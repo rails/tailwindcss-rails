@@ -3,3 +3,4 @@ end
 
 require "tailwindcss/version"
 require "tailwindcss/engine"
+require "tailwindcss/compressor"

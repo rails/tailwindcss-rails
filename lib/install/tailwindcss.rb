@@ -7,3 +7,6 @@ else
   say "Default application.html.erb is missing!", :red
   say %(        Add <%= stylesheet_link_tag "tailwind" %> within the <head> tag in your custom layout.)
 end
+
+say "Turn on purging of unused css classes in production"
+append_to_file Rails.root.join("app/config/environments/production.rb"), %(  config.assets.css_compressor = :purger)

@@ -1,15 +1,15 @@
 class Tailwindcss::Purger
-  attr_reader :stylesheet_path, :paths_with_css_class_names
+  attr_reader :paths_with_css_class_names
 
-  def initialize(stylesheet_path:, paths_with_css_class_names:)
-    @stylesheet_path, @paths_with_css_class_names = stylesheet_path, paths_with_css_class_names
+  def initialize(paths_with_css_class_names:)
+    @paths_with_css_class_names = paths_with_css_class_names
   end
 
-  def purge
+  def purge(input)
     inside_valid_selector = inside_invalid_selector = false
     output = []
 
-    stylesheet_path.readlines.each do |line|
+    input.split("\n").each do |line|
       case
       when inside_valid_selector
         output << line
