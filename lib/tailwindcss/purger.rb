@@ -1,4 +1,8 @@
 class Tailwindcss::Purger
+  CLASS_NAME_PATTERN       = /([:A-Za-z0-9_-]+)/
+  OPENING_SELECTOR_PATTERN = /\..*\{/
+  CLOSING_SELECTOR_PATTERN = /\s*\}/
+
   attr_reader :paths_with_css_class_names
 
   def initialize(paths_with_css_class_names:)
@@ -40,10 +44,6 @@ class Tailwindcss::Purger
   end
 
   private
-    CLASS_NAME_PATTERN       = /([:A-Za-z0-9_-]+)/
-    OPENING_SELECTOR_PATTERN = /\..*\{/
-    CLOSING_SELECTOR_PATTERN = /\s*\}/
-
     def find_potential_css_class_names_in(path_patterns)
       files_in(path_patterns).flat_map { |file| extract_potential_css_class_names_from(file) }.flatten.uniq.sort
     end
