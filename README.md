@@ -1,6 +1,6 @@
 # Tailwind CSS for Rails
 
-[Tailwindcss](https://tailwindcss.com) A utility-first CSS framework packed with classes like flex, pt-4, text-center and rotate-90 that can be composed to build any design, directly in your markup.
+[Tailwind CSS](https://tailwindcss.com) is a utility-first CSS framework packed with classes like flex, pt-4, text-center and rotate-90 that can be composed to build any design, directly in your markup.
 
 Tailwind CSS for Rails makes it easy to use this CSS framework with the asset pipeline. In development mode, the full 3mb+ Tailwind stylsheet is loaded, but in production, only the css classes used by files in `app/views` and `app/helpers` are included.
 
