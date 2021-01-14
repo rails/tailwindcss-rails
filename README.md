@@ -10,9 +10,11 @@ This gem just gives access to the standard Tailwind CSS framework. If you need t
 ## Installation
 
 1. Run `./bin/bundle add tailwindcss-rails`
-2. Run `./bin/rails tailwindcss:install`
+2. Run `./bin/rails tailwindcss:install` (on a fresh Rails application)
 
-The last option adds the purger compressor to `config/environments/production.rb`. This ensures that when `assets:precompile` is called during deployment that the unused class names are not included in the tailwind output css used by the app. It also adds a `javascript_link_tag` to your `app/views/application.html.erb` file.
+The last option adds the purger compressor to `config/environments/production.rb`. This ensures that when `assets:precompile` is called during deployment that the unused class names are not included in the tailwind output css used by the app. It also adds a `javascript_link_tag "tailwind"` to your `app/views/application.html.erb` file.
+
+You can do both things yourself, if you've changed the default setup.
 
 If you need to customize what files are searched for class names, you need to replace the compressor line with something like:
 
