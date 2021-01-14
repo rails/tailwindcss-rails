@@ -9,4 +9,4 @@ else
 end
 
 say "Turn on purging of unused css classes in production"
-append_to_file Rails.root.join("app/config/environments/production.rb"), %(  config.assets.css_compressor = :purger)
+append_to_file Rails.root.join("config/environments/production.rb"), %(  config.assets.css_compressor = :purger)
