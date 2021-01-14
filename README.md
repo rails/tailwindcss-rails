@@ -14,6 +14,12 @@ This gem just gives access to the standard Tailwind CSS framework. If you need t
 
 The last option adds the purger compressor to `config/environments/production.rb`. This ensures that when `assets:precompile` is called during deployment that the unused class names are not included in the tailwind output css used by the app. It also adds a `javascript_link_tag` to your `app/views/application.html.erb` file.
 
+If you need to customize what files are searched for class names, you need to replace the compressor line with something like:
+
+```ruby
+  config.assets.css_compressor = Tailwindcss::Compressor.new(files_with_class_names: Rails.root.glob("app/somehere/**/*.*"))
+```
+
 
 ## License
 
