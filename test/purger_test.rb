@@ -8,13 +8,13 @@ class Tailwindcss::PurgerTest < ActiveSupport::TestCase
 
   test "extract class names from files" do
     assert_equal %w[ div class max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 translate-x-1/2 ].sort,
-      Tailwindcss::Purger.extract_class_names_from(Rails.root.join("app/views/tailwinded/simple.html.erb"))
+      Tailwindcss::Purger.extract_class_names_from(Pathname.new(__dir__).join("fixtures/simple.html.erb"))
   end
 
   test "basic purge" do
     purged = Tailwindcss::Purger.purge \
       Pathname.new(__FILE__).join("../../app/assets/stylesheets/tailwind.css").read, 
-      keeping_class_names_from_files: Rails.root.glob("app/views/**/*.*") + Rails.root.glob("app/helpers/**/*.rb")
+      keeping_class_names_from_files: Pathname(__dir__).glob("fixtures/*.html.erb")
   
     assert purged !~ /.mt-6 \{/
   
