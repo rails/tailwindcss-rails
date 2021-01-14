@@ -10,10 +10,10 @@ class Tailwindcss::Compressor
   end
 
   def initialize(options = {})
-    @options = { paths_with_css_class_names: [ "app/views/**/*.*", "app/helpers/**/*.rb" ] }.merge(options).freeze
+    @options = { files_with_class_names: Rails.root.glob("app/views/**/*.*") + Rails.root.glob("app/helpers/**/*.rb") }.merge(options).freeze
   end
 
   def call(input)
-    { data: Tailwindcss::Purger.new(**@options).purge(input[:data]) }
+    { data: Tailwindcss::Purger.purge(input[:data], keeping_class_names_from_files: @options[:files_with_class_names]) }
   end
 end

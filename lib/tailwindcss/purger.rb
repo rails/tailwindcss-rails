@@ -1,58 +1,61 @@
 class Tailwindcss::Purger
-  CLASS_NAME_PATTERN       = /([:A-Za-z0-9_-]+)/
+  CLASS_NAME_PATTERN       = /([:A-Za-z0-9_-]+[\.]*[\\\/:A-Za-z0-9_-]*)/
   OPENING_SELECTOR_PATTERN = /\..*\{/
   CLOSING_SELECTOR_PATTERN = /\s*\}/
+  NEWLINE = "\n"
 
-  attr_reader :paths_with_css_class_names
+  attr_reader :keep_these_class_names
 
-  def initialize(paths_with_css_class_names:)
-    @paths_with_css_class_names = paths_with_css_class_names
+  class << self
+    def purge(input, keeping_class_names_from_files:)
+      new(extract_class_names_from(keeping_class_names_from_files)).purge(input)
+    end
+
+    def extract_class_names(string)
+      string.scan(CLASS_NAME_PATTERN).flatten.uniq.sort
+    end
+
+    def extract_class_names_from(files)
+      Array(files).flat_map { |file| extract_class_names(file.read) }.uniq.sort
+    end
+  end
+
+  def initialize(keep_these_class_names)
+    @keep_these_class_names = keep_these_class_names
   end
 
   def purge(input)
-    inside_valid_selector = inside_invalid_selector = false
+    inside_kept_selector = inside_ignored_selector = false
     output = []
 
-    input.split("\n").each do |line|
+    input.split(NEWLINE).each do |line|
       case
-      when inside_valid_selector
+      when inside_kept_selector
         output << line
-        inside_valid_selector = false if line =~ CLOSING_SELECTOR_PATTERN
-      when inside_invalid_selector
-        inside_invalid_selector = false if line =~ CLOSING_SELECTOR_PATTERN
-      else
-        if line =~ OPENING_SELECTOR_PATTERN
-          line.remove("\u001A") =~ CLASS_NAME_PATTERN
-
-          if potential_css_class_names.include?($1)
-            output << line
-            inside_valid_selector = true
-          else
-            inside_invalid_selector = true
-          end
-        else
+        inside_kept_selector = false if line =~ CLOSING_SELECTOR_PATTERN
+      when inside_ignored_selector
+        inside_ignored_selector = false if line =~ CLOSING_SELECTOR_PATTERN
+      when line =~ OPENING_SELECTOR_PATTERN
+        if keep_these_class_names.include? class_name_in(line)
           output << line
+          inside_kept_selector = true
+        else
+          inside_ignored_selector = true
         end
+      else
+        output << line
       end
     end
 
-    output.reject { |line| line == "\n" }.join
-  end
-
-  def potential_css_class_names
-    @potential_css_class_names ||= find_potential_css_class_names_in(paths_with_css_class_names)
+    separated_without_empty_lines(output)
   end
 
   private
-    def find_potential_css_class_names_in(path_patterns)
-      files_in(path_patterns).flat_map { |file| extract_potential_css_class_names_from(file) }.flatten.uniq.sort
+    def class_name_in(line)
+      CLASS_NAME_PATTERN.match(line)[1].remove("\\")
     end
 
-    def files_in(path_patterns)
-      path_patterns.flat_map { |path_pattern| Rails.root.glob(path_pattern) }
-    end
-
-    def extract_potential_css_class_names_from(file)
-      file.read.scan(CLASS_NAME_PATTERN)
+    def separated_without_empty_lines(output)
+      output.reject { |line| line.strip.empty? }.join(NEWLINE)
     end
 end

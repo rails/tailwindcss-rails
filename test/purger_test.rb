@@ -1,16 +1,26 @@
 require "test_helper"
 
 class Tailwindcss::PurgerTest < ActiveSupport::TestCase
-  test "extract class names" do
-    assert_equal %w[ div class max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ].sort,
-      %(<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">).scan(Tailwindcss::Purger::CLASS_NAME_PATTERN).flatten.sort
+  test "extract class names from string" do
+    assert_equal %w[ div class max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 translate-x-1/2 ].sort,
+      Tailwindcss::Purger.extract_class_names(%(<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 translate-x-1/2">))
+  end
+
+  test "extract class names from files" do
+    assert_equal %w[ div class max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 translate-x-1/2 ].sort,
+      Tailwindcss::Purger.extract_class_names_from(Rails.root.join("app/views/tailwinded/simple.html.erb"))
   end
 
   test "basic purge" do
-    purger = Tailwindcss::Purger.new(paths_with_css_class_names: [ "app/views/**/*.html*", "app/helpers/**/*.rb" ])
-    purged = purger.purge(Pathname.new(__FILE__).join("../../app/assets/stylesheets/tailwind.css").read)
-
-    assert_not purged =~ /.mt-6 \{/
+    purged = Tailwindcss::Purger.purge \
+      Pathname.new(__FILE__).join("../../app/assets/stylesheets/tailwind.css").read, 
+      keeping_class_names_from_files: Rails.root.glob("app/views/**/*.*") + Rails.root.glob("app/helpers/**/*.rb")
+  
+    assert purged !~ /.mt-6 \{/
+  
+    assert purged =~ /.mt-5 \{/
+    assert purged =~ /.sm\\:px-6 \{/
+    assert purged =~ /.translate-x-1\\\/2 \{/
     assert purged =~ /.mt-10 \{/
   end
 end
