@@ -1,4 +1,4 @@
-require "tailwindcss/purger"
+require "tailwindcss/compressor"
 
 module Tailwindcss
   class Engine < ::Rails::Engine
