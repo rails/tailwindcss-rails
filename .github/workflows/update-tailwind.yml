@@ -1,0 +1,28 @@
+name: Update Tailwind
+
+on:
+  schedule:
+    - cron:  '0 3 * * *'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+    - uses: actions/checkout@master
+    - name: Update app/assets/stylesheets/tailwind.css
+      run: |
+        npx tailwindcss-cli@latest build -o app/assets/stylesheets/tailwind.css
+    - name: Commit files
+      run: |
+        TAILWIND_CSS_VERSION=`npm view tailwindcss@latest version`
+        git config --local user.email "github-actions@example.com"
+        git config --local user.name "GitHub Actions"
+        git add app/assets/stylesheets/tailwind.css
+        git commit -am "[nodoc] Updating Tailwind CSS to $TAILWIND_CSS_VERSION" || echo "No changes to commit"
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: ${{ github.ref }}
