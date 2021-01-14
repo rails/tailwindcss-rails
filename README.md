@@ -1,21 +1,18 @@
 # Tailwind CSS for Rails
 
-[Tailwindcss](https://tailwindcss.hotwire.dev) is a JavaScript framework with modest ambitions. It doesn’t seek to take over your entire front-end in fact, it’s not concerned with rendering HTML at all. Instead, it’s designed to augment your HTML with just enough behavior to make it shine. Tailwindcss pairs beautifully with Turbo to provide a complete solution for fast, compelling applications with a minimal amount of effort.
+[Tailwindcss](https://tailwindcss.com) A utility-first CSS framework packed with classes like flex, pt-4, text-center and rotate-90 that can be composed to build any design, directly in your markup.
 
-Tailwindcss for Rails makes it easy to use this modest framework with the asset pipeline and ES6/ESM in the browser. It uses the 7kb es-module-shim to provide [importmap](https://github.com/WICG/import-maps) support for all ES6-compatible browsers. This means you can develop and deploy without using any bundling or transpiling at all! Far less complexity, no waiting for compiling.
+Tailwind CSS for Rails makes it easy to use this CSS framework with the asset pipeline. In development mode, the full 3mb+ Tailwind stylsheet is loaded, but in production, only the css classes used by files in `app/views` and `app/helpers` are included.
 
-If you want to use Tailwindcss with a bundler, you should use [Webpacker](https://github.com/rails/webpacker) instead. This gem is purely intended for those who wish to use Tailwindcss with the asset pipeline using ESM in the browser.
+This gem just gives access to the standard Tailwind CSS framework. If you need to customize Tailwind, you will need to install it the traditional way using [Webpacker](https://github.com/rails/webpacker) instead. This gem is purely intended for those who wish to use Tailwind CSS with the asset pipeline.
+
 
 ## Installation
 
-1. Add the `tailwind-rails` gem to your Gemfile: `gem 'tailwind-rails'`
-2. Run `./bin/bundle install`.
-3. Run `./bin/rails tailwind:install`
+1. Run `./bin/bundle add tailwindcss-rails`
+2. Run `./bin/rails tailwindcss:install`
 
-
-## Usage
-
-
+The last option adds the purger compressor to `config/environments/production.rb`. This ensures that when `assets:precompile` is called during deployment that the unused class names are not included in the tailwind output css used by the app. It also adds a `javascript_link_tag` to your `app/views/application.html.erb` file.
 
 
 ## License
