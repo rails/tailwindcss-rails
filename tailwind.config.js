@@ -102,7 +102,7 @@ colors = {
 module.exports = {
   purge: [],
   presets: [],
-  darkMode: false, // or 'media' or 'class'
+  darkMode: 'media',
   theme: {
     screens: {
       sm: '640px',
