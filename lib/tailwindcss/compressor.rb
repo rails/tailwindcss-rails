@@ -14,6 +14,9 @@ class Tailwindcss::Compressor
   end
 
   def call(input)
-    { data: Tailwindcss::Purger.purge(input[:data], keeping_class_names_from_files: @options[:files_with_class_names]) }
+    {
+      data: Tailwindcss::Purger.purge(input[:data], keeping_class_names_from_files: @options[:files_with_class_names]),
+      dependencies: @options[:files_with_class_names].map { |f| "file-digest://#{f.to_path}" }.to_set
+    }
   end
 end
