@@ -6,6 +6,7 @@ Tailwind CSS for Rails makes it easy to use this CSS framework with the asset pi
 
 This gem just gives access to the standard Tailwind CSS framework. If you need to customize Tailwind, you will need to install it the traditional way using [Webpacker](https://github.com/rails/webpacker) instead. This gem is purely intended for those who wish to use Tailwind CSS with the asset pipeline.
 
+The version of Tailwind included in this gem has been configured for dark mode, forms, aspect-ratio, and typography.
 
 ## Installation
 
