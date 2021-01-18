@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    tailwindcss-rails (0.1.2)
+    tailwindcss-rails (0.1.0)
       rails (>= 6.0.0)
 
 GEM
@@ -75,7 +75,7 @@ GEM
       activesupport (>= 4.2.0)
     i18n (1.8.7)
       concurrent-ruby (~> 1.0)
-    loofah (2.8.0)
+    loofah (2.9.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     mail (2.7.1)
@@ -85,11 +85,9 @@ GEM
     method_source (1.0.0)
     mimemagic (0.3.5)
     mini_mime (1.0.2)
-    mini_portile2 (2.5.0)
     minitest (5.14.3)
     nio4r (2.5.4)
-    nokogiri (1.11.1)
-      mini_portile2 (~> 2.5.0)
+    nokogiri (1.11.1-x86_64-darwin)
       racc (~> 1.4)
     racc (1.5.2)
     rack (2.2.3)
