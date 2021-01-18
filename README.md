@@ -18,6 +18,7 @@ The last option adds the purger compressor to `config/environments/production.rb
 
 You can do these things yourself, if you've changed the default setup.
 
+Note: You should ensure that delete `app/assets/stylesheets/scaffold.scss` that Rails adds after running a scaffold command. This stylesheet will interfere with Tailwind's reset of base styles.
 
 ## Purging in production
 
