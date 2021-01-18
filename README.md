@@ -16,6 +16,16 @@ The last option adds the purger compressor to `config/environments/production.rb
 
 You can do both things yourself, if you've changed the default setup.
 
+
+## Purging in production
+
+The Tailwind CSS framework starts out as a massive file, which gives you all the combinations of utility classes for development, but you wouldn't want to ship all those unused classes in production. So this gem includes a Sprockets compressor that purges the tailwind file from all those unused classes.
+
+This happens automatically on `assets:precompile`, which should always be part of a deployment path, but is not currently compatible with the default sprockets cache. So you must run the `assets:clobber` task prior to `assets:precompile` when deploying to production, or new new usage of additional utility classes from your view and helper files will not be updated. 
+
+
+## Configuration
+
 If you need to customize what files are searched for class names, you need to replace the compressor line with something like:
 
 ```ruby
