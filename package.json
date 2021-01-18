@@ -5,5 +5,8 @@
     "@tailwindcss/typography": "^0.4.0",
     "autoprefixer": "^10.2.1",
     "tailwindcss": "^2.0.2"
+  },
+  "scripts": {
+    "build": "npx tailwind build > ./app/assets/stylesheets/tailwind.css"
   }
 }
