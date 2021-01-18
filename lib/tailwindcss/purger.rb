@@ -52,7 +52,10 @@ class Tailwindcss::Purger
 
   private
     def class_name_in(line)
-      CLASS_NAME_PATTERN.match(line)[1].remove("\\")
+      CLASS_NAME_PATTERN.match(line)[1]
+        .remove("\\")
+        .remove(/:(focus|hover)(-within)?/)
+        .remove("::placeholder").remove("::-moz-placeholder").remove(":-ms-input-placeholder")
     end
 
     def separated_without_empty_lines(output)

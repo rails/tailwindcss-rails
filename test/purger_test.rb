@@ -12,9 +12,7 @@ class Tailwindcss::PurgerTest < ActiveSupport::TestCase
   end
 
   test "basic purge" do
-    purged = Tailwindcss::Purger.purge \
-      Pathname.new(__FILE__).join("../../app/assets/stylesheets/tailwind.css").read, 
-      keeping_class_names_from_files: Pathname(__dir__).glob("fixtures/*.html.erb")
+    purged = purged_tailwind_from_fixtures
   
     assert purged !~ /.mt-6 \{/
   
@@ -23,4 +21,28 @@ class Tailwindcss::PurgerTest < ActiveSupport::TestCase
     assert purged =~ /.translate-x-1\\\/2 \{/
     assert purged =~ /.mt-10 \{/
   end
+
+  test "purge shouldn't remove hover or focus classes" do
+    purged = purged_tailwind_from_fixtures
+    assert purged =~ /.hover\\\:text-gray-500\:hover \{/
+    assert purged =~ /.focus\\\:outline-none\:focus \{/
+    assert purged =~ /.focus-within\\\:outline-black\:focus-within \{/
+  end
+
+  test "purge shouldn't remove placeholder selectors" do
+    purged = Tailwindcss::Purger.purge \
+      Pathname.new(__FILE__).join("../../app/assets/stylesheets/tailwind.css").read, 
+      keeping_class_names_from_files: Pathname(__dir__).join("fixtures/placeholders.html.erb")
+
+    assert purged =~ /.placeholder-transparent\:\:-moz-placeholder \{/
+    assert purged =~ /.placeholder-transparent\:-ms-input-placeholder \{/
+    assert purged =~ /.placeholder-transparent\:\:placeholder \{/
+  end
+
+  private
+    def purged_tailwind_from_fixtures
+      Tailwindcss::Purger.purge \
+        Pathname.new(__FILE__).join("../../app/assets/stylesheets/tailwind.css").read, 
+        keeping_class_names_from_files: Pathname(__dir__).glob("fixtures/*.html.erb")
+    end
 end
