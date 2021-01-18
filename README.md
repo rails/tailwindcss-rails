@@ -23,7 +23,13 @@ You can do these things yourself, if you've changed the default setup.
 
 The Tailwind CSS framework starts out as a massive file, which gives you all the combinations of utility classes for development, but you wouldn't want to ship all those unused classes in production. So this gem includes a Sprockets compressor that purges the tailwind file from all those unused classes.
 
-This happens automatically on `assets:precompile`, which should always be part of a deployment path, but is not currently compatible with the default sprockets cache. So you must run the `assets:clobber` task prior to `assets:precompile` when deploying to production, or new new usage of additional utility classes from your view and helper files will not be updated. 
+This compressor is currently not compatible with the default Sprockets cache system due to the fact its output depends on files outside of Sprockets (all the files observed for utility class name usage), so this cache is disabled in production. If you need to disable it in other deployed environments, add the following to that environment configuration file:
+
+```ruby
+Rails.application.config.assets.configure do |env|
+  env.cache = ActiveSupport::Cache.lookup_store(:null_store)
+end
+```
 
 
 ## Configuration
