@@ -7,7 +7,7 @@ module Tailwindcss
     end
 
     initializer "tailwindcss.assets" do
-      Rails.application.config.assets.precompile += %w( tailwind )
+      Rails.application.config.assets.precompile += %w( tailwind.css inter-font.css )
     end
   end
 end

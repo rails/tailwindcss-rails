@@ -6,16 +6,17 @@ Tailwind CSS for Rails makes it easy to use this CSS framework with the asset pi
 
 This gem just gives access to the standard Tailwind CSS framework. If you need to customize Tailwind, you will need to install it the traditional way using [Webpacker](https://github.com/rails/webpacker) instead. This gem is purely intended for those who wish to use Tailwind CSS with the asset pipeline.
 
-The version of Tailwind included in this gem has been configured for dark mode, forms, aspect-ratio, and typography.
+The version of Tailwind included in this gem has been configured for dark mode, forms, aspect-ratio, typography, and the Inter font.
+
 
 ## Installation
 
 1. Run `./bin/bundle add tailwindcss-rails`
 2. Run `./bin/rails tailwindcss:install` (on a fresh Rails application)
 
-The last option adds the purger compressor to `config/environments/production.rb`. This ensures that when `assets:precompile` is called during deployment that the unused class names are not included in the tailwind output css used by the app. It also adds a `stylesheet_link_tag "tailwind"` to your `app/views/application.html.erb` file.
+The last option adds the purger compressor to `config/environments/production.rb`. This ensures that when `assets:precompile` is called during deployment that the unused class names are not included in the tailwind output css used by the app. It also adds a `stylesheet_link_tag "tailwind"` and `stylesheet_link_tag "inter-font"` to your `app/views/application.html.erb` file.
 
-You can do both things yourself, if you've changed the default setup.
+You can do these things yourself, if you've changed the default setup.
 
 
 ## Purging in production
@@ -38,6 +39,7 @@ By default, the CSS purger will only operate on the tailwind css file included w
 ```ruby
   config.assets.css_compressor = Tailwindcss::Compressor.new(only_purge: %w[ tailwind and_my_other_css_file ])
 ```
+
 
 ## License
 
