@@ -1,7 +1,3 @@
-def run_install_template(path)
-  system "#{RbConfig.ruby} ./bin/rails app:template LOCATION=#{File.expand_path("../install/#{path}.rb", __dir__)}"
-end
-
 namespace :tailwindcss do
   desc "Install Tailwind CSS into the app"
   task :install do
@@ -10,18 +6,6 @@ namespace :tailwindcss do
     else
       Rake::Task["tailwindcss:install:asset_pipeline"].invoke
     end
-  end
-
-  desc "Show the list of class names being kept in Tailwind CSS"
-  task :keeping_class_names do
-    puts Tailwindcss::Purger.extract_class_names_from(Rails.root.glob("app/views/**/*.*") + Rails.root.glob("app/helpers/**/*.rb"))
-  end
-
-  desc "Show Tailwind CSS styles that are left after purging unused class names"
-  task :preview_purge do
-    puts Tailwindcss::Purger.purge \
-      Pathname.new(__FILE__).join("../../../app/assets/stylesheets/tailwind.css").read,
-      keeping_class_names_from_files: Rails.root.glob("app/views/**/*.*") + Rails.root.glob("app/helpers/**/*.rb")
   end
 
   namespace :install do
@@ -35,4 +19,26 @@ namespace :tailwindcss do
       run_install_template "tailwindcss_with_webpacker"
     end
   end
+
+  desc "Show the list of class names being kept in Tailwind CSS"
+  task :keeping_class_names do
+    puts Tailwindcss::Purger.extract_class_names_from(default_files_with_class_names)
+  end
+
+  desc "Show Tailwind CSS styles that are left after purging unused class names"
+  task :preview_purge do
+    puts Tailwindcss::Purger.purge tailwind_css, keeping_class_names_from_files: default_files_with_class_names
+  end
+end
+
+def run_install_template(path)
+  system "#{RbConfig.ruby} ./bin/rails app:template LOCATION=#{File.expand_path("../install/#{path}.rb", __dir__)}"
+end
+
+def default_files_with_class_names
+  Rails.root.glob("app/views/**/*.*") + Rails.root.glob("app/helpers/**/*.rb")
+end
+
+def tailwind_css
+  Pathname.new(__FILE__).join("../../../app/assets/stylesheets/tailwind.css").read
 end
