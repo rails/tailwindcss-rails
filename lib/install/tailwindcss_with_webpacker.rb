@@ -1,5 +1,4 @@
 LATEST_WEBPACKER = "\"@rails\/webpacker\": \"rails\/webpacker#b6c2180\",".freeze
-TAILWIND_IMPORTS = "@import \"tailwindcss/base\";\n@import \"tailwindcss/components\";\n@import \"tailwindcss/utilities\";\n".freeze
 
 say "Installing Tailwind CSS"
 
@@ -13,10 +12,7 @@ insert_into_file "#{Webpacker.config.source_entry_path}/application.js",
                  "\nrequire(\"stylesheets/application.scss\")\n"
 
 say "Adding minimal configuration for TailwindCSS to work properly"
-stylesheets_directory = "#{Webpacker.config.source_path}/stylesheets"
-empty_directory stylesheets_directory
-add_file "#{stylesheets_directory}/application.scss"
-insert_into_file "#{stylesheets_directory}/application.scss", TAILWIND_IMPORTS
+directory "stylesheets/application.scss", Webpacker.config.source_path
 
 insert_into_file "postcss.config.js",
                  "require('tailwindcss'),\n\t", before: "require('postcss-import')"
