@@ -13,9 +13,9 @@ class Tailwindcss::PurgerTest < ActiveSupport::TestCase
 
   test "basic purge" do
     purged = purged_tailwind_from_fixtures
-  
+
     assert purged !~ /.mt-6 \{/
-  
+
     assert purged =~ /.mt-5 \{/
     assert purged =~ /.sm\\:px-6 \{/
     assert purged =~ /.translate-x-1\\\/2 \{/
@@ -29,9 +29,18 @@ class Tailwindcss::PurgerTest < ActiveSupport::TestCase
     assert purged =~ /.focus-within\\\:outline-black\:focus-within \{/
   end
 
+  test "purge should remove unused group-hover classes" do
+    purged = purged_tailwind_from_fixtures
+
+    assert purged !~ /.group\:hover .group-hover\\\:bg-blue-900 \{/
+
+    assert purged =~ /.group\:hover .group-hover\\\:bg-gray-900 \{/
+    assert purged =~ /.group\:hover .group-hover\\\:bg-red-500 \{/
+  end
+
   test "purge shouldn't remove placeholder selectors" do
     purged = Tailwindcss::Purger.purge \
-      Pathname.new(__FILE__).join("../../app/assets/stylesheets/tailwind.css").read, 
+      Pathname.new(__FILE__).join("../../app/assets/stylesheets/tailwind.css").read,
       keeping_class_names_from_files: Pathname(__dir__).join("fixtures/placeholders.html.erb")
 
     assert purged =~ /.placeholder-transparent\:\:-moz-placeholder \{/
@@ -42,7 +51,7 @@ class Tailwindcss::PurgerTest < ActiveSupport::TestCase
   private
     def purged_tailwind_from_fixtures
       Tailwindcss::Purger.purge \
-        Pathname.new(__FILE__).join("../../app/assets/stylesheets/tailwind.css").read, 
+        Pathname.new(__FILE__).join("../../app/assets/stylesheets/tailwind.css").read,
         keeping_class_names_from_files: Pathname(__dir__).glob("fixtures/*.html.erb")
     end
 end
