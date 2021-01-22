@@ -10,6 +10,10 @@ module Tailwindcss
       Rails.application.config.assets.precompile += %w( tailwind.css inter-font.css )
     end
 
+    initializer "tailwindcss.disable_generator_stylesheets" do
+      Rails.application.config.generators.stylesheets = false
+    end
+
     initializer "tailwindcss.disable_assets_cache" do
       Rails.application.config.assets.configure do |env|
         env.cache = ActiveSupport::Cache.lookup_store(:null_store)
