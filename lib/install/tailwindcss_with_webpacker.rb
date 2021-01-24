@@ -13,7 +13,7 @@ insert_into_file "#{Webpacker.config.source_entry_path}/application.js", "\nrequ
 say "Adding minimal configuration for Tailwind CSS to work properly"
 directory Pathname.new(__dir__).join("stylesheets"), Webpacker.config.source_path.join("stylesheets")
 
-insert_into_file "postcss.config.js", "require('tailwindcss'),\n\t", before: "  require('postcss-import')"
+insert_into_file "postcss.config.js", "require('tailwindcss'),\n    ", before: "require('postcss-import')"
 
 if APPLICATION_LAYOUT_PATH.exist?
   say "Add Tailwindcss include tags in application layout"
