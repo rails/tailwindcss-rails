@@ -41,7 +41,7 @@ end
 If you need to customize what files are searched for class names when using the asset pipeline, you need to replace the compressor line with something like:
 
 ```ruby
-  config.assets.css_compressor = Tailwindcss::Compressor.new(files_with_class_names: Rails.root.glob("app/somehere/**/*.*"))
+  config.assets.css_compressor = Tailwindcss::Compressor.new(files_with_class_names: Rails.root.glob("app/somewhere/**/*.*"))
 ```
 
 By default, the CSS purger will only operate on the tailwind css file included with this gem. If you want to use it more broadly:
