@@ -18,7 +18,7 @@ When run on an app using the just the asset pipeline, the last step adds the pur
 
 You can do these things yourself, if you've changed the default setup.
 
-Note: You should ensure to delete `app/assets/stylesheets/scaffold.scss` that Rails adds after running a scaffold command, if you had run this generator before installing Tailwind CSS for Rails. This stylesheet will interfere with Tailwind's reset of base styles. This gem will turn off stylesheet generation for all future scaffold runs.
+Note: You should ensure to delete `app/assets/stylesheets/scaffolds.scss` that Rails adds after running a scaffold command, if you had run this generator before installing Tailwind CSS for Rails. This stylesheet will interfere with Tailwind's reset of base styles. This gem will turn off stylesheet generation for all future scaffold runs.
 
 When run on an app using Webpacker, the last step adds the npm dependencies for Tailwind CSS, configures postCSS, and generates a app/javascript/stylesheets/application.scss file as the default for using Tailwind.
 
