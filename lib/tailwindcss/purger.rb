@@ -1,5 +1,5 @@
 class Tailwindcss::Purger
-  CLASS_NAME_PATTERN       = /([:A-Za-z0-9_-]+[\.]*[\\\/:A-Za-z0-9_-]*)/
+  CLASS_NAME_PATTERN       = /([:A-Za-z0-9_-]+[\.\\\/:A-Za-z0-9_-]*)/
   OPENING_SELECTOR_PATTERN = /\..*\{/
   CLOSING_SELECTOR_PATTERN = /\s*\}/
   NEWLINE = "\n"
