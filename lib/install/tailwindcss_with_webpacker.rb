@@ -5,10 +5,13 @@ say "Installing Tailwind CSS"
 run "yarn add tailwindcss@npm:@tailwindcss/postcss7-compat postcss@^7 autoprefixer@^9"
 insert_into_file "#{Webpacker.config.source_entry_path}/application.js", "\nimport \"stylesheets/application\"\n"
 
-say "Adding minimal configuration for Tailwind CSS to work properly"
+say "Configuring Tailwind CSS"
 directory Pathname.new(__dir__).join("stylesheets"), Webpacker.config.source_path.join("stylesheets")
+Dir.chdir(WEBPACK_STYLESHEETS_PATH) { run "npx tailwindcss init" }
 
-insert_into_file "postcss.config.js", "require('tailwindcss'),\n    ", before: "require('postcss-import')"
+insert_into_file "postcss.config.js", "require('tailwindcss')(\"./app/javascript/stylesheets/tailwind.config.js\"),\n    ",
+  before: "require('postcss-import')"
+
 
 if APPLICATION_LAYOUT_PATH.exist?
   say "Add Tailwindcss include tags in application layout"
