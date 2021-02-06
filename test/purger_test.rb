@@ -2,12 +2,12 @@ require "test_helper"
 
 class Tailwindcss::PurgerTest < ActiveSupport::TestCase
   test "extract class names from string" do
-    assert_equal %w[ div class max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 translate-x-1/2 ].sort,
-      Tailwindcss::Purger.extract_class_names(%(<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 translate-x-1/2">))
+    assert_equal %w[ div class max-w-7xl mx-auto my-1.5 px-4 sm:px-6 lg:px-8 sm:py-0.5 translate-x-1/2 ].sort,
+      Tailwindcss::Purger.extract_class_names(%(<div class="max-w-7xl mx-auto my-1.5 px-4 sm:px-6 lg:px-8 sm:py-0.5 translate-x-1/2">))
   end
 
   test "extract class names from files" do
-    assert_equal %w[ div class max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 translate-x-1/2 ].sort,
+    assert_equal %w[ div class max-w-7xl mx-auto my-1.5 px-4 sm:px-6 lg:px-8 sm:py-0.5 translate-x-1/2 ].sort,
       Tailwindcss::Purger.extract_class_names_from(Pathname.new(__dir__).join("fixtures/simple.html.erb"))
   end
 
@@ -20,6 +20,8 @@ class Tailwindcss::PurgerTest < ActiveSupport::TestCase
     assert purged =~ /.sm\\:px-6 \{/
     assert purged =~ /.translate-x-1\\\/2 \{/
     assert purged =~ /.mt-10 \{/
+    assert purged =~ /.my-1\\.5 \{/
+    assert purged =~ /.sm\\:py-0\\.5 \{/
   end
 
   test "purge shouldn't remove hover or focus classes" do
@@ -30,9 +32,7 @@ class Tailwindcss::PurgerTest < ActiveSupport::TestCase
   end
 
   test "purge shouldn't remove placeholder selectors" do
-    purged = Tailwindcss::Purger.purge \
-      Pathname.new(__FILE__).join("../../app/assets/stylesheets/tailwind.css").read, 
-      keeping_class_names_from_files: Pathname(__dir__).join("fixtures/placeholders.html.erb")
+    purged = purged_tailwind_from Pathname(__dir__).join("fixtures/placeholders.html.erb")
 
     assert purged =~ /.placeholder-transparent\:\:-moz-placeholder \{/
     assert purged =~ /.placeholder-transparent\:-ms-input-placeholder \{/
@@ -41,8 +41,12 @@ class Tailwindcss::PurgerTest < ActiveSupport::TestCase
 
   private
     def purged_tailwind_from_fixtures
+      purged_tailwind_from Pathname(__dir__).glob("fixtures/*.html.erb")
+    end
+
+    def purged_tailwind_from files
       Tailwindcss::Purger.purge \
         Pathname.new(__FILE__).join("../../app/assets/stylesheets/tailwind.css").read, 
-        keeping_class_names_from_files: Pathname(__dir__).glob("fixtures/*.html.erb")
+        keeping_class_names_from_files: files
     end
 end
