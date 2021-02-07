@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Tailwindcss::Purger
-  CLASS_NAME_PATTERN = /[:A-Za-z0-9_-]+[\.]*[\\\/:A-Za-z0-9_-]*/
+  CLASS_NAME_PATTERN = /((?:[:A-Za-z0-9_-]+[\\\/:A-Za-z0-9_-]*[0-3][\\.]*5)|(?:[A-Za-z0-9_-]+[\\\/:A-Za-z0-9_-]*))/
 
   CLASS_BREAK = /(?![-_a-z0-9\\])/i # `\b` for class selectors
 
@@ -29,7 +29,7 @@ class Tailwindcss::Purger
     end
 
     def extract_class_names(string)
-      string.scan(CLASS_NAME_PATTERN).uniq.sort!
+      string.scan(CLASS_NAME_PATTERN).flatten.uniq.sort!
     end
 
     def extract_class_names_from(files)
