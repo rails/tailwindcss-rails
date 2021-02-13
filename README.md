@@ -4,7 +4,7 @@
 
 Tailwind CSS for Rails works with both the asset pipeline and Webpacker.
 
-When use with the asset pipeline, production-mode purging of unused css class names is provided by a Sprockets compressor built into this gem. This compressor ensures that only the css classes used by files in `app/views` and `app/helpers` are included. In development mode, the full 3mb+ Tailwind stylesheet is loaded. In both cases, Tailwind CSS is configured for dark mode, forms, aspect-ratio, typography, and the Inter font. If you need more configuration than that, you'll need to use it with Webpacker.
+When used with the asset pipeline, production-mode purging of unused css class names is provided by a Sprockets compressor built into this gem. This compressor ensures that only the css classes used by files in `app/views` and `app/helpers` are included. In development mode, the full 3mb+ Tailwind stylesheet is loaded. In both cases, Tailwind CSS is configured for dark mode, forms, aspect-ratio, typography, and the Inter font. If you need more configuration than that, you'll need to use it with Webpacker.
 
 When used with Webpacker, Tailwind CSS is installed as a postCSS processor. Refer to the [TailwindCSS documentation](https://tailwindcss.com/docs/installation#customizing-your-configuration) to customize your tailwind.config.js file.
 
