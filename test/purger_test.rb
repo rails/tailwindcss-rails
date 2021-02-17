@@ -13,15 +13,41 @@ class Tailwindcss::PurgerTest < ActiveSupport::TestCase
 
   test "basic purge" do
     purged = purged_tailwind_from_fixtures
-  
+
     assert purged !~ /.mt-6 \{/
-  
+
     assert purged =~ /.mt-5 \{/
     assert purged =~ /.sm\\:px-6 \{/
     assert purged =~ /.translate-x-1\\\/2 \{/
     assert purged =~ /.mt-10 \{/
     assert purged =~ /.my-1\\.5 \{/
     assert purged =~ /.sm\\:py-0\\.5 \{/
+  end
+
+  test "purge handles class names that begin with a number" do
+    purged = purged_tailwind(keep_these_class_names: %w[32xl:container])
+
+    assert_class_selector "32xl:container", purged
+  end
+
+  test "purge removes selectors that aren't on the same line as their block brace" do
+    purged = purged_tailwind(keep_these_class_names: %w[aspect-w-9])
+
+    assert_class_selector "aspect-w-9", purged
+    assert_no_class_selector "aspect-w-1", purged
+    assert purged !~ /,\s*@media/
+  end
+
+  test "purge removes empty blocks" do
+    purged = purged_tailwind_from_fixtures
+
+    assert purged !~ /\{\s*\}/
+  end
+
+  test "purge removes top-level comments" do
+    purged = purged_tailwind_from_fixtures
+
+    assert purged !~ /^#{Regexp.escape "/*"}/
   end
 
   test "purge shouldn't remove hover or focus classes" do
@@ -39,14 +65,88 @@ class Tailwindcss::PurgerTest < ActiveSupport::TestCase
     assert purged =~ /.placeholder-transparent\:\:placeholder \{/
   end
 
+  test "purge handles compound selectors" do
+    purged = purged_tailwind(keep_these_class_names: %w[group group-hover:text-gray-500])
+
+    assert_class_selector "group", purged
+    assert_class_selector "group-hover:text-gray-500", purged
+    assert_no_class_selector "group-hover:text-gray-100", purged
+  end
+
+  test "purge handles complex selector groups" do
+    css = <<~CSS
+      element.keep, element .keep, .red-herring.discard, .red-herring .discard {
+        foo: bar;
+      }
+      element.discard, element .discard, .red-herring.discard, .red-herring .discard {
+        baz: qux;
+      }
+    CSS
+
+    expected = <<~CSS
+      element.keep, element .keep {
+        foo: bar;
+      }
+    CSS
+
+    assert_equal expected, purged_css(css, keep_these_class_names: %w[keep red-herring])
+  end
+
+  test "purge handles nested blocks" do
+    css = <<~CSS
+      .keep {
+        foo: bar;
+        .discard {
+          baz: qux;
+        }
+        .keep-nested {
+          bar: foo;
+        }
+      }
+    CSS
+
+    expected = <<~CSS
+      .keep {
+        foo: bar;
+        .keep-nested {
+          bar: foo;
+        }
+      }
+    CSS
+
+    assert_equal expected, purged_css(css, keep_these_class_names: %w[keep keep-nested])
+  end
+
   private
+    def class_selector_pattern(class_name)
+      /\.#{Regexp.escape Tailwindcss::Purger.escape_class_selector(class_name)}(?![-_a-z0-9\\])/
+    end
+
+    def assert_class_selector(class_name, css)
+      assert css =~ class_selector_pattern(class_name)
+    end
+
+    def assert_no_class_selector(class_name, css)
+      assert css !~ class_selector_pattern(class_name)
+    end
+
+    def purged_css(css, keep_these_class_names:)
+      Tailwindcss::Purger.new(keep_these_class_names).purge(css)
+    end
+
+    def tailwind
+      $tailwind ||= Pathname.new(__FILE__).join("../../app/assets/stylesheets/tailwind.css").read.freeze
+    end
+
+    def purged_tailwind(keep_these_class_names:)
+      purged_css(tailwind, keep_these_class_names: keep_these_class_names)
+    end
+
     def purged_tailwind_from_fixtures
-      purged_tailwind_from Pathname(__dir__).glob("fixtures/*.html.erb")
+      $purged_tailwind_from_fixtures ||= purged_tailwind_from Pathname(__dir__).glob("fixtures/*.html.erb")
     end
 
     def purged_tailwind_from files
-      Tailwindcss::Purger.purge \
-        Pathname.new(__FILE__).join("../../app/assets/stylesheets/tailwind.css").read, 
-        keeping_class_names_from_files: files
+      Tailwindcss::Purger.purge tailwind, keeping_class_names_from_files: files
     end
 end
