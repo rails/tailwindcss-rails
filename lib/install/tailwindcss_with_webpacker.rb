@@ -7,7 +7,6 @@ insert_into_file "#{Webpacker.config.source_entry_path}/application.js", "\nimpo
 
 say "Configuring Tailwind CSS"
 directory Pathname.new(__dir__).join("stylesheets"), Webpacker.config.source_path.join("stylesheets")
-Dir.chdir(WEBPACK_STYLESHEETS_PATH) { run "npx tailwindcss init" }
 
 insert_into_file "postcss.config.js", "require('tailwindcss')(\"./app/javascript/stylesheets/tailwind.config.js\"),\n    ",
   before: "require('postcss-import')"
