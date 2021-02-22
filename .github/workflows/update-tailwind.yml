@@ -11,16 +11,18 @@ jobs:
     timeout-minutes: 10
     steps:
     - uses: actions/checkout@master
-    - name: Update app/assets/stylesheets/tailwind.css
+
+    - name: Update tailwind.css
       run: |
-        npx tailwindcss-cli@latest build -o app/assets/stylesheets/tailwind.css
-    - name: Commit files
+        yarn upgrade tailwindcss
+        yarn build
+
+    - name: Commit changes
       run: |
-        TAILWIND_CSS_VERSION=`npm view tailwindcss@latest version`
         git config --local user.email "github-actions@example.com"
         git config --local user.name "GitHub Actions"
-        git add app/assets/stylesheets/tailwind.css
-        git commit -am "[nodoc] Updating Tailwind CSS to $TAILWIND_CSS_VERSION" || echo "No changes to commit"
+        git commit -am "Update tailwind.css" || echo "No changes to commit"
+
     - name: Push changes
       uses: ad-m/github-push-action@master
       with:
