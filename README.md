@@ -14,7 +14,7 @@ When used with Webpacker, Tailwind CSS is installed as a postCSS processor. Refe
 1. Run `./bin/bundle add tailwindcss-rails`
 2. Run `./bin/rails tailwindcss:install` (on a fresh Rails application)
 
-When run on an app using the just the asset pipeline, the last step adds the purger compressor to `config/environments/production.rb`. This ensures that when `assets:precompile` is called during deployment that the unused class names are not included in the tailwind output css used by the app. It also adds a `stylesheet_link_tag "tailwind"` and `stylesheet_link_tag "inter-font"` to your `app/views/application.html.erb` file.
+When run on an app using just the asset pipeline, the last step adds the purger compressor to `config/environments/production.rb`. This ensures that when `assets:precompile` is called during deployment that the unused class names are not included in the tailwind output css used by the app. It also adds a `stylesheet_link_tag "tailwind"` and `stylesheet_link_tag "inter-font"` to your `app/views/application.html.erb` file.
 
 You can do these things yourself, if you've changed the default setup.
 
