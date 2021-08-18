@@ -8,5 +8,8 @@ else
   say %(        Add <%= stylesheet_link_tag "inter-font" %> and <%= stylesheet_link_tag "tailwind" %> within the <head> tag in your custom layout.)
 end
 
+say "Removing scaffold styles"
+remove_file Rails.root.join("app/assets/stylesheets/scaffolds.scss")
+
 say "Turn on purging of unused css classes in production"
 gsub_file Rails.root.join("config/environments/production.rb"), /^\s+#?\s+config.assets.css_compressor =.*$/, %(  config.assets.css_compressor = :purger)
