@@ -2,11 +2,11 @@
 
 [Tailwind CSS](https://tailwindcss.com) is a utility-first CSS framework packed with classes like flex, pt-4, text-center and rotate-90 that can be composed to build any design, directly in your markup.
 
-Tailwind CSS for Rails works with both the asset pipeline and Webpacker.
+This gem just gives access to the standard Tailwind CSS framework. If you need to customize Tailwind, you will need to install it the traditional way using [Webpacker](https://github.com/rails/webpacker) instead. This gem is purely intended for those who wish to use Tailwind CSS with the asset pipeline.
 
-When used with the asset pipeline, production-mode purging of unused css class names is provided by a Sprockets compressor built into this gem. This compressor ensures that only the css classes used by files in `app/views` and `app/helpers` are included. In development mode, the full 3mb+ Tailwind stylesheet is loaded. In both cases, Tailwind CSS is configured for dark mode, forms, aspect-ratio, typography, and the Inter font. If you need more configuration than that, you'll need to use it with Webpacker.
+Production-mode purging of unused css class names is provided by a Sprockets compressor built into this gem. This compressor ensures that only the css classes used by files in `app/views` and `app/helpers` are included. In development mode, the full 3mb+ Tailwind stylesheet is loaded.
 
-When used with Webpacker, Tailwind CSS is installed as a postCSS processor. Refer to the [TailwindCSS documentation](https://tailwindcss.com/docs/installation#customizing-your-configuration) to customize your tailwind.config.js file.
+In both cases, Tailwind CSS is configured for dark mode, forms, aspect-ratio, typography, and the Inter font. If you need more configuration than that, you'll need to use it with Webpacker.
 
 
 ## Installation
@@ -14,13 +14,11 @@ When used with Webpacker, Tailwind CSS is installed as a postCSS processor. Refe
 1. Run `./bin/bundle add tailwindcss-rails`
 2. Run `./bin/rails tailwindcss:install` (on a fresh Rails application)
 
-When run on an app using just the asset pipeline, the last step adds the purger compressor to `config/environments/production.rb`. This ensures that when `assets:precompile` is called during deployment that the unused class names are not included in the tailwind output css used by the app. It also adds a `stylesheet_link_tag "tailwind"` and `stylesheet_link_tag "inter-font"` to your `app/views/application.html.erb` file.
+The last step adds the purger compressor to `config/environments/production.rb`. This ensures that when `assets:precompile` is called during deployment that the unused class names are not included in the tailwind output css used by the app. It also adds a `stylesheet_link_tag "tailwind"` and `stylesheet_link_tag "inter-font"` to your `app/views/layouts/application.html.erb` file.
 
 You can do these things yourself, if you've changed the default setup.
 
 Note: You should ensure to delete `app/assets/stylesheets/scaffolds.scss` that Rails adds after running a scaffold command, if you had run this generator before installing Tailwind CSS for Rails. This stylesheet will interfere with Tailwind's reset of base styles. This gem will turn off stylesheet generation for all future scaffold runs.
-
-When run on an app using Webpacker, the last step adds the npm dependencies for Tailwind CSS, configures postCSS, and generates a app/javascript/stylesheets/application.scss file as the default for using Tailwind.
 
 
 ## Purging in production
