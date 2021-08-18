@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    tailwindcss-rails (0.3.3)
+    tailwindcss-rails (0.4.0)
       rails (>= 6.0.0)
 
 GEM
@@ -75,7 +75,7 @@ GEM
       activesupport (>= 5.0)
     i18n (1.8.10)
       concurrent-ruby (~> 1.0)
-    loofah (2.11.0)
+    loofah (2.12.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     mail (2.7.1)
@@ -86,7 +86,7 @@ GEM
     mini_portile2 (2.6.1)
     minitest (5.14.4)
     nio4r (2.5.8)
-    nokogiri (1.12.2)
+    nokogiri (1.12.3)
       mini_portile2 (~> 2.6.1)
       racc (~> 1.4)
     racc (1.5.2)
@@ -145,4 +145,4 @@ DEPENDENCIES
   tailwindcss-rails!
 
 BUNDLED WITH
-   2.2.3
+   2.2.25
