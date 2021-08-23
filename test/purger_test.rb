@@ -21,6 +21,16 @@ class Tailwindcss::PurgerTest < ActiveSupport::TestCase
       Tailwindcss::Purger.extract_class_names_from(Pathname.new(__dir__).join("fixtures/simple.html.haml"))
   end
 
+  test "extract class names from slim string" do
+    assert_equal %w[ class max-w-7xl mx-auto my-1.5 px-4 sm:px-6 lg:px-8 sm:py-0.5 translate-x-1/2 ].sort,
+      Tailwindcss::Purger.extract_class_names(%(.max-w-7xl.mx-auto.px-4.sm:px-6.lg:px-8.translate-x-1/2 class="my-1.5 sm:py-0.5"))
+  end
+
+  test "extract class names from slim file" do
+    assert_equal %w[ class max-w-7xl mx-auto my-1.5 px-4 sm:px-6 lg:px-8 sm:py-0.5 translate-x-1/2 ].sort,
+      Tailwindcss::Purger.extract_class_names_from(Pathname.new(__dir__).join("fixtures/simple.html.slim"))
+  end
+
   test "basic purge" do
     purged = purged_tailwind_from_erb_fixtures
 
@@ -36,6 +46,19 @@ class Tailwindcss::PurgerTest < ActiveSupport::TestCase
 
   test "basic haml purge" do
     purged = purged_tailwind_from_haml_fixtures
+
+    assert purged !~ /.mt-6 \{/
+
+    assert purged =~ /.mt-5 \{/
+    assert purged =~ /.sm\\:px-6 \{/
+    assert purged =~ /.translate-x-1\\\/2 \{/
+    assert purged =~ /.mt-10 \{/
+    assert purged =~ /.my-1\\.5 \{/
+    assert purged =~ /.sm\\:py-0\\.5 \{/
+  end
+
+  test "basic slim purge" do
+    purged = purged_tailwind_from_slim_fixtures
 
     assert purged !~ /.mt-6 \{/
 
@@ -171,6 +194,10 @@ class Tailwindcss::PurgerTest < ActiveSupport::TestCase
 
     def purged_tailwind_from_haml_fixtures
       $purged_tailwind_from_haml_fixtures ||= purged_tailwind_from Pathname(__dir__).glob("fixtures/*.html.haml")
+    end
+
+    def purged_tailwind_from_slim_fixtures
+      $purged_tailwind_from_haml_fixtures ||= purged_tailwind_from Pathname(__dir__).glob("fixtures/*.html.slim")
     end
 
     def purged_tailwind_from files
