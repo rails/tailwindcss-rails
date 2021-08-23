@@ -2,7 +2,7 @@
 
 [Tailwind CSS](https://tailwindcss.com) is a utility-first CSS framework packed with classes like flex, pt-4, text-center and rotate-90 that can be composed to build any design, directly in your markup.
 
-This gem gives access to the standard Tailwind CSS framework configured for dark mode, forms, aspect-ratio, typography, and the Inter font via the asset pipeline using Sprockets. If you need to customize Tailwind, you will need to install it the traditional way using [Webpacker](https://github.com/rails/webpacker) instead.
+This gem gives access to the standard Tailwind CSS framework configured for dark mode, forms, aspect-ratio, typography, and the Inter font via the asset pipeline using Sprockets. If you need to customize Tailwind, you will need to install it the traditional way using [Webpacker](https://github.com/rails/webpacker) instead or use webpacker port of this gem [tailwindcss-rails-webpacker](https://github.com/WizardComputer/tailwindcss-rails-webpacker).
 
 Production-mode purging of unused css class names is provided by a Sprockets compressor built into this gem. This compressor ensures that only the css classes used by files in `app/views` and `app/helpers` are included. In development mode, the full 7mb+ Tailwind stylesheet is loaded.
 
