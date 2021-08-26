@@ -2,10 +2,10 @@ APPLICATION_LAYOUT_PATH = Rails.root.join("app/views/layouts/application.html.er
 
 if APPLICATION_LAYOUT_PATH.exist?
   say "Add Tailwindcss include tags in application layout"
-  insert_into_file Rails.root.join("app/views/layouts/application.html.erb").to_s, %(\n    <%= stylesheet_link_tag "inter-font" %>\n    <%= stylesheet_link_tag "tailwind" %>), before: /^\s*<%= stylesheet_link_tag/
+  insert_into_file Rails.root.join("app/views/layouts/application.html.erb").to_s, %(\n    <%= stylesheet_link_tag "inter-font", "data-turbo-track": "reload" %>\n    <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>), before: /^\s*<%= stylesheet_link_tag/
 else
   say "Default application.html.erb is missing!", :red
-  say %(        Add <%= stylesheet_link_tag "inter-font" %> and <%= stylesheet_link_tag "tailwind" %> within the <head> tag in your custom layout.)
+  say %(        Add <%= stylesheet_link_tag "inter-font", "data-turbo-track": "reload" %> and <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %> within the <head> tag in your custom layout.)
 end
 
 say "Removing scaffold styles"
