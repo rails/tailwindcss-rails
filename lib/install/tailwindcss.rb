@@ -2,7 +2,10 @@ APPLICATION_LAYOUT_PATH = Rails.root.join("app/views/layouts/application.html.er
 
 if APPLICATION_LAYOUT_PATH.exist?
   say "Add Tailwindcss include tags in application layout"
-  insert_into_file Rails.root.join("app/views/layouts/application.html.erb").to_s, %(\n    <%= stylesheet_link_tag "inter-font", "data-turbo-track": "reload" %>\n    <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>), before: /^\s*<%= stylesheet_link_tag/
+  insert_into_file APPLICATION_LAYOUT_PATH.to_s, <<~ERB.indent(4), before: /^\s*<%= stylesheet_link_tag/
+    <%= stylesheet_link_tag "inter-font", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
+  ERB
 else
   say "Default application.html.erb is missing!", :red
   say %(        Add <%= stylesheet_link_tag "inter-font", "data-turbo-track": "reload" %> and <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %> within the <head> tag in your custom layout.)
