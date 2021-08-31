@@ -21,7 +21,7 @@ jobs:
       run: |
         git config --local user.email "github-actions@example.com"
         git config --local user.name "GitHub Actions"
-        git commit -am "Update tailwind.css" || echo "No changes to commit"
+        git diff --quiet app/assets || git commit -am "Update tailwind.css"
 
     - name: Push changes
       uses: ad-m/github-push-action@master
