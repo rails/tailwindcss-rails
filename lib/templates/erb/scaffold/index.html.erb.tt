@@ -4,29 +4,11 @@
   <%% end %>
 
   <div class="flex justify-between items-center">
-    <h1 class="text-lg font-bold text-4xl"><%= human_name %></h1>
+    <h1 class="text-lg font-bold text-4xl"><%= human_name.pluralize %></h1>
     <%%= link_to 'New <%= human_name.downcase %>', new_<%= singular_route_name %>_path, class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" %>
   </div>
 
-  <table class="min-w-full">
-    <thead class="border-b-2 border-gray-200">
-      <tr class="text-gray-500 uppercase text-left">
-<% attributes.reject(&:password_digest?).each do |attribute| -%>
-        <th class="pt-6 pb-2 font-normal"><%= attribute.human_name %></th>
-<% end -%>
-      </tr>
-    </thead>
-
-    <tbody>
-      <%% @<%= plural_table_name %>.each do |<%= singular_table_name %>| %>
-        <tr class="align-top border-b border-gray-200">
-<% attributes.reject(&:password_digest?).each do |attribute| -%>
-          <td class="py-6 pr-3"><%%= <%= singular_table_name %>.<%= attribute.column_name %> %></td>
-<% end -%>
-          <td class="py-6 pr-3"><%%= link_to 'Show', <%= model_resource_name %>, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %></td>
-          <td class="py-6 pr-3"><%%= link_to 'Edit', edit_<%= singular_route_name %>_path(<%= singular_table_name %>), class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %></td>
-        </tr>
-      <%% end %>
-    </tbody>
-  </table>
+  <div id="<%= plural_table_name %>" class="min-w-full">
+    <%%= render @<%= plural_table_name %> %>
+  </div>
 </div>

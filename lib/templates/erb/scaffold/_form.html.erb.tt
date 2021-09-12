@@ -12,13 +12,13 @@
   <%% end %>
 
 <% attributes.each do |attribute| -%>
-  <div class="field my-5">
+  <div class="my-5">
 <% if attribute.password_digest? -%>
     <%%= form.label :password %>
     <%%= form.password_field :password %>
 </div>
 
-<div class="field my-5">
+<div class="my-5">
     <%%= form.label :password_confirmation %>
     <%%= form.password_field :password_confirmation, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
 <% elsif attribute.attachments? -%>
@@ -37,7 +37,7 @@
   </div>
 
 <% end -%>
-  <div class="actions inline">
+  <div class="inline">
     <%%= form.submit class: "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium" %>
   </div>
 <%% end %>

@@ -4,17 +4,12 @@
       <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%%= notice %></p>
     <%% end %>
 
-<% attributes.reject(&:password_digest?).each do |attribute| -%>
-    <p class="my-5">
-      <strong class="block font-medium mb-1"><%= attribute.human_name %>:</strong>
-      <%%= @<%= singular_table_name %>.<%= attribute.column_name %> %>
-    </p>
-<% end -%>
+    <%%= render @<%= singular_table_name %> %>
 
-    <%%= link_to 'Edit', edit_<%= singular_table_name %>_path(@<%= singular_table_name %>), class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+    <%%= link_to 'Edit this <%= singular_table_name %>', edit_<%= singular_table_name %>_path(@<%= singular_table_name %>), class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
     <div class="inline-block ml-2">
-      <%%= button_to 'Delete', <%= singular_table_name %>_path(@<%= singular_table_name %>), method: :delete, class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 font-medium" %>
+      <%%= button_to 'Delete this <%= singular_table_name %>', <%= singular_table_name %>_path(@<%= singular_table_name %>), method: :delete, data: { confirm: "Are you sure you want to delete this <%= singular_table_name %>?" }, class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 font-medium" %>
     </div>
-    <%%= link_to 'Back', <%= index_helper %>_path, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+    <%%= link_to 'Back to <%= plural_table_name %>', <%= index_helper %>_path, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
   </div>
 </div>
