@@ -7,5 +7,5 @@ require "byebug"
 require_relative "../lib/tailwindcss-rails"
 
 require "rails/test_unit/reporter"
-Rails::TestUnitReporter.executable = 'bin/test'
+Rails::TestUnitReporter.executable = "bin/test"
 

@@ -20,8 +20,9 @@ module Tailwindcss
       end if Rails.env.production?
     end
 
-    config.app_generators do |g|
-      g.templates.unshift File::expand_path('../../templates', __FILE__)
-    end
+     config.app_generators do |g|
+       #g.templates.unshift File::expand_path('../../templates', __FILE__)
+       g.template_engine :tailwindcss
+     end
   end
 end
