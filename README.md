@@ -53,7 +53,7 @@ The Tailwind CSS main file that's being used before purging consists of these ve
 * @tailwindcss/forms 0.3.3
 * @tailwindcss/typography 0.4.1
 * autoprefixer 10.3.1
-* tailwindcss 2.2.7
+* tailwindcss 2.2.15
 
 
 ## License
