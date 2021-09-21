@@ -2,6 +2,13 @@ require "tailwindcss/compressor"
 
 module Tailwindcss
   class Engine < ::Rails::Engine
+    config.tailwind                         = ActiveSupport::OrderedOptions.new
+    config.tailwind.files_with_class_names  = []
+
+    initializer "set files with class names" do
+      config.tailwind.files_with_class_names += Rails.root.glob("app/views/**/*.*") + Rails.root.glob("app/helpers/**/*.rb") + Rails.root.glob("app/javascript/**/*.js")
+    end
+
     initializer "tailwindcss.compressor" do
       Sprockets.register_compressor "text/css", :purger, Tailwindcss::Compressor
     end

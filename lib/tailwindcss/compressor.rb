@@ -25,9 +25,8 @@ class Tailwindcss::Compressor
   end
 
   private
+
     def files_with_class_names
-      Rails.root.glob("app/views/**/*.*") +
-        Rails.root.glob("app/helpers/**/*.rb") +
-        Rails.root.glob("app/javascript/**/*.js")
+      Rails.application.config.tailwind.files_with_class_names
     end
 end

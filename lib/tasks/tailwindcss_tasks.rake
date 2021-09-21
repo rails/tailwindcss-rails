@@ -5,7 +5,7 @@ namespace :tailwindcss do
   end
 
   desc "Show the list of class names being kept in Tailwind CSS"
-  task :keeping_class_names do
+  task keeping_class_names: :environment do
     puts Tailwindcss::Purger.extract_class_names_from(default_files_with_class_names)
   end
 
@@ -16,7 +16,7 @@ namespace :tailwindcss do
 end
 
 def default_files_with_class_names
-  Rails.root.glob("app/views/**/*.*") + Rails.root.glob("app/helpers/**/*.rb")
+  Rails.application.config.tailwind.files_with_class_names
 end
 
 def tailwind_css
