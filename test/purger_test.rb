@@ -8,7 +8,7 @@ class Tailwindcss::PurgerTest < ActiveSupport::TestCase
 
   test "extract class names from erb file" do
     assert_equal %w[ div class max-w-7xl mx-auto my-1.5 px-4 sm:px-6 lg:px-8 sm:py-0.5 translate-x-1/2 ].sort,
-      Tailwindcss::Purger.extract_class_names_from(Pathname.new(__dir__).join("fixtures/simple.html.erb"))
+      Tailwindcss::Purger.extract_class_names_from(file_fixture("simple.html.erb"))
   end
 
   test "extract class names from haml string" do
@@ -18,7 +18,7 @@ class Tailwindcss::PurgerTest < ActiveSupport::TestCase
 
   test "extract class names from haml file" do
     assert_equal %w[ class max-w-7xl mx-auto my-1.5 px-4 sm:px-6 lg:px-8 sm:py-0.5 translate-x-1/2 ].sort,
-      Tailwindcss::Purger.extract_class_names_from(Pathname.new(__dir__).join("fixtures/simple.html.haml"))
+      Tailwindcss::Purger.extract_class_names_from(file_fixture("simple.html.haml"))
   end
 
   test "extract class names from slim string" do
@@ -28,7 +28,7 @@ class Tailwindcss::PurgerTest < ActiveSupport::TestCase
 
   test "extract class names from slim file" do
     assert_equal %w[ class max-w-7xl mx-auto my-1.5 px-4 sm:px-6 lg:px-8 sm:py-0.5 translate-x-1/2 ].sort,
-      Tailwindcss::Purger.extract_class_names_from(Pathname.new(__dir__).join("fixtures/simple.html.slim"))
+      Tailwindcss::Purger.extract_class_names_from(file_fixture("simple.html.slim"))
   end
 
   test "basic purge" do
@@ -104,7 +104,7 @@ class Tailwindcss::PurgerTest < ActiveSupport::TestCase
   end
 
   test "purge shouldn't remove placeholder selectors" do
-    purged = purged_tailwind_from Pathname(__dir__).join("fixtures/placeholders.html.erb")
+    purged = purged_tailwind_from file_fixture("placeholders.html.erb")
 
     assert purged =~ /.placeholder-transparent\:\:-moz-placeholder \{/
     assert purged =~ /.placeholder-transparent\:-ms-input-placeholder \{/
@@ -189,15 +189,15 @@ class Tailwindcss::PurgerTest < ActiveSupport::TestCase
     end
 
     def purged_tailwind_from_erb_fixtures
-      $purged_tailwind_from_erb_fixtures ||= purged_tailwind_from Pathname(__dir__).glob("fixtures/*.html.erb")
+      $purged_tailwind_from_erb_fixtures ||= purged_tailwind_from Pathname(__dir__).glob("fixtures/files/*.html.erb")
     end
 
     def purged_tailwind_from_haml_fixtures
-      $purged_tailwind_from_haml_fixtures ||= purged_tailwind_from Pathname(__dir__).glob("fixtures/*.html.haml")
+      $purged_tailwind_from_haml_fixtures ||= purged_tailwind_from Pathname(__dir__).glob("fixtures/files/*.html.haml")
     end
 
     def purged_tailwind_from_slim_fixtures
-      $purged_tailwind_from_haml_fixtures ||= purged_tailwind_from Pathname(__dir__).glob("fixtures/*.html.slim")
+      $purged_tailwind_from_haml_fixtures ||= purged_tailwind_from Pathname(__dir__).glob("fixtures/files/*.html.slim")
     end
 
     def purged_tailwind_from files
