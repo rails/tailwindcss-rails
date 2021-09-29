@@ -19,5 +19,9 @@ module Tailwindcss
         env.cache = ActiveSupport::Cache.lookup_store(:null_store)
       end if Rails.env.production?
     end
+
+     config.app_generators do |g|
+       g.template_engine :tailwindcss
+     end
   end
 end

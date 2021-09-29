@@ -1,0 +1,22 @@
+<div id="<%%= dom_id <%= singular_table_name %> %>">
+<% attributes.reject(&:password_digest?).each do |attribute| -%>
+  <p class="my-5">
+    <strong class="block font-medium mb-1"><%= attribute.human_name %>:</strong>
+<% if attribute.attachment? -%>
+    <%%= link_to <%= singular_table_name %>.<%= attribute.column_name %>.filename, <%= singular_table_name %>.<%= attribute.column_name %> if <%= singular_table_name %>.<%= attribute.column_name %>.attached? %>
+<% elsif attribute.attachments? -%>
+    <%% <%= singular_table_name %>.<%= attribute.column_name %>.each do |<%= attribute.singular_name %>| %>
+      <div><%%= link_to <%= attribute.singular_name %>.filename, <%= attribute.singular_name %> %></div>
+    <%% end %>
+<% else -%>
+    <%%= <%= singular_table_name %>.<%= attribute.column_name %> %>
+<% end -%>
+  </p>
+
+<% end -%>
+  <%% if action_name != "show" %>
+    <%%= link_to "Show this <%= human_name.downcase %>", <%= singular_table_name %>, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+    <%%= link_to 'Edit this <%= human_name.downcase %>', edit_<%= singular_table_name %>_path(<%= singular_table_name %>), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
+    <hr class="mt-6">
+  <%% end %>
+</div>

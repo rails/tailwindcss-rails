@@ -12,3 +12,4 @@
 .byebug_history
 *.gem
 .idea/
+**/tmp/
