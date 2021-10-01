@@ -1,0 +1,4 @@
+<div>
+  <h1 class="text-xl font-bold"><%= class_name %>#<%= @action %></h1>
+  <p>Find me in <%= @path %></p>
+<div>

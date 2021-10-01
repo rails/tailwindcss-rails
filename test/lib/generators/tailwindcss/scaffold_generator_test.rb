@@ -2,7 +2,7 @@ require "test_helper"
 require "generators/tailwindcss/scaffold/scaffold_generator"
 
 class Tailwindcss::Generators::ScaffoldGeneratorTest < Rails::Generators::TestCase
-  GENERATION_PATH = File.expand_path("../tmp", File.dirname(__FILE__))
+  GENERATION_PATH = File.expand_path("../scaffold_tmp", File.dirname(__FILE__))
 
   tests Tailwindcss::Generators::ScaffoldGenerator
   destination GENERATION_PATH
