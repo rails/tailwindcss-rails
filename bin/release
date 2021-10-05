@@ -10,4 +10,5 @@ git push
 git tag v$VERSION
 git push --tags
 gem build tailwindcss-rails.gemspec
-gem push "tailwindcss-rails-$VERSION.gem"
+gem push "tailwindcss-rails-$VERSION.gem" --host https://rubygems.org
+rm "tailwindcss-rails-$VERSION.gem"
