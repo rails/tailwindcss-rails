@@ -39,6 +39,12 @@ class Tailwindcss::Purger
     def escape_class_selector(class_name)
       class_name.gsub(/\A\d|[^-_a-z0-9]/, '\\\\\0')
     end
+
+    def default_files_with_class_names
+      Rails.root.glob("app/views/**/*.*") +
+        Rails.root.glob("app/helpers/**/*.rb") +
+        Rails.root.glob("app/javascript/**/*.js")
+    end
   end
 
   def initialize(keep_these_class_names)

@@ -16,7 +16,7 @@ namespace :tailwindcss do
 end
 
 def default_files_with_class_names
-  Rails.root.glob("app/views/**/*.*") + Rails.root.glob("app/helpers/**/*.rb")
+  Tailwindcss::Purger.default_files_with_class_names
 end
 
 def tailwind_css
