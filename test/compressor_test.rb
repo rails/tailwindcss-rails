@@ -2,7 +2,7 @@ require "test_helper"
 
 class Tailwindcss::CompressorTest < ActiveSupport::TestCase
   test "files_with_class_names on default configuration" do
-    default_files_with_class_names = Rails.root.glob("app/views/**/*.*") + Rails.root.glob("app/helpers/**/*.rb")
+    default_files_with_class_names = Rails.root.glob("app/views/**/*.*") + Rails.root.glob("app/helpers/**/*.rb") + Rails.root.glob("app/javascript/**/*.js")
 
     assert_equal default_files_with_class_names, Tailwindcss::Compressor.new.instance_variable_get(:@options)[:files_with_class_names]
   end
