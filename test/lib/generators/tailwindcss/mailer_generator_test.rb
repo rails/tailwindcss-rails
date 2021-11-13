@@ -3,16 +3,10 @@ require "rails/generators/mailer/mailer_generator"
 require "generators/tailwindcss/mailer/mailer_generator"
 
 class Tailwindcss::Generators::MailerGeneratorTest < Rails::Generators::TestCase
-  GENERATION_PATH = File.expand_path("../mailer_tmp", File.dirname(__FILE__))
-
   tests Rails::Generators::MailerGenerator
-  destination GENERATION_PATH
+  destination Dir.mktmpdir
 
   arguments %w(Notifications invoice)
-
-   Minitest.after_run do
-     FileUtils.rm_rf GENERATION_PATH
-   end
 
   test "generates correct mailer view templates" do
     run_generator
