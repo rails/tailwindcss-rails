@@ -1,4 +1,4 @@
 <div>
   <h1 class="text-lg font-bold text-4xl"><%= class_name %>#<%= @action %></h1>
   <p>Find me in <%= @path %></p>
-<div>
+</div>
