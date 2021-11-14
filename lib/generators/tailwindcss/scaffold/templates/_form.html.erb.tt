@@ -21,7 +21,7 @@
 <div class="my-5">
     <%%= form.label :password_confirmation %>
     <%%= form.password_field :password_confirmation, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
-<% elsif attribute.attachments? -%>
+<% elsif attribute.try(:attachments?) -%>
     <%%= form.label :<%= attribute.column_name %> %>
     <%%= form.<%= attribute.field_type %> :<%= attribute.column_name %>, multiple: true, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
 <% else -%>
