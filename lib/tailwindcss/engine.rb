@@ -1,3 +1,4 @@
+require "rails"
 require "tailwindcss/compressor"
 
 module Tailwindcss
