@@ -9,7 +9,10 @@ Gem::Specification.new do |spec|
   spec.summary     = "Integrate Tailwind CSS with the asset pipeline in Rails."
   spec.license     = "MIT"
 
-  spec.metadata["homepage_uri"] = spec.homepage
+  spec.metadata = {
+    "homepage_uri" => spec.homepage,
+    "rubygems_mfa_required" => "true"
+  }
 
   spec.files = Dir["{app,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
 
