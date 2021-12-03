@@ -7,8 +7,7 @@ bundle
 git add Gemfile.lock lib/tailwindcss/version.rb
 git commit -m "Bump version for $VERSION"
 git push
-git tag v$VERSION
+git tag -s v$VERSION
+bundle exec rake release
 git push --tags
-gem build tailwindcss-rails.gemspec
-gem push "tailwindcss-rails-$VERSION.gem" --host https://rubygems.org
-rm "tailwindcss-rails-$VERSION.gem"
+rm -Rf pkg
