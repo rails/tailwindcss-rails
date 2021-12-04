@@ -2,12 +2,18 @@
 
 VERSION=$1
 
+if [ -z "$VERSION" ]; then
+  echo "Usage: $0 <version>"
+  exit 1
+fi
+
 printf "module Tailwindcss\n  VERSION = \"$VERSION\"\nend\n" > ./lib/tailwindcss/version.rb
 bundle
 git add Gemfile.lock lib/tailwindcss/version.rb
 git commit -m "Bump version for $VERSION"
 git push
-git tag -s v$VERSION
-bundle exec rake release
+git tag v$VERSION
 git push --tags
-rm -Rf pkg
+gem build tailwindcss-rails.gemspec
+gem push "tailwindcss-rails-$VERSION.gem" --host https://rubygems.org
+rm "tailwindcss-rails-$VERSION.gem"
