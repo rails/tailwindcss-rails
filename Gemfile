@@ -4,3 +4,7 @@ gemspec
 
 gem "sqlite3"
 gem "debug", ">= 1.0.0"
+
+group :test do
+  gem "actionmailer", ">= 6.0.0"
+end
