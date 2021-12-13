@@ -1,7 +1,6 @@
 const defaultTheme = require('tailwindcss/defaultTheme')
 
 module.exports = {
-  darkMode: 'media',
   theme: {
     extend: {
       fontFamily: {
@@ -9,6 +8,24 @@ module.exports = {
       },
     },
   },
+  safelist: [
+    {
+      pattern: /.+/,
+      variants: [
+        'responsive',
+        'group-hover',
+        'group-focus',
+        'hover',
+        'focus-within',
+        'focus-visible',
+        'focus',
+        'active',
+        'visited',
+        'disabled',
+        'checked',
+      ]
+    }
+  ],
   plugins: [
     require('@tailwindcss/forms'),
     require('@tailwindcss/aspect-ratio'),
