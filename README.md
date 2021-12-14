@@ -63,6 +63,11 @@ The Tailwind CSS main file that's being used before purging consists of these ve
 This gem is not yet compatible with the JIT approach taken with Tailwind 3.0. We're working with the team on an approach that would bring compatibility, but at the moment you'd need to use [cssbundling-rails](https://github.com/rails/cssbundling-rails/) (and thus bring Node into your app) in order to use 3.0.
 
 
+## Conflict with sassc-rails
+
+Tailwind uses modern CSS features that are not recognized by the `sassc-rails` extension that was included by default in the Gemfile for Rails 6. In order to avoid any errors like `SassC::SyntaxError`, you must remove that gem from your Gemfile.
+
+
 ## License
 
 Tailwind for Rails is released under the [MIT License](https://opensource.org/licenses/MIT).
