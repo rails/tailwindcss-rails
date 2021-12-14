@@ -12,17 +12,12 @@ module.exports = {
     {
       pattern: /.+/,
       variants: [
-        'responsive',
+        'sm', 'md', 'lg', 'xl', '2xl',
         'group-hover',
-        'group-focus',
         'hover',
         'focus-within',
-        'focus-visible',
         'focus',
-        'active',
-        'visited',
-        'disabled',
-        'checked',
+        'dark',
       ]
     }
   ],
