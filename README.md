@@ -58,6 +58,11 @@ The Tailwind CSS main file that's being used before purging consists of these ve
 * tailwindcss 2.2.15
 
 
+## Compatibility with Tailwind 3.0
+
+This gem is not yet compatible with the JIT approach taken with Tailwind 3.0. We're working with the team on an approach that would bring compatibility, but at the moment you'd need to use [cssbundling-rails](https://github.com/rails/cssbundling-rails/) (and thus bring Node into your app) in order to use 3.0.
+
+
 ## License
 
 Tailwind for Rails is released under the [MIT License](https://opensource.org/licenses/MIT).
