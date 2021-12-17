@@ -1,0 +1,64 @@
+name: Native Gems
+on: [push, pull_request]
+jobs:
+  package:
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: ["x64-mingw32", "x86_64-darwin", "x86_64-linux"]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.0"
+          bundler: latest
+          bundler-cache: true
+      - run: "bundle exec rake gem:${{matrix.platform}}"
+      - uses: actions/upload-artifact@v2
+        with:
+          name: gem-${{matrix.platform}}
+          path: pkg
+          retention-days: 1
+
+  linux-install:
+    needs: ["package"]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.0"
+      - uses: actions/download-artifact@v2
+        with:
+          name: gem-x86_64-linux
+          path: pkg
+      - run: "gem install pkg/tailwindcss-rails-*.gem"
+      - run: "tailwindcss --help"
+
+  darwin-install:
+    needs: ["package"]
+    runs-on: macos-latest
+    steps:
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.0"
+      - uses: actions/download-artifact@v2
+        with:
+          name: gem-x86_64-darwin
+          path: pkg
+      - run: "gem install pkg/tailwindcss-rails-*.gem"
+      - run: "tailwindcss --help"
+
+  windows-install:
+    needs: ["package"]
+    runs-on: windows-latest
+    steps:
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.0"
+      - uses: actions/download-artifact@v2
+        with:
+          name: gem-x64-mingw32
+          path: pkg
+      - run: "gem install pkg/tailwindcss-rails-*.gem"
+      - run: "tailwindcss --help"

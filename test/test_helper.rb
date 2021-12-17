@@ -10,5 +10,4 @@ require "rails/test_unit/reporter"
 Rails::TestUnitReporter.executable = "bin/test"
 
 class ActiveSupport::TestCase
-  self.file_fixture_path = File.expand_path("fixtures/files", __dir__)
 end

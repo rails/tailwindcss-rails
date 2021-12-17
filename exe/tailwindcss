@@ -1,0 +1,20 @@
+#! /usr/bin/env ruby
+# because rubygems shims assume a gem's executables are Ruby
+
+require "shellwords"
+
+platform_dir = Dir.glob(File.join(__dir__, "*")).select do |f|
+  File.directory?(f) && Gem::Platform.match(File.basename(f))
+end.first
+if platform_dir.nil?
+  raise "Cannot find the tailwindcss executable in #{__dir__} (1)"
+end
+
+exe_path = File.join(platform_dir, "tailwindcss")
+if !File.exist?(exe_path)
+  raise "Cannot find the tailwindcss executable in #{__dir__} (2)"
+end
+
+command = Shellwords.join([exe_path, ARGV].flatten)
+puts "+ #{command}"
+exec(command)

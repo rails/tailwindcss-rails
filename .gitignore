@@ -13,3 +13,4 @@
 *.gem
 .idea/
 **/tmp/
+/exe/*/tailwindcss
