@@ -1,5 +1,5 @@
 <div class="mx-auto md:w-2/3 w-full">
-  <h1 class="text-lg font-bold text-4xl">New <%= human_name.downcase %></h1>
+  <h1 class="font-bold text-4xl">New <%= human_name.downcase %></h1>
 
   <%%= render "form", <%= singular_table_name %>: @<%= singular_table_name %> %>
 

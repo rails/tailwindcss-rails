@@ -4,7 +4,7 @@
   <%% end %>
 
   <div class="flex justify-between items-center">
-    <h1 class="text-lg font-bold text-4xl"><%= human_name.pluralize %></h1>
+    <h1 class="font-bold text-4xl"><%= human_name.pluralize %></h1>
     <%%= link_to 'New <%= human_name.downcase %>', new_<%= singular_route_name %>_path, class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" %>
   </div>
 
