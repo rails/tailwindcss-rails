@@ -2,17 +2,37 @@
 # because rubygems shims assume a gem's executables are Ruby
 
 require "shellwords"
+require "tailwindcss/upstream"
 
-platform_dir = Dir.glob(File.join(__dir__, "*")).select do |f|
-  File.directory?(f) && Gem::Platform.match(File.basename(f))
-end.first
-if platform_dir.nil?
-  raise "Cannot find the tailwindcss executable in #{__dir__} (1)"
+supported_platforms = Tailwindcss::Upstream::NATIVE_PLATFORMS.keys
+
+if supported_platforms.none? { |supported_platform| Gem::Platform.match(supported_platform) }
+  STDERR.puts(<<~ERRMSG)
+    ERROR: tailwindcss-rails does not support the #{::Gem::Platform.local} platform
+    Please install tailwindcss following instructions at https://tailwindcss.com/docs/installation
+  ERRMSG
+  exit 1
 end
 
-exe_path = File.join(platform_dir, "tailwindcss")
-if !File.exist?(exe_path)
-  raise "Cannot find the tailwindcss executable in #{__dir__} (2)"
+exe_path = Dir.glob(File.join(__dir__, "*", "tailwindcss")).find do |f|
+  Gem::Platform.match(File.basename(File.dirname(f)))
+end
+if exe_path.nil?
+  STDERR.puts(<<~ERRMSG)
+    ERROR: Cannot find the tailwindcss executable for #{::Gem::Platform.local} in #{__dir__}
+    If you're using bundler, please make sure you're on the latest bundler version:
+
+      gem install bundler
+      bundle update --bundler
+
+    Then make sure your lock file includes this platform by running:
+
+      bundle lock --add-platform #{::Gem::Platform.local}
+      bundle install
+
+    See `bundle lock --help` output for details.
+  ERRMSG
+  exit 1
 end
 
 command = Shellwords.join([exe_path, ARGV].flatten)

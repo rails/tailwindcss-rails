@@ -77,7 +77,6 @@ Tailwindcss::Upstream::NATIVE_PLATFORMS.each do |platform, filename|
 
     # modify a copy of the gemspec to include the native executable
     gemspec.platform = platform
-    gemspec.executables << "tailwindcss"
     gemspec.files += [exepath, "LICENSE-DEPENDENCIES"]
 
     # create a package task

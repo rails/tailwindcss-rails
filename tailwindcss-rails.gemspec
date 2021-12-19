@@ -16,6 +16,7 @@ Gem::Specification.new do |spec|
 
   spec.files = Dir["{app,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
   spec.bindir = "exe"
+  spec.executables << "tailwindcss"
 
   spec.add_dependency "railties", ">= 6.0.0"
 end

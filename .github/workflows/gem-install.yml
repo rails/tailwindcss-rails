@@ -5,7 +5,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        platform: ["x64-mingw32", "x86_64-darwin", "x86_64-linux"]
+        platform: ["ruby", "x64-mingw32", "x86_64-darwin", "x86_64-linux"]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -20,6 +20,20 @@ jobs:
           name: gem-${{matrix.platform}}
           path: pkg
           retention-days: 1
+
+  vanilla-install:
+    needs: ["package"]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.0"
+      - uses: actions/download-artifact@v2
+        with:
+          name: gem-ruby
+          path: pkg
+      - run: "gem install pkg/tailwindcss-rails-*.gem"
+      - run: "tailwindcss 2>&1 | fgrep 'ERROR: Cannot find the tailwindcss executable'"
 
   linux-install:
     needs: ["package"]
