@@ -4,8 +4,8 @@
 #
 #  TL;DR: run "rake package"
 #
-#  The native platform gems (defined by TAILWINDCSS_NATIVE_PLATFORMS below) will each contain two
-#  files in addition to what the vanilla ruby gem contains:
+#  The native platform gems (defined by Tailwindcss::Upstream::NATIVE_PLATFORMS) will each contain
+#  two files in addition to what the vanilla ruby gem contains:
 #
 #     exe/
 #     ├── tailwindcss                             #  generic ruby script to find and run the binary
@@ -56,19 +56,10 @@
 #
 require "rubygems/package_task"
 require "open-uri"
-
-TAILWINDCSS_VERSION = "v3.0.5" # string used to generate the download URL
-
-# rubygems platform name => upstream release filename
-TAILWINDCSS_NATIVE_PLATFORMS = {
-  "arm64-darwin" => "tailwindcss-macos-arm64",
-  "x64-mingw32" => "tailwindcss-windows-x64.exe",
-  "x86_64-darwin" => "tailwindcss-macos-x64",
-  "x86_64-linux" => "tailwindcss-linux-x64",
-}
+require_relative "../lib/tailwindcss/upstream"
 
 def tailwindcss_download_url(filename)
-  "https://github.com/tailwindlabs/tailwindcss/releases/download/#{TAILWINDCSS_VERSION}/#{filename}"
+  "https://github.com/tailwindlabs/tailwindcss/releases/download/#{Tailwindcss::Upstream::VERSION}/#{filename}"
 end
 
 TAILWINDCSS_RAILS_GEMSPEC = Bundler.load_gemspec("tailwindcss-rails.gemspec")
@@ -78,7 +69,7 @@ desc "Build the ruby gem"
 task "gem:ruby" => [gem_path]
 
 exepaths = []
-TAILWINDCSS_NATIVE_PLATFORMS.each do |platform, filename|
+Tailwindcss::Upstream::NATIVE_PLATFORMS.each do |platform, filename|
   TAILWINDCSS_RAILS_GEMSPEC.dup.tap do |gemspec|
     exedir = File.join(gemspec.bindir, platform) # "exe/x86_64-linux"
     exepath = File.join(exedir, "tailwindcss") # "exe/x86_64-linux/tailwindcss"
@@ -86,7 +77,6 @@ TAILWINDCSS_NATIVE_PLATFORMS.each do |platform, filename|
 
     # modify a copy of the gemspec to include the native executable
     gemspec.platform = platform
-    gemspec.executables << "tailwindcss"
     gemspec.files += [exepath, "LICENSE-DEPENDENCIES"]
 
     # create a package task
