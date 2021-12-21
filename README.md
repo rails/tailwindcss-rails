@@ -30,6 +30,13 @@ The `tailwindcss:build` is automatically attached to `assets:precompile`, so bef
 
 Tailwind uses modern CSS features that are not recognized by the `sassc-rails` extension that was included by default in the Gemfile for Rails 6. In order to avoid any errors like `SassC::SyntaxError`, you must remove that gem from your Gemfile.
 
+## View Component compatibility 
+
+In order to successfully generate a view component you will need to generate a component with `--template-engine` option.
+
+`bin/rails generate component Example title --template-engine=erb`
+
+
 
 ## License
 
