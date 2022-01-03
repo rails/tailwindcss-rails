@@ -27,6 +27,7 @@
 #  So the full set of gem files created will be:
 #
 #  - pkg/tailwindcss-rails-1.0.0.gem
+#  - pkg/tailwindcss-rails-1.0.0-aarch64-linux.gem
 #  - pkg/tailwindcss-rails-1.0.0-arm64-darwin.gem
 #  - pkg/tailwindcss-rails-1.0.0-x64-mingw32.gem
 #  - pkg/tailwindcss-rails-1.0.0-x86_64-darwin.gem
@@ -39,6 +40,7 @@
 #  New rake tasks created:
 #
 #  - rake gem:ruby           # Build the ruby gem
+#  - rake gem:aarch64-linux  # Build the aarch64-linux gem
 #  - rake gem:arm64-darwin   # Build the arm64-darwin gem
 #  - rake gem:x64-mingw32    # Build the x64-mingw32 gem
 #  - rake gem:x86_64-darwin  # Build the x86_64-darwin gem
