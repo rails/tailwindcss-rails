@@ -31,6 +31,63 @@ The `tailwindcss:build` is automatically attached to `assets:precompile`, so bef
 Tailwind uses modern CSS features that are not recognized by the `sassc-rails` extension that was included by default in the Gemfile for Rails 6. In order to avoid any errors like `SassC::SyntaxError`, you must remove that gem from your Gemfile.
 
 
+## Troubleshooting
+
+Some common problems experienced by users ...
+
+### ERROR: Cannot find the tailwindcss executable for &lt;supported platform&gt;
+
+Some users are reporting this error even when running on one of the supported native platforms:
+
+- arm64-darwin
+- x64-mingw32
+- x86_64-darwin
+- x86_64-linux
+- aarch64-linux
+
+#### Check Bundler PLATFORMS
+
+A possible cause of this is that Bundler has not been told to include native gems for your current platform. Please check your `Gemfile.lock` file to see whether your native platform is included in the `PLATFORMS` section. If necessary, run:
+
+``` sh
+bundle lock --add-platform <platform-name>
+```
+
+and re-bundle.
+
+
+#### Check BUNDLE_FORCE_RUBY_PLATFORM
+
+Another common cause of this is that bundler is configured to always use the "ruby" platform via the
+`BUNDLE_FORCE_RUBY_PLATFORM` config parameter being set to `true`. Please remove this configuration:
+
+``` sh
+bundle config unset force_ruby_platform
+# or
+bundle config set --local force_ruby_platform false
+```
+
+and re-bundle.
+
+See https://bundler.io/man/bundle-config.1.html for more information.
+
+
+### "No such file or directory" running on Alpine (musl)
+
+When running `tailwindcss` on an Alpine system, some users report a "No such file or directory" error message.
+
+
+#### Install gnu libc compatibility
+
+The cause of this is the upstream `tailwindcss` binary executables being built on a gnu libc system, making them incompatible with standard musl libc systems.
+
+A fix for this has been proposed upstream at https://github.com/tailwindlabs/tailwindcss/discussions/6785, but in the meantime a workaround is to install compatibility libraries:
+
+``` sh
+apk add build-base gcompat
+```
+
+
 ## License
 
 Tailwind for Rails is released under the [MIT License](https://opensource.org/licenses/MIT).
