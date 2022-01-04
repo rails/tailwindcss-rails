@@ -33,8 +33,8 @@ if exe_path.nil?
 
     See `bundle lock --help` output for details.
         
-    If you're still seeing this message after taking those steps, check that you 
-    don't have `BUNDLE_FORCE_RUBY_PLATFORM` set to `true` in `~/.bundle/config`.
+    If you're still seeing this message after taking those steps, try running
+    `bundle config` and ensure `force_ruby_platform` isn't set to `true`.
   ERRMSG
   exit 1
 end
