@@ -32,6 +32,9 @@ if exe_path.nil?
       bundle install
 
     See `bundle lock --help` output for details.
+        
+    If you're still seeing this message after taking those steps, check that you 
+    don't have `BUNDLE_FORCE_RUBY_PLATFORM` set to `true` in `~/.bundle/config`.
   ERRMSG
   exit 1
 end
