@@ -35,7 +35,7 @@ unless Rails.root.join("app/assets/stylesheets/application.tailwind.css").exist?
 end
 
 if Rails.root.join("Procfile.dev").exist?
-  append_to_file "Procfile.dev", "css: rails tailwindcss:watch\n"
+  append_to_file "Procfile.dev", "css: bin/rails tailwindcss:watch\n"
 else
   say "Add default Procfile.dev"
   copy_file "#{__dir__}/Procfile.dev", "Procfile.dev"
