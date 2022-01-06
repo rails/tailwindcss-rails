@@ -30,6 +30,9 @@ The `tailwindcss:build` is automatically attached to `assets:precompile`, so bef
 
 Tailwind uses modern CSS features that are not recognized by the `sassc-rails` extension that was included by default in the Gemfile for Rails 6. In order to avoid any errors like `SassC::SyntaxError`, you must remove that gem from your Gemfile.
 
+## Class names must be spelled out
+
+For Tailwind to work, your class names need to be spelled out. They can't be programmatically composed. So no "text-gray-#{grade}", only "text-gray-500".
 
 ## Troubleshooting
 
