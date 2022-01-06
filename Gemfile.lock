@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    tailwindcss-rails (2.0.3)
+    tailwindcss-rails (2.0.4)
       railties (>= 6.0.0)
 
 GEM
@@ -81,7 +81,7 @@ GEM
     reline (0.2.7)
       io-console (~> 0.5)
     sqlite3 (1.4.2)
-    thor (1.1.0)
+    thor (1.2.1)
     tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
     zeitwerk (2.5.1)
