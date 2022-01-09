@@ -6,6 +6,7 @@ namespace :tailwindcss do
     system TAILWIND_COMPILE_COMMAND
   end
 
+  desc "Watch and build your Tailwind CSS on file changes"
   task :watch do
     system "#{TAILWIND_COMPILE_COMMAND} -w"
   end
