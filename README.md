@@ -20,6 +20,28 @@ With Rails 7 you can generate a new application preconfigured with Tailwind by u
 1. Run `./bin/bundle add tailwindcss-rails`
 2. Run `./bin/rails tailwindcss:install`
 
+## Using the included TailwindCSS generator templates
+
+Included are several pre-styled templates. 
+
+```
+Tailwindcss:
+  tailwindcss:controller
+  tailwindcss:mailer
+  tailwindcss:scaffold
+ ```
+
+Simply prepend `tailwindcss:` to the generator type for some styling.
+
+```
+rails generate tailwindcss:scaffold Post title:string content:text 
+```
+These templated styles have been set up with a container element in mind. This element is added to `views/layouts/application.html.erb` during the above install process.
+```
+<main class="container mx-auto mt-28 px-5 flex">
+  <%= yield %>
+</main>
+```
 
 ## Building in production
 
