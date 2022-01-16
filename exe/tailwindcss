@@ -34,7 +34,9 @@ if exe_path.nil?
     See `bundle lock --help` output for details.
         
     If you're still seeing this message after taking those steps, try running
-    `bundle config` and ensure `force_ruby_platform` isn't set to `true`.
+    `bundle config` and ensure `force_ruby_platform` isn't set to `true`. See
+    https://github.com/rails/tailwindcss-rails#check-bundle_force_ruby_platform
+    for more details.
   ERRMSG
   exit 1
 end
