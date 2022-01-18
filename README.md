@@ -25,6 +25,9 @@ With Rails 7 you can generate a new application preconfigured with Tailwind by u
 
 The `tailwindcss:build` is automatically attached to `assets:precompile`, so before the asset pipeline digests the files, the Tailwind output will be generated.
 
+## Building for testing
+
+The `tailwindcss:build` is automatically attached to `test:prepare`, which runs before Rails tests. (Note that this currently only applies to rails `test:*` tasks (like `test:all` or `test:controllers`), not "rails test", as that doesn't load `test:prepare`).
 
 ## Conflict with sassc-rails
 
