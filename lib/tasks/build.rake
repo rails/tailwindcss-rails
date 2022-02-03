@@ -10,6 +10,11 @@ namespace :tailwindcss do
   task :watch do
     system "#{TAILWIND_COMPILE_COMMAND} -w"
   end
+  
+  desc "Minify your Tailwind CSS file"
+  task :minify do
+    system "#{TAILWIND_COMPILE_COMMAND} --minify"
+  end
 end
 
 Rake::Task["assets:precompile"].enhance(["tailwindcss:build"])
