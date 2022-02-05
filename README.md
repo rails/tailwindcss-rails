@@ -90,6 +90,27 @@ A fix for this has been proposed upstream at https://github.com/tailwindlabs/tai
 apk add build-base gcompat
 ```
 
+### Using asset-pipeline assets
+
+To use assets from the asset pipeline one would normally use `asset-url`. This doesn't work with Tailwind, as the CSS is not processed with sass. Instead use `url(image.svg)`, [since Sprockets v3.3.0](https://github.com/rails/sprockets-rails/pull/476) the URL will automatically be rewritten. In Tailwind this looks like this:
+
+```js
+module.exports = {
+    theme: {
+        extend: {
+            backgroundImage: {
+                'image': "url('image.svg')"
+            }
+        }
+    }
+}
+```
+
+The inline version also works:
+
+```html
+<section class="bg-[url('image.svg')]">Has the image as it's background</section>
+```
 
 ## License
 
