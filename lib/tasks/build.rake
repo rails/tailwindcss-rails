@@ -1,4 +1,4 @@
-TAILWIND_COMPILE_COMMAND = "#{Pathname.new(__dir__).to_s}/../../exe/tailwindcss -i #{Rails.root.join("app/assets/stylesheets/application.tailwind.css")} -o #{Rails.root.join("app/assets/builds/tailwind.css")} -c #{Rails.root.join("config/tailwind.config.js")}"
+TAILWIND_COMPILE_COMMAND = "#{Pathname.new(__dir__).to_s}/../../exe/tailwindcss -i #{Rails.root.join("app/assets/stylesheets/application.tailwind.css")} -o #{Rails.root.join("app/assets/builds/tailwind.css")} -c #{Rails.root.join("config/tailwind.config.js")} --minify"
 
 namespace :tailwindcss do
   desc "Build your Tailwind CSS"
