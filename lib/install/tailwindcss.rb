@@ -7,8 +7,10 @@ if APPLICATION_LAYOUT_PATH.exist?
     <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
   ERB
 
-  insert_into_file APPLICATION_LAYOUT_PATH.to_s, %(    <main class="container mx-auto mt-28 px-5 flex">\n  ), before: CENTERING_CONTAINER_INSERTION_POINT
-  insert_into_file APPLICATION_LAYOUT_PATH.to_s, %(\n    </main>),  after: CENTERING_CONTAINER_INSERTION_POINT
+  if File.open(APPLICATION_LAYOUT_PATH).read =~ /<body>\n\s*<%= yield %>\n\s*<\/body>/
+    insert_into_file APPLICATION_LAYOUT_PATH.to_s, %(    <main class="container mx-auto mt-28 px-5 flex">\n  ), before: CENTERING_CONTAINER_INSERTION_POINT
+    insert_into_file APPLICATION_LAYOUT_PATH.to_s, %(\n    </main>),  after: CENTERING_CONTAINER_INSERTION_POINT
+  end
 else
   say "Default application.html.erb is missing!", :red
   say %(        Add <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %> within the <head> tag in your custom layout.)
