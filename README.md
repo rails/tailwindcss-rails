@@ -93,6 +93,27 @@ A fix for this has been proposed upstream at https://github.com/tailwindlabs/tai
 apk add build-base gcompat
 ```
 
+### Using asset-pipeline assets
+
+In Rails, you want to use [assets from the asset pipeline to get fingerprinting](https://guides.rubyonrails.org/asset_pipeline.html#what-is-fingerprinting-and-why-should-i-care-questionmark). However, Tailwind isn't aware of those assets. To use assets from the pipeline, use `url(image.svg)`. [Since Sprockets v3.3.0](https://github.com/rails/sprockets-rails/pull/476) `url(image.svg)` will then automatically be rewritten to `/path/to/assets/image-7801e7538c6f1cc57aa75a5876ab0cac.svg`. So the output CSS will have the correct path to those assets.
+
+```js
+module.exports = {
+    theme: {
+        extend: {
+            backgroundImage: {
+                'image': "url('image.svg')"
+            }
+        }
+    }
+}
+```
+
+The inline version also works:
+
+```html
+<section class="bg-[url('image.svg')]">Has the image as it's background</section>
+```
 
 ## License
 
