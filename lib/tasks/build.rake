@@ -12,7 +12,11 @@ namespace :tailwindcss do
   end
 end
 
-Rake::Task["assets:precompile"].enhance(["tailwindcss:build"])
+if Rake::Task.task_defined?('assets:precompile') 
+  Rake::Task["assets:precompile"].enhance(["tailwindcss:build"]) 
+else 
+  Rake::Task["build"].enhance(["tailwindcss:build"]) 
+end
 
 if Rake::Task.task_defined?("test:prepare")
   Rake::Task["test:prepare"].enhance(["tailwindcss:build"])
