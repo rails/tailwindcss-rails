@@ -5,4 +5,4 @@ namespace :tailwindcss do
   end
 end
 
-Rake::Task["assets:clobber"].enhance(["tailwindcss:clobber"])
+Rake::Task["assets:clobber"].enhance(["tailwindcss:clobber"]) if Rake::Task.task_defined?('assets:precompile') && Rake::Task.task_defined?('clober_assets')
