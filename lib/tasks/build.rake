@@ -6,9 +6,14 @@ namespace :tailwindcss do
     system TAILWIND_COMPILE_COMMAND
   end
 
-  desc "Watch and build your Tailwind CSS on file changes"
+  desc "Watch and build your Tailwind CSS on file changes (using filesystem events)"
   task :watch do
     system "#{TAILWIND_COMPILE_COMMAND} -w"
+  end
+  
+  desc "Watch and build your Tailwind CSS on file changes (using polling)"
+  task :poll do
+    system "#{TAILWIND_COMPILE_COMMAND} -p"
   end
 end
 
