@@ -6,4 +6,18 @@ then
   gem install foreman
 fi
 
-foreman start -f Procfile.dev
+while getopts p: option
+do 
+  case "${option}"
+    in
+    p)polling=1;;
+    *);;
+  esac
+done
+
+if [ $polling -eq 1 ]
+then
+  foreman start -f Procfile.dev -m all=1,css=0
+else 
+  foreman start -f Procfile.dev -m all=1,css_polling=0
+fi
