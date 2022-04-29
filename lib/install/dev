@@ -6,7 +6,7 @@ then
   gem install foreman
 fi
 
-while getopts p: option
+while getopts "p" option
 do 
   case "${option}"
     in
@@ -17,6 +17,7 @@ done
 
 if [ $polling -eq 1 ]
 then
+  echo "[INFO] Enabled polling for css processing!"
   foreman start -f Procfile.dev -m all=1,css=0
 else 
   foreman start -f Procfile.dev -m all=1,css_polling=0
