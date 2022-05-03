@@ -83,6 +83,11 @@ See https://bundler.io/man/bundle-config.1.html for more information.
 When running `tailwindcss` on an Alpine system, some users report a "No such file or directory" error message.
 
 
+### Running the TailwindCSS watch command in Docker
+
+In order to run `bin/rails tailwindcss:watch` from a process, set `tty: true` in `docker-compose.yml` for the appropriate container.
+
+
 #### Install gnu libc compatibility
 
 The cause of this is the upstream `tailwindcss` binary executables being built on a gnu libc system, making them incompatible with standard musl libc systems.
