@@ -10,7 +10,7 @@ The installer will create your Tailwind input file in `app/assets/stylesheets/ap
 
 If you need to use a custom input or output file, you can run `bundle exec tailwindcss` to access the platform-specific executable, and give it your own build options.
 
-When you're developing your application, you want to run Tailwind in watch mode, so changes are automatically reflected in the generated CSS output. You can do this either by running `rails tailwindcss:watch` as a separate process, or by running `./bin/dev` which uses [foreman](https://github.com/ddollar/foreman) to starts both the Tailwind watch process and the rails server in development mode.
+When you're developing your application, you want to run Tailwind in watch mode, so changes are automatically reflected in the generated CSS output. You can do this either by running `rails tailwindcss:watch` as a separate process, or by running `./bin/dev` which uses [foreman](https://github.com/ddollar/foreman) to starts both the Tailwind watch process and the rails server in development mode. If you are running `rails tailwindcss:watch` as a process in a Docker container, set `tty: true` in `docker-compose.yml` for the appropriate container to keep the watch process running.
 
 
 ## Installation
