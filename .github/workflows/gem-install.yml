@@ -5,7 +5,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        platform: ["ruby", "x64-mingw32", "x86_64-darwin", "x86_64-linux"]
+        platform: ["ruby", "x64-mingw32", "x64-mingw-ucrt", "x86_64-darwin", "x86_64-linux"]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -73,6 +73,20 @@ jobs:
       - uses: actions/download-artifact@v2
         with:
           name: gem-x64-mingw32
+          path: pkg
+      - run: "gem install pkg/tailwindcss-rails-*.gem"
+      - run: "tailwindcss --help"
+
+  windows-ucrt-install:
+    needs: ["package"]
+    runs-on: windows-2022
+    steps:
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.1"
+      - uses: actions/download-artifact@v2
+        with:
+          name: gem-x64-mingw-ucrt
           path: pkg
       - run: "gem install pkg/tailwindcss-rails-*.gem"
       - run: "tailwindcss --help"

@@ -47,6 +47,7 @@ Some users are reporting this error even when running on one of the supported na
 
 - arm64-darwin
 - x64-mingw32
+- x64-mingw-ucrt
 - x86_64-darwin
 - x86_64-linux
 - aarch64-linux
