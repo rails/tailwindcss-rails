@@ -16,6 +16,12 @@
 #  binary and executes it. Note that this script is required because rubygems requires that
 #  executables declared in a gemspec must be Ruby scripts.
 #
+#  Windows support note: we ship the same executable in two gems, the `x64-mingw32` and
+#  `x64-mingw-ucrt` flavors because Ruby < 3.1 uses the MSCVRT runtime libraries, and Ruby >= 3.1
+#  uses the UCRT runtime libraries. You can read more about this change here:
+#
+#     https://rubyinstaller.org/2021/12/31/rubyinstaller-3.1.0-1-released.html
+#
 #  As a concrete example, an x86_64-linux system will see these files on disk after installing
 #  tailwindcss-rails-1.x.x-x86_64-linux.gem:
 #
@@ -30,6 +36,7 @@
 #  - pkg/tailwindcss-rails-1.0.0-aarch64-linux.gem
 #  - pkg/tailwindcss-rails-1.0.0-arm64-darwin.gem
 #  - pkg/tailwindcss-rails-1.0.0-x64-mingw32.gem
+#  - pkg/tailwindcss-rails-1.0.0-x64-mingw-ucrt.gem
 #  - pkg/tailwindcss-rails-1.0.0-x86_64-darwin.gem
 #  - pkg/tailwindcss-rails-1.0.0-x86_64-linux.gem
 # 
@@ -43,6 +50,7 @@
 #  - rake gem:aarch64-linux  # Build the aarch64-linux gem
 #  - rake gem:arm64-darwin   # Build the arm64-darwin gem
 #  - rake gem:x64-mingw32    # Build the x64-mingw32 gem
+#  - rake gem:x64-mingw-ucrt # Build the x64-mingw-ucrt gem
 #  - rake gem:x86_64-darwin  # Build the x86_64-darwin gem
 #  - rake gem:x86_64-linux   # Build the x86_64-linux gem
 #  - rake download           # Download all tailwindcss binaries
