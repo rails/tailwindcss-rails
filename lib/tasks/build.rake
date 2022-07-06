@@ -3,12 +3,12 @@ TAILWIND_COMPILE_COMMAND = "#{RbConfig.ruby} #{Pathname.new(__dir__).to_s}/../..
 namespace :tailwindcss do
   desc "Build your Tailwind CSS"
   task :build do
-    system TAILWIND_COMPILE_COMMAND
+    exec TAILWIND_COMPILE_COMMAND
   end
 
   desc "Watch and build your Tailwind CSS on file changes"
   task :watch do
-    system "#{TAILWIND_COMPILE_COMMAND} -w"
+    exec "#{TAILWIND_COMPILE_COMMAND} -w"
   end
 end
 
