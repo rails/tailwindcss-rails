@@ -33,6 +33,16 @@ unless Rails.root.join("config/tailwind.config.js").exist?
   copy_file "#{__dir__}/tailwind.config.js", "config/tailwind.config.js"
 end
 
+unless Rails.root.join("config/tailwind.plugins.js").exist?
+  say "Add default config/tailwindcss.plugins.js"
+  copy_file "#{__dir__}/tailwind.plugins.js", "config/tailwind.plugins.js"
+end
+
+unless Rails.root.join("config/tailwind.plugins.yml").exist?
+  say "Add default config/tailwindcss.plugins.yml"
+  copy_file "#{__dir__}/tailwind.plugins.yml", "config/tailwind.plugins.yml"
+end
+
 unless Rails.root.join("app/assets/stylesheets/application.tailwind.css").exist?
   say "Add default app/assets/stylesheets/application.tailwind.css"
   copy_file "#{__dir__}/application.tailwind.css", "app/assets/stylesheets/application.tailwind.css"
@@ -54,3 +64,4 @@ chmod "bin/dev", 0755, verbose: false
 
 say "Compile initial Tailwind build"
 run "rails tailwindcss:build"
+run "npm i --location=global postcss"
