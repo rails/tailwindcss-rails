@@ -62,6 +62,8 @@ say "Add bin/dev to start foreman"
 copy_file "#{__dir__}/dev", "bin/dev"
 chmod "bin/dev", 0755, verbose: false
 
+say "Install postcss globally"
+run "npm i --location=global postcss"
+
 say "Compile initial Tailwind build"
 run "rails tailwindcss:build"
-run "npm i --location=global postcss"

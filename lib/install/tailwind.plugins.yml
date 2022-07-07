@@ -1,0 +1,4 @@
+# Format
+# plugin_name: cdn URI
+# Example
+# daisyui: https://cdn.jsdelivr.net/npm/daisyui@2.18.1/dist/full.css
