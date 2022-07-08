@@ -23,16 +23,17 @@ namespace :tailwindcss do
 
   desc "Build your Tailwind CSS"
   task :build do
-    Rake::Task["tailwindcss:install_plugins"].invoke
     exec TAILWIND_COMPILE_COMMAND
   end
 
   desc "Watch and build your Tailwind CSS on file changes"
   task :watch do
-    Rake::Task["tailwindcss:install_plugins"].invoke
     exec "#{TAILWIND_COMPILE_COMMAND} -w"
   end
 end
+
+Rake::Task["tailwindcss:watch"].enhance(["tailwindcss:install_plugins"])
+Rake::Task["tailwindcss:build"].enhance(["tailwindcss:install_plugins"])
 
 Rake::Task["assets:precompile"].enhance(["tailwindcss:build"])
 
