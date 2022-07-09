@@ -33,11 +33,6 @@ unless Rails.root.join("config/tailwind.config.js").exist?
   copy_file "#{__dir__}/tailwind.config.js", "config/tailwind.config.js"
 end
 
-unless Rails.root.join("config/tailwind.plugins.js").exist?
-  say "Add default config/tailwindcss.plugins.js"
-  copy_file "#{__dir__}/tailwind.plugins.js", "config/tailwind.plugins.js"
-end
-
 unless Rails.root.join("config/tailwind.plugins.yml").exist?
   say "Add default config/tailwindcss.plugins.yml"
   copy_file "#{__dir__}/tailwind.plugins.yml", "config/tailwind.plugins.yml"
@@ -61,9 +56,6 @@ end
 say "Add bin/dev to start foreman"
 copy_file "#{__dir__}/dev", "bin/dev"
 chmod "bin/dev", 0755, verbose: false
-
-say "Install postcss globally"
-run "npm i --location=global postcss"
 
 say "Compile initial Tailwind build"
 run "rails tailwindcss:build"
