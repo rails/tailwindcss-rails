@@ -4,6 +4,8 @@
 require "shellwords"
 require "tailwindcss/upstream"
 
+Gem::Platform.local.version = nil if Gem::Platform.local.version == "musl"
+
 supported_platforms = Tailwindcss::Upstream::NATIVE_PLATFORMS.keys
 platform = [:cpu, :os].map { |m| Gem::Platform.local.send(m) }.join("-")
 
