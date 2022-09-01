@@ -5,7 +5,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        platform: ["ruby", "x64-mingw32", "x64-mingw-ucrt", "x86_64-darwin", "x86_64-linux"]
+        platform: ["ruby", "x64-mingw32", "x64-mingw-ucrt", "x86_64-darwin", "x86_64-linux", "x86_64-linux-musl"]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -45,6 +45,19 @@ jobs:
       - uses: actions/download-artifact@v2
         with:
           name: gem-x86_64-linux
+          path: pkg
+      - run: "gem install pkg/tailwindcss-rails-*.gem"
+      - run: "tailwindcss --help"
+
+  linux-musl-install:
+    needs: ["package"]
+    runs-on: ubuntu-latest
+    container:
+      image: ruby:3.1-alpine
+    steps:
+      - uses: actions/download-artifact@v2
+        with:
+          name: gem-x86_64-linux-musl
           path: pkg
       - run: "gem install pkg/tailwindcss-rails-*.gem"
       - run: "tailwindcss --help"

@@ -39,6 +39,7 @@
 #  - pkg/tailwindcss-rails-1.0.0-x64-mingw-ucrt.gem
 #  - pkg/tailwindcss-rails-1.0.0-x86_64-darwin.gem
 #  - pkg/tailwindcss-rails-1.0.0-x86_64-linux.gem
+#  - pkg/tailwindcss-rails-1.0.0-x86_64-linux-musl.gem
 # 
 #  Note that in addition to the native gems, a vanilla "ruby" gem will also be created without
 #  either the `exe/tailwindcss` script or a binary executable present.
@@ -46,14 +47,15 @@
 #
 #  New rake tasks created:
 #
-#  - rake gem:ruby           # Build the ruby gem
-#  - rake gem:aarch64-linux  # Build the aarch64-linux gem
-#  - rake gem:arm64-darwin   # Build the arm64-darwin gem
-#  - rake gem:x64-mingw32    # Build the x64-mingw32 gem
-#  - rake gem:x64-mingw-ucrt # Build the x64-mingw-ucrt gem
-#  - rake gem:x86_64-darwin  # Build the x86_64-darwin gem
-#  - rake gem:x86_64-linux   # Build the x86_64-linux gem
-#  - rake download           # Download all tailwindcss binaries
+#  - rake gem:ruby              # Build the ruby gem
+#  - rake gem:aarch64-linux     # Build the aarch64-linux gem
+#  - rake gem:arm64-darwin      # Build the arm64-darwin gem
+#  - rake gem:x64-mingw32       # Build the x64-mingw32 gem
+#  - rake gem:x64-mingw-ucrt    # Build the x64-mingw-ucrt gem
+#  - rake gem:x86_64-darwin     # Build the x86_64-darwin gem
+#  - rake gem:x86_64-linux      # Build the x86_64-linux gem
+#  - rake gem:x86_64-linux-musl # Build the x86_64-linux gem
+#  - rake download              # Download all tailwindcss binaries
 #
 #  Modified rake tasks:
 #

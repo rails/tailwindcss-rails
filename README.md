@@ -50,6 +50,7 @@ Some users are reporting this error even when running on one of the supported na
 - x64-mingw-ucrt
 - x86_64-darwin
 - x86_64-linux
+- x86_64-linux-musl
 - aarch64-linux
 
 #### Check Bundler PLATFORMS
