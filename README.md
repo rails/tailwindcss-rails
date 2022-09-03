@@ -2,19 +2,6 @@
 
 [Tailwind CSS](https://tailwindcss.com) is a utility-first CSS framework packed with classes like flex, pt-4, text-center and rotate-90 that can be composed to build any design, directly in your markup.
 
-This gem wraps [the standalone executable version](https://tailwindcss.com/blog/standalone-cli) of the Tailwind CSS v3 framework. These executables are platform specific, so there are actually separate underlying gems per platform, but the correct gem will automatically be picked for your platform. Supported platforms are Linux x64, macOS arm64, macOS x64, and Windows x64. (Note that due to this setup, you must install the actual gems – you can't pin your gem to the github repo.)
-
-You can customize the Tailwind build through the `config/tailwind.config.js` file, just like you would if Tailwind was running in a traditional node installation. All the first-party plugins are supported.
-
-The installer will create your Tailwind input file in `app/assets/stylesheets/application.tailwind.css`. This is where you import the plugins you want to use, and where you can setup your custom `@apply` rules. When you run `rails tailwindcss:build`, this input file will be used to generate the output in `app/assets/builds/tailwind.css`. That's the output CSS that you'll include in your app (the installer automatically configures this, alongside the Inter font as well).
-
-**If you need to use a custom input or output file**, you can run `bundle exec tailwindcss` to access the platform-specific executable, and give it your own build options.
-
-**When you're developing your application**, you want to run Tailwind in watch mode, so changes are automatically reflected in the generated CSS output. You can do this either by running `rails tailwindcss:watch` as a separate process, or by running `./bin/dev` which uses [foreman](https://github.com/ddollar/foreman) to starts both the Tailwind watch process and the rails server in development mode. If you are running `rails tailwindcss:watch` as a process in a Docker container, set `tty: true` in `docker-compose.yml` for the appropriate container to keep the watch process running.
-
-**If you want unminified assets**, you can pass the `debug` parameter to the rake task, i.e. `rails tailwindcss:build[debug]` or `rails tailwindcss:watch[debug]`.
-
-
 ## Installation
 
 With Rails 7 you can generate a new application preconfigured with Tailwind by using `--css tailwind`. If you're adding Tailwind later, you need to:
@@ -22,26 +9,58 @@ With Rails 7 you can generate a new application preconfigured with Tailwind by u
 1. Run `./bin/bundle add tailwindcss-rails`
 2. Run `./bin/rails tailwindcss:install`
 
+This gem wraps [the standalone executable version](https://tailwindcss.com/blog/standalone-cli) of the Tailwind CSS v3 framework. These executables are platform specific, so there are actually separate underlying gems per platform, but the correct gem will automatically be picked for your platform. Supported platforms are Linux x64, macOS arm64, macOS x64, and Windows x64. (Note that due to this setup, you must install the actual gems – you can't pin your gem to the github repo.)
 
-## Building in production
+
+## Developing with Tailwindcss
+
+### Configuration
+
+You can customize the Tailwind build through the `config/tailwind.config.js` file, just like you would if Tailwind was running in a traditional node installation. All the first-party plugins are supported.
+
+The installer will create your Tailwind input file in `app/assets/stylesheets/application.tailwind.css`. This is where you import the plugins you want to use, and where you can setup your custom `@apply` rules. When you run `rails tailwindcss:build`, this input file will be used to generate the output in `app/assets/builds/tailwind.css`. That's the output CSS that you'll include in your app (the installer automatically configures this, alongside the Inter font as well).
+
+
+### Building for production
 
 The `tailwindcss:build` is automatically attached to `assets:precompile`, so before the asset pipeline digests the files, the Tailwind output will be generated.
 
-## Building for testing
+
+### Building for testing
 
 The `tailwindcss:build` is automatically attached to `test:prepare`, which runs before Rails tests. (Note that this currently only applies to rails `test:*` tasks (like `test:all` or `test:controllers`), not "rails test", as that doesn't load `test:prepare`).
 
-## Conflict with sassc-rails
 
-Tailwind uses modern CSS features that are not recognized by the `sassc-rails` extension that was included by default in the Gemfile for Rails 6. In order to avoid any errors like `SassC::SyntaxError`, you must remove that gem from your Gemfile.
+### Update assets automatically
 
-## Class names must be spelled out
+While you're developing your application, you want to run Tailwind in "watch" mode, so changes are automatically reflected in the generated CSS output. You can do this by:
 
-For Tailwind to work, your class names need to be spelled out. They can't be programmatically composed. So no "text-gray-#{grade}", only "text-gray-500".
+- running `rails tailwindcss:watch` as a separate process,
+- or by running `./bin/dev` which uses [foreman](https://github.com/ddollar/foreman) to start both the Tailwind watch process and the rails server in development mode.
+
+If you are running `rails tailwindcss:watch` as a process in a Docker container, set `tty: true` in `docker-compose.yml` for the appropriate container to keep the watch process running.
+
+### Debugging with unminified assets
+
+If you want unminified assets, you can pass a `debug` argument to the rake task, i.e. `rails tailwindcss:build[debug]` or `rails tailwindcss:watch[debug]`.
+
+
+### Custom inputs or outputs
+
+If you need to use a custom input or output file, you can run `bundle exec tailwindcss` to access the platform-specific executable, and give it your own build options.
+
 
 ## Troubleshooting
 
 Some common problems experienced by users ...
+
+### Conflict with sassc-rails
+
+Tailwind uses modern CSS features that are not recognized by the `sassc-rails` extension that was included by default in the Gemfile for Rails 6. In order to avoid any errors like `SassC::SyntaxError`, you must remove that gem from your Gemfile.
+
+### Class names must be spelled out
+
+For Tailwind to work, your class names need to be spelled out. They can't be programmatically composed. So no "text-gray-#{grade}", only "text-gray-500".
 
 ### ERROR: Cannot find the tailwindcss executable for &lt;supported platform&gt;
 
