@@ -1,14 +1,16 @@
-TAILWIND_COMPILE_COMMAND = "#{RbConfig.ruby} #{Pathname.new(__dir__).to_s}/../../exe/tailwindcss -i '#{Rails.root.join("app/assets/stylesheets/application.tailwind.css")}' -o '#{Rails.root.join("app/assets/builds/tailwind.css")}' -c '#{Rails.root.join("config/tailwind.config.js")}' --minify"
-
 namespace :tailwindcss do
   desc "Build your Tailwind CSS"
   task :build do
-    system(TAILWIND_COMPILE_COMMAND, exception: true)
+    command = Tailwindcss::Commands.compile_command
+    puts command.inspect
+    system(*command, exception: true)
   end
 
   desc "Watch and build your Tailwind CSS on file changes"
   task :watch do
-    system "#{TAILWIND_COMPILE_COMMAND} -w"
+    command = Tailwindcss::Commands.watch_command
+    puts command.inspect
+    system(*command)
   end
 end
 

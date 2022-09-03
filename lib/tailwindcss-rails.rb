@@ -1,6 +1,7 @@
 module Tailwindcss
 end
 
-require "tailwindcss/upstream"
-require "tailwindcss/version"
-require "tailwindcss/engine"
+require_relative "tailwindcss/upstream"
+require_relative "tailwindcss/version"
+require_relative "tailwindcss/engine"
+require_relative "tailwindcss/commands"
