@@ -2,7 +2,8 @@
 ## Unreleased
 
 * Correctly handle paths with embedded spaces. [#184](https://github.com/rails/tailwindcss-rails/issues/184) by [@flavorjones](https://github.com/flavorjones)
-* Rake tasks accept a `debug` argument to generate unminified assets, e.g. `tailwindcss:build[debug]`. [#198](https://github.com/rails/tailwindcss-rails/pull/198) by [@flavorjones](https://github.com/flavorjones)
+* The `build` and `watch` tasks accept a `debug` argument to generate unminified assets: `rails tailwindcss:build[debug]` or `rails tailwindcss:watch[debug]`. [#198](https://github.com/rails/tailwindcss-rails/pull/198) by [@flavorjones](https://github.com/flavorjones)
+* The `watch` task accepts a `poll` argument to use polling instead of file system events: `rails tailwindcss:watch[poll]`. [#199](https://github.com/rails/tailwindcss-rails/pull/199) by [@flavorjones](https://github.com/flavorjones)
 
 
 ## v2.0.12 / 2022-08-10

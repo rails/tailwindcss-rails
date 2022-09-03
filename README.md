@@ -40,9 +40,14 @@ While you're developing your application, you want to run Tailwind in "watch" mo
 
 If you are running `rails tailwindcss:watch` as a process in a Docker container, set `tty: true` in `docker-compose.yml` for the appropriate container to keep the watch process running.
 
+If you are running `rails tailwindcss:watch` on a system that doesn't fully support file system events, pass a `poll` argument to the task to instruct tailwindcss to instead use polling: `rails tailwindcss:watch[poll]`. If you use `bin/dev` then you should modify your `Procfile.dev`.
+
+
 ### Debugging with unminified assets
 
 If you want unminified assets, you can pass a `debug` argument to the rake task, i.e. `rails tailwindcss:build[debug]` or `rails tailwindcss:watch[debug]`.
+
+Note that you can combine task options, e.g. `rails tailwindcss:watch[debug,poll]`.
 
 
 ### Custom inputs or outputs
