@@ -1,46 +1,19 @@
 #! /usr/bin/env ruby
 # because rubygems shims assume a gem's executables are Ruby
 
-require "shellwords"
-require "tailwindcss/upstream"
+require "tailwindcss/commands"
 
-supported_platforms = Tailwindcss::Upstream::NATIVE_PLATFORMS.keys
-platform = [:cpu, :os].map { |m| Gem::Platform.local.send(m) }.join("-")
-
-if supported_platforms.none? { |supported_platform| Gem::Platform.match(supported_platform) }
-  STDERR.puts(<<~ERRMSG)
-    ERROR: tailwindcss-rails does not support the #{platform} platform
-    Please install tailwindcss following instructions at https://tailwindcss.com/docs/installation
-  ERRMSG
+begin
+  command = [Tailwindcss::Commands.executable, *ARGV]
+  puts command.inspect
+  if Gem.win_platform?
+    # use system rather than exec as exec inexplicably fails to find the executable on Windows
+    # see related https://github.com/rubys/sprockets-esbuild/pull/4
+    system(*command, exception: true)
+  else
+    exec(*command)
+  end
+rescue Tailwindcss::Commands::UnsupportedPlatformException, Tailwindcss::Commands::ExecutableNotFoundException => e
+  STDERR.puts("ERROR: " + e.message)
   exit 1
 end
-
-exe_path = Dir.glob(File.join(__dir__, "*", "tailwindcss")).find do |f|
-  Gem::Platform.match(File.basename(File.dirname(f)))
-end
-if exe_path.nil?
-  STDERR.puts(<<~ERRMSG)
-    ERROR: Cannot find the tailwindcss executable for #{platform} in #{__dir__}
-    If you're using bundler, please make sure you're on the latest bundler version:
-
-      gem install bundler
-      bundle update --bundler
-
-    Then make sure your lock file includes this platform by running:
-
-      bundle lock --add-platform #{platform}
-      bundle install
-
-    See `bundle lock --help` output for details.
-        
-    If you're still seeing this message after taking those steps, try running
-    `bundle config` and ensure `force_ruby_platform` isn't set to `true`. See
-    https://github.com/rails/tailwindcss-rails#check-bundle_force_ruby_platform
-    for more details.
-  ERRMSG
-  exit 1
-end
-
-command = Shellwords.join([exe_path, ARGV].flatten)
-puts "+ #{command}"
-exec(command)
