@@ -55,14 +55,15 @@ module Tailwindcss
         exe_path
       end
 
-      def compile_command(**kwargs)
+      def compile_command(debug: false, **kwargs)
         [
           executable(**kwargs),
           "-i", Rails.root.join("app/assets/stylesheets/application.tailwind.css").to_s,
           "-o", Rails.root.join("app/assets/builds/tailwind.css").to_s,
           "-c", Rails.root.join("config/tailwind.config.js").to_s,
-          "--minify",
-        ]
+        ].tap do |command|
+          command << "--minify" unless debug
+        end
       end
 
       def watch_command(**kwargs)

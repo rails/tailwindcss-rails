@@ -48,6 +48,12 @@ class Tailwindcss::CommandsTest < ActiveSupport::TestCase
         actual = Tailwindcss::Commands.compile_command(exe_path: dir)
         assert_kind_of(Array, actual)
         assert_equal(executable, actual.first)
+        assert_includes(actual, "--minify")
+
+        actual = Tailwindcss::Commands.compile_command(exe_path: dir, debug: true)
+        assert_kind_of(Array, actual)
+        assert_equal(executable, actual.first)
+        refute_includes(actual, "--minify")
       end
     end
   end
@@ -59,6 +65,13 @@ class Tailwindcss::CommandsTest < ActiveSupport::TestCase
         assert_kind_of(Array, actual)
         assert_equal(executable, actual.first)
         assert_includes(actual, "-w")
+        assert_includes(actual, "--minify")
+
+        actual = Tailwindcss::Commands.watch_command(exe_path: dir, debug: true)
+        assert_kind_of(Array, actual)
+        assert_equal(executable, actual.first)
+        assert_includes(actual, "-w")
+        refute_includes(actual, "--minify")
       end
     end
   end
