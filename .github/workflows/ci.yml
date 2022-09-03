@@ -33,3 +33,19 @@ jobs:
 
       - name: Run tests
         run: bin/test
+
+  user-journey:
+    strategy:
+      fail-fast: false
+      matrix:
+        plat: ["ubuntu", "windows", "macos"]
+    runs-on: ${{matrix.plat}}-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.1"
+          bundler-cache: true
+          bundler: latest
+      - run: test/integration/user_journey_test.sh
+        shell: bash
