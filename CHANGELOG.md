@@ -1,3 +1,9 @@
+
+## Unreleased
+
+* Correctly handle paths with embedded spaces. [#184](https://github.com/rails/tailwindcss-rails/issues/184)
+
+
 ## v2.0.12 / 2022-08-10
 
 * Address issue when running commands with #exec by [@blerchin](https://github.com/blerchin) in [#189](https://github.com/rails/tailwindcss-rails/issues/189)
