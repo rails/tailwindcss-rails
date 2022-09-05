@@ -66,8 +66,11 @@ module Tailwindcss
         end
       end
 
-      def watch_command(**kwargs)
-        compile_command(**kwargs) << "-w"
+      def watch_command(poll: false, **kwargs)
+        compile_command(**kwargs).tap do |command|
+          command << "-w"
+          command << "-p" if poll
+        end
       end
     end
   end

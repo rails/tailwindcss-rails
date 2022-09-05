@@ -10,7 +10,8 @@ namespace :tailwindcss do
   desc "Watch and build your Tailwind CSS on file changes"
   task :watch do |_, args|
     debug = args.extras.include?("debug")
-    command = Tailwindcss::Commands.watch_command(debug: debug)
+    poll = args.extras.include?("poll")
+    command = Tailwindcss::Commands.watch_command(debug: debug, poll: poll)
     puts command.inspect
     system(*command)
   end
