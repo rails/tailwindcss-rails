@@ -1,14 +1,16 @@
 namespace :tailwindcss do
   desc "Build your Tailwind CSS"
-  task :build do
-    command = Tailwindcss::Commands.compile_command
+  task :build do |_, args|
+    debug = args.extras.include?("debug")
+    command = Tailwindcss::Commands.compile_command(debug: debug)
     puts command.inspect
     system(*command, exception: true)
   end
 
   desc "Watch and build your Tailwind CSS on file changes"
-  task :watch do
-    command = Tailwindcss::Commands.watch_command
+  task :watch do |_, args|
+    debug = args.extras.include?("debug")
+    command = Tailwindcss::Commands.watch_command(debug: debug)
     puts command.inspect
     system(*command)
   end

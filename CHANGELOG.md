@@ -1,7 +1,8 @@
 
 ## Unreleased
 
-* Correctly handle paths with embedded spaces. [#184](https://github.com/rails/tailwindcss-rails/issues/184)
+* Correctly handle paths with embedded spaces. [#184](https://github.com/rails/tailwindcss-rails/issues/184) by [@flavorjones](https://github.com/flavorjones)
+* Rake tasks accept a `debug` argument to generate unminified assets, e.g. `tailwindcss:build[debug]`. [#198](https://github.com/rails/tailwindcss-rails/pull/198) by [@flavorjones](https://github.com/flavorjones)
 
 
 ## v2.0.12 / 2022-08-10
