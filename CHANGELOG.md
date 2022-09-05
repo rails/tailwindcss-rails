@@ -1,5 +1,5 @@
 
-## Unreleased
+## v2.0.13 / 2022-09-05
 
 * Correctly handle paths with embedded spaces. [#184](https://github.com/rails/tailwindcss-rails/issues/184) by [@flavorjones](https://github.com/flavorjones)
 * The `build` and `watch` tasks accept a `debug` argument to generate unminified assets: `rails tailwindcss:build[debug]` or `rails tailwindcss:watch[debug]`. [#198](https://github.com/rails/tailwindcss-rails/pull/198) by [@flavorjones](https://github.com/flavorjones)
