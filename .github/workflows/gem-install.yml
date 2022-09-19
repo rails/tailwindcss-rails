@@ -25,7 +25,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: "3.0"
+          ruby-version: "3.1"
           bundler: latest
           bundler-cache: true
       - run: "bundle exec rake gem:${{matrix.platform}}"
@@ -41,7 +41,7 @@ jobs:
     steps:
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: "3.0"
+          ruby-version: "3.1"
       - uses: actions/download-artifact@v2
         with:
           name: gem-ruby
@@ -55,7 +55,7 @@ jobs:
     steps:
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: "3.0"
+          ruby-version: "3.1"
       - uses: actions/download-artifact@v2
         with:
           name: gem-x86_64-linux
@@ -69,7 +69,7 @@ jobs:
     steps:
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: "3.0"
+          ruby-version: "3.1"
       - uses: actions/download-artifact@v2
         with:
           name: gem-x86_64-darwin
