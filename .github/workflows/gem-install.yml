@@ -64,6 +64,21 @@ jobs:
       - run: "gem install pkg/tailwindcss-rails-*.gem"
       - run: "tailwindcss --help"
 
+  linux-musl-install:
+    needs: ["package"]
+    runs-on: ubuntu-latest
+    container:
+      image: ruby:3.1-alpine
+    steps:
+      - uses: actions/download-artifact@v2
+        with:
+          name: gem-x86_64-linux
+          path: pkg
+      - run: "gem update --system"
+      - run: "apk add build-base" # TODO: remove after https://github.com/rubygems/rubygems/issues/5914 is in a rubygems release
+      - run: "gem install pkg/tailwindcss-rails-*.gem"
+      - run: "tailwindcss --help"
+
   darwin-install:
     needs: ["package"]
     runs-on: macos-latest
