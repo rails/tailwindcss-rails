@@ -1,4 +1,9 @@
 
+## v2.0.14 / 2022-09-19
+
+* Work around [upstream rubygems issue](https://github.com/rubygems/rubygems/issues/5938) on `musl` platforms. [[#200](https://github.com/rails/tailwindcss-rails/issues/200)]
+
+
 ## v2.0.13 / 2022-09-05
 
 * Correctly handle paths with embedded spaces. [#184](https://github.com/rails/tailwindcss-rails/issues/184) by [@flavorjones](https://github.com/flavorjones)
