@@ -18,7 +18,7 @@ rails new test-app --skip-bundle
 pushd test-app
 
 # install tailwindcss-rails
-echo 'gem "tailwindcss-rails", path: "../.."' >> Gemfile
+bundle add tailwindcss-rails --path="../.."
 bundle install
 
 bin/rails tailwindcss:install
