@@ -1,4 +1,9 @@
 
+## next / unreleased
+
+* Update to [Tailwind CSS v3.2.0](https://github.com/tailwindlabs/tailwindcss/releases/tag/v3.2.0) by [@domchristie](https://github.com/domchristie) in [#209](https://github.com/rails/tailwindcss-rails/pull/209).
+
+
 ## v2.0.14 / 2022-09-19
 
 * Work around [upstream rubygems issue](https://github.com/rubygems/rubygems/issues/5938) on `musl` platforms. [[#200](https://github.com/rails/tailwindcss-rails/issues/200)]
