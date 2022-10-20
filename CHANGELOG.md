@@ -1,5 +1,5 @@
 
-## next / unreleased
+## v2.0.15 / 2022-10-20
 
 * Update to [Tailwind CSS v3.2.0](https://github.com/tailwindlabs/tailwindcss/releases/tag/v3.2.0) by [@domchristie](https://github.com/domchristie) in [#209](https://github.com/rails/tailwindcss-rails/pull/209).
 
