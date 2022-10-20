@@ -21,7 +21,7 @@ jobs:
       matrix:
         ruby: ["2.7", "3.0", "3.1"]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - run: rm Gemfile.lock
       - uses: ruby/setup-ruby@v1
         with:
@@ -38,7 +38,7 @@ jobs:
         plat: ["ubuntu", "windows", "macos"]
     runs-on: ${{matrix.plat}}-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - run: rm Gemfile.lock
       - uses: ruby/setup-ruby@v1
         with:

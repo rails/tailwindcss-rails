@@ -22,7 +22,7 @@ jobs:
         platform: ["ruby", "x64-mingw32", "x64-mingw-ucrt", "x86_64-darwin", "x86_64-linux"]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - run: rm Gemfile.lock
       - uses: ruby/setup-ruby@v1
         with:
@@ -30,7 +30,7 @@ jobs:
           bundler: latest
           bundler-cache: true
       - run: "bundle exec rake gem:${{matrix.platform}}"
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: gem-${{matrix.platform}}
           path: pkg
@@ -43,7 +43,7 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: "3.1"
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v3
         with:
           name: gem-ruby
           path: pkg
@@ -57,7 +57,7 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: "3.1"
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v3
         with:
           name: gem-x86_64-linux
           path: pkg
@@ -70,7 +70,7 @@ jobs:
     container:
       image: ruby:3.1-alpine
     steps:
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v3
         with:
           name: gem-x86_64-linux
           path: pkg
@@ -86,7 +86,7 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: "3.1"
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v3
         with:
           name: gem-x86_64-darwin
           path: pkg
@@ -100,7 +100,7 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: "3.0"
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v3
         with:
           name: gem-x64-mingw32
           path: pkg
@@ -114,7 +114,7 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: "3.1"
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v3
         with:
           name: gem-x64-mingw-ucrt
           path: pkg
