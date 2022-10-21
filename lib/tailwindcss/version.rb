@@ -1,3 +1,3 @@
 module Tailwindcss
-  VERSION = "2.0.15"
+  VERSION = "2.0.16"
 end

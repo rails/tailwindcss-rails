@@ -1,4 +1,9 @@
 
+## v2.0.16 / 2022-10-21
+
+* Update to [Tailwind CSS v3.2.1](https://github.com/tailwindlabs/tailwindcss/releases/tag/v3.2.1) by [@AlexKovynev](https://github.com/AlexKovynev) in [#213](https://github.com/rails/tailwindcss-rails/pull/213).
+
+
 ## v2.0.15 / 2022-10-20
 
 * Update to [Tailwind CSS v3.2.0](https://github.com/tailwindlabs/tailwindcss/releases/tag/v3.2.0) by [@domchristie](https://github.com/domchristie) in [#209](https://github.com/rails/tailwindcss-rails/pull/209).
