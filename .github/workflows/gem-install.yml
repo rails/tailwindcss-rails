@@ -19,7 +19,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        platform: ["ruby", "x64-mingw32", "x64-mingw-ucrt", "x86_64-darwin", "x86_64-linux"]
+        platform: ["ruby", "x64-mingw32", "x64-mingw-ucrt", "x86_64-darwin", "x86_64-linux", "arm-linux"]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -77,6 +77,23 @@ jobs:
       - run: "gem update --system" # let's make sure the latest is working for us (upstream test, see #200)
       - run: "gem install pkg/tailwindcss-rails-*.gem"
       - run: "tailwindcss --help"
+
+  linux-arm-install:
+    needs: ["package"]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: gem-arm-linux
+          path: pkg
+      - run: |
+          docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+          docker run --rm -v "$(pwd):/test" -w /test --platform=linux/arm/v7 ruby:3.1 \
+            /bin/bash -c "
+              set -ex
+              gem install pkg/tailwindcss-rails-*.gem
+              tailwindcss --help
+            "
 
   darwin-install:
     needs: ["package"]

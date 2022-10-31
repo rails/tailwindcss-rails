@@ -11,6 +11,7 @@ module Tailwindcss
       "x86_64-darwin" => "tailwindcss-macos-x64",
       "x86_64-linux" => "tailwindcss-linux-x64",
       "aarch64-linux" => "tailwindcss-linux-arm64",
+      "arm-linux" => "tailwindcss-linux-armv7",
     }
   end
 end
