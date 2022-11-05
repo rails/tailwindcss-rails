@@ -63,6 +63,7 @@ module Tailwindcss
           "-c", Rails.root.join("config/tailwind.config.js").to_s,
         ].tap do |command|
           command << "--minify" unless debug
+          command << "--postcss" if postcss
         end
       end
 
