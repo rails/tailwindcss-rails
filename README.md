@@ -48,6 +48,10 @@ If you are running `rails tailwindcss:watch` as a process in a Docker container,
 If you are running `rails tailwindcss:watch` on a system that doesn't fully support file system events, pass a `poll` argument to the task to instruct tailwindcss to instead use polling: `rails tailwindcss:watch[poll]`. If you use `bin/dev` then you should modify your `Procfile.dev`.
 
 
+### Use postcss
+
+In the case you want to use postcss plugins you will need to pass postcss option like  `rails tailwindcss:build[postcss]` or `rails tailwindcss:watch[postcss]`.
+
 ### Debugging with unminified assets
 
 If you want unminified assets, you can pass a `debug` argument to the rake task, i.e. `rails tailwindcss:build[debug]` or `rails tailwindcss:watch[debug]`.
