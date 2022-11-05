@@ -1,4 +1,4 @@
-require_relative "upstream"
+require_relative 'upstream'
 
 module Tailwindcss
   module Commands
@@ -25,7 +25,7 @@ module Tailwindcss
           MESSAGE
         end
 
-        exe_path = Dir.glob(File.expand_path(File.join(exe_path, "*", "tailwindcss"))).find do |f|
+        exe_path = Dir.glob(File.expand_path(File.join(exe_path, '*', 'tailwindcss'))).find do |f|
           Gem::Platform.match(Gem::Platform.new(File.basename(File.dirname(f))))
         end
 
@@ -55,7 +55,7 @@ module Tailwindcss
         exe_path
       end
 
-      def compile_command(debug: false, **kwargs)
+      def compile_command(debug: false, postcss: false, **kwargs)
         [
           executable(**kwargs),
           "-i", Rails.root.join("app/assets/stylesheets/application.tailwind.css").to_s,
@@ -67,10 +67,11 @@ module Tailwindcss
         end
       end
 
-      def watch_command(poll: false, **kwargs)
+      def watch_command(poll: false, postcss: false, **kwargs)
         compile_command(**kwargs).tap do |command|
           command << "-w"
           command << "-p" if poll
+          command << "--postcss" if postcss
         end
       end
     end
