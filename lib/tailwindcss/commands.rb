@@ -1,4 +1,4 @@
-require_relative 'upstream'
+require_relative "upstream"
 
 module Tailwindcss
   module Commands
@@ -25,7 +25,7 @@ module Tailwindcss
           MESSAGE
         end
 
-        exe_path = Dir.glob(File.expand_path(File.join(exe_path, '*', 'tailwindcss'))).find do |f|
+        exe_path = Dir.glob(File.expand_path(File.join(exe_path, "*", "tailwindcss"))).find do |f|
           Gem::Platform.match(Gem::Platform.new(File.basename(File.dirname(f))))
         end
 
