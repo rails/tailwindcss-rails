@@ -2,7 +2,7 @@ namespace :tailwindcss do
   desc "Build your Tailwind CSS"
   task :build do |_, args|
     debug = args.extras.include?("debug")
-    postcss = args.extras.include?("postcss")
+    postcss = args.extras.include?("postcss") || !ENV['TAILWIND_POSTCSS'].blank?
     command = Tailwindcss::Commands.compile_command(debug: debug, postcss: postcss)
     puts command.inspect if args.extras.include?("verbose")
     system(*command, exception: true)
