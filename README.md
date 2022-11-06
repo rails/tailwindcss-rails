@@ -48,9 +48,9 @@ If you are running `rails tailwindcss:watch` as a process in a Docker container,
 If you are running `rails tailwindcss:watch` on a system that doesn't fully support file system events, pass a `poll` argument to the task to instruct tailwindcss to instead use polling: `rails tailwindcss:watch[poll]`. If you use `bin/dev` then you should modify your `Procfile.dev`.
 
 
-### Use postcss
+### Using postcss
 
-In the case you want to use postcss plugins you will need to pass postcss option like  `rails tailwindcss:build[postcss]` or `rails tailwindcss:watch[postcss]`.
+The tailwind cli supports passing a postcss.config.js file. This might be necessary if you want to use postcss plugins (e.g. postcss-css-variables). In this case you can pass postcss as a task option `rails tailwindcss:build[postcss]` or `rails tailwindcss:watch[postcss]`.
 
 ### Debugging with unminified assets
 
@@ -149,6 +149,14 @@ The inline version also works:
 
 ```html
 <section class="bg-[url('image.svg')]">Has the image as it's background</section>
+```
+
+### Contributing
+
+If you want to fork this repo and test this gem locally in your projects, you will need to run `rake package` (the process this gem uses to generate platform-related gem versions, e.g. x86_64-linux, x86_64-darwin, etc). You can now point the local version of the gem in your Gemfile:
+
+```ruby
+gem 'tailwindcss-rails', '2.0.18', path: '/path/to/your/local/gem'
 ```
 
 ## License
