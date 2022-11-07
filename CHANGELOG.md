@@ -1,4 +1,9 @@
 
+## v2.0.18 / 2022-11-07
+
+* Update to [Tailwind CSS v3.2.2](https://github.com/tailwindlabs/tailwindcss/releases/tag/v3.2.2) by by [@AlexKovynev](https://github.com/AlexKovynev).
+
+
 ## v2.0.17 / 2022-11-01
 
 * Add `arm-linux` support. [#218](https://github.com/rails/tailwindcss-rails/pull/218) by [@flavorjones](https://github.com/flavorjones).
