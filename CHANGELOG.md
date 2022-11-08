@@ -1,7 +1,12 @@
 
+## v2.0.19 / 2022-11-08
+
+* Update `bin/dev` script to stay in sync with other Rails installers' versions (e.g, `cssbundling-rails` and `dartsass-rails`). Use `sh` instead of `bash` for vanilla Alpine support, and use `exec` to run foreman for better interrupt handling. [#219](https://github.com/rails/tailwindcss-rails/pull/219) by [@marcoroth](https://github.com/marcoroth).
+
+
 ## v2.0.18 / 2022-11-07
 
-* Update to [Tailwind CSS v3.2.2](https://github.com/tailwindlabs/tailwindcss/releases/tag/v3.2.2) by by [@AlexKovynev](https://github.com/AlexKovynev).
+* Update to [Tailwind CSS v3.2.2](https://github.com/tailwindlabs/tailwindcss/releases/tag/v3.2.2) by [@AlexKovynev](https://github.com/AlexKovynev).
 
 
 ## v2.0.17 / 2022-11-01
