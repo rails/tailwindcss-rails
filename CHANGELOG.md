@@ -1,4 +1,9 @@
 
+## v2.0.21 / 2022-11-11
+
+* Update to [Tailwind CSS v3.2.4](https://github.com/tailwindlabs/tailwindcss/releases/tag/v3.2.4) by [@flavorjones](https://github.com/flavorjones).
+
+
 ## v2.0.20 / 2022-11-10
 
 * Update to [Tailwind CSS v3.2.3](https://github.com/tailwindlabs/tailwindcss/releases/tag/v3.2.3) by [@willcosgrove](https://github.com/willcosgrove).
