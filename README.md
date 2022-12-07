@@ -28,8 +28,13 @@ The `tailwindcss:build` is automatically attached to `assets:precompile`, so bef
 
 ### Building for testing
 
-The `tailwindcss:build` is automatically attached to `test:prepare`, which runs before Rails tests. (Note that this currently only applies to rails `test:*` tasks (like `test:all` or `test:controllers`), not "rails test", as that doesn't load `test:prepare`).
+The `tailwindcss:build` task is automatically attached to the `test:prepare` Rake task. The `test:prepare` task is run before some test tasks (e.g. `test:all` and `test:controllers`), but not before the bare `test` task.
 
+If your tests need Tailwind assets in your CI environment, it's best to be explicit and run this command:
+
+```
+bin/rails test:prepare test
+```
 
 ### Update assets automatically
 
