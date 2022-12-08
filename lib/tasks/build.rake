@@ -3,7 +3,7 @@ namespace :tailwindcss do
   task :build do |_, args|
     debug = args.extras.include?("debug")
     command = Tailwindcss::Commands.compile_command(debug: debug)
-    puts command.inspect
+    puts command.inspect if args.extras.include?("verbose")
     system(*command, exception: true)
   end
 
@@ -12,7 +12,7 @@ namespace :tailwindcss do
     debug = args.extras.include?("debug")
     poll = args.extras.include?("poll")
     command = Tailwindcss::Commands.watch_command(debug: debug, poll: poll)
-    puts command.inspect
+    puts command.inspect if args.extras.include?("verbose")
     system(*command)
   end
 end
