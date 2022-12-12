@@ -70,7 +70,8 @@ Tailwind uses modern CSS features that are not recognized by the `sassc-rails` e
 
 ### Class names must be spelled out
 
-For Tailwind to work, your class names need to be spelled out. They can't be programmatically composed. So no "text-gray-#{grade}", only "text-gray-500".
+For Tailwind to work, your class names need to be spelled out. If you need to make sure Tailwind generates certain class names that don’t exist in your content files or they are programmatically composed, use the [safelist option](https://tailwindcss.com/docs/content-configuration#safelisting-classes).
+
 
 ### ERROR: Cannot find the tailwindcss executable for &lt;supported platform&gt;
 
