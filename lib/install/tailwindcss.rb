@@ -48,6 +48,11 @@ else
   run "gem install foreman"
 end
 
+unless Rails.root.join(".browserslistrc").exist?
+  say "Add default .browserslistrc"
+  copy_file "#{__dir__}/.browserslistrc", ".browserslistrc"
+end
+
 say "Add bin/dev to start foreman"
 copy_file "#{__dir__}/dev", "bin/dev"
 chmod "bin/dev", 0755, verbose: false
