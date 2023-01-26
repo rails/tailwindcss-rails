@@ -58,6 +58,38 @@ class Tailwindcss::CommandsTest < ActiveSupport::TestCase
     end
   end
 
+  test ".compile_file_command" do
+    mock_exe_directory("sparc-solaris2.8") do |dir, executable|
+      Rails.stub(:root, Pathname.new(File.dirname(__FILE__))) do
+        file = Rails.root.join("../../fixtures/application.tailwind.css")
+        actual = Tailwindcss::Commands.compile_file_command(file: file, glob: "*.tailwind.css", exe_path: dir)
+        assert_kind_of(Array, actual)
+        assert_equal(executable, actual.first)
+        assert_includes(actual, "--minify")
+        assert_includes(actual, "-c")
+        assert_includes(actual[2], "application.tailwind.css")
+        refute_includes(actual[4], "tailwind.css")
+
+        actual = Tailwindcss::Commands.compile_file_command(file: file, glob: "*.tailwind.css", exe_path: dir, debug: true)
+        assert_kind_of(Array, actual)
+        assert_equal(executable, actual.first)
+        assert_includes(actual, "-c")
+        refute_includes(actual, "--minify")
+        assert_includes(actual[2], "application.tailwind.css")
+        refute_includes(actual[4], "tailwind.css")
+
+        file = Rails.root.join("../../fixtures/custom.tailwind.css")
+        actual = Tailwindcss::Commands.compile_file_command(file: file, glob: "*.tailwind.css", exe_path: dir)
+        assert_kind_of(Array, actual)
+        assert_equal(executable, actual.first)
+        assert_includes(actual, "--minify")
+        assert_includes(actual[2], "custom.tailwind.css")
+        refute_includes(actual, "-c")
+        refute_includes(actual[4], "tailwind.css")
+      end
+    end
+  end
+
   test ".watch_command" do
     mock_exe_directory("sparc-solaris2.8") do |dir, executable|
       Rails.stub(:root, File) do # Rails.root won't work in this test suite
@@ -81,6 +113,44 @@ class Tailwindcss::CommandsTest < ActiveSupport::TestCase
         assert_includes(actual, "-w")
         assert_includes(actual, "-p")
         assert_includes(actual, "--minify")
+      end
+    end
+  end
+
+  test ".watch_file_command" do
+    mock_exe_directory("sparc-solaris2.8") do |dir, executable|
+      Rails.stub(:root, Pathname.new(File.dirname(__FILE__))) do
+        file = Rails.root.join("../../fixtures/application.tailwind.css")
+        actual = Tailwindcss::Commands.watch_file_command(file: file, glob: "*.tailwind.css", exe_path: dir)
+        assert_kind_of(Array, actual)
+        assert_equal(executable, actual.first)
+        assert_includes(actual, "-w")
+        assert_includes(actual, "--minify")
+        assert_includes(actual, "-c")
+        assert_includes(actual[2], "application.tailwind.css")
+        refute_includes(actual, "-p")
+        refute_includes(actual[4], "tailwind.css")
+
+        actual = Tailwindcss::Commands.watch_file_command(file: file, glob: "*.tailwind.css", exe_path: dir, debug: true)
+        assert_kind_of(Array, actual)
+        assert_equal(executable, actual.first)
+        assert_includes(actual, "-w")
+        assert_includes(actual, "-c")
+        assert_includes(actual[2], "application.tailwind.css")
+        refute_includes(actual, "-p")
+        refute_includes(actual, "--minify")
+        refute_includes(actual[4], "tailwind.css")
+
+        file = Rails.root.join("../../fixtures/custom.tailwind.css")
+        actual = Tailwindcss::Commands.watch_file_command(file: file, glob: "*.tailwind.css", exe_path: dir, poll: true)
+        assert_kind_of(Array, actual)
+        assert_equal(executable, actual.first)
+        assert_includes(actual, "-w")
+        assert_includes(actual, "-p")
+        assert_includes(actual, "--minify")
+        assert_includes(actual[2], "custom.tailwind.css")
+        refute_includes(actual, "-c")
+        refute_includes(actual[4], "tailwind.css")
       end
     end
   end
