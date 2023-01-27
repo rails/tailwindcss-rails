@@ -77,7 +77,7 @@ module Tailwindcss
         file = Pathname.new(file.to_s)
         input = file
         output = Rails.root.join("app/assets/builds", file.basename.sub("tailwind.", ""))
-        config = input.read.include?("@config") ? nil : Rails.root.join("config/tailwind.config.js")
+        config = input.open(&:readline).starts_with?("@config") ? nil : Rails.root.join("config/tailwind.config.js")
         [
           executable(**kwargs),
           "-i", input.to_s,
