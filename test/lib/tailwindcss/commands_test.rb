@@ -62,7 +62,7 @@ class Tailwindcss::CommandsTest < ActiveSupport::TestCase
     mock_exe_directory("sparc-solaris2.8") do |dir, executable|
       Rails.stub(:root, Pathname.new(File.dirname(__FILE__))) do
         file = Rails.root.join("../../fixtures/application.tailwind.css")
-        actual = Tailwindcss::Commands.compile_file_command(file: file, glob: "*.tailwind.css", exe_path: dir)
+        actual = Tailwindcss::Commands.compile_file_command(file: file, exe_path: dir)
         assert_kind_of(Array, actual)
         assert_equal(executable, actual.first)
         assert_includes(actual, "--minify")
@@ -70,7 +70,7 @@ class Tailwindcss::CommandsTest < ActiveSupport::TestCase
         assert_includes(actual[2], "application.tailwind.css")
         refute_includes(actual[4], "tailwind.css")
 
-        actual = Tailwindcss::Commands.compile_file_command(file: file, glob: "*.tailwind.css", exe_path: dir, debug: true)
+        actual = Tailwindcss::Commands.compile_file_command(file: file, exe_path: dir, debug: true)
         assert_kind_of(Array, actual)
         assert_equal(executable, actual.first)
         assert_includes(actual, "-c")
@@ -79,7 +79,7 @@ class Tailwindcss::CommandsTest < ActiveSupport::TestCase
         refute_includes(actual[4], "tailwind.css")
 
         file = Rails.root.join("../../fixtures/custom.tailwind.css")
-        actual = Tailwindcss::Commands.compile_file_command(file: file, glob: "*.tailwind.css", exe_path: dir)
+        actual = Tailwindcss::Commands.compile_file_command(file: file, exe_path: dir)
         assert_kind_of(Array, actual)
         assert_equal(executable, actual.first)
         assert_includes(actual, "--minify")
@@ -121,7 +121,7 @@ class Tailwindcss::CommandsTest < ActiveSupport::TestCase
     mock_exe_directory("sparc-solaris2.8") do |dir, executable|
       Rails.stub(:root, Pathname.new(File.dirname(__FILE__))) do
         file = Rails.root.join("../../fixtures/application.tailwind.css")
-        actual = Tailwindcss::Commands.watch_file_command(file: file, glob: "*.tailwind.css", exe_path: dir)
+        actual = Tailwindcss::Commands.watch_file_command(file: file, exe_path: dir)
         assert_kind_of(Array, actual)
         assert_equal(executable, actual.first)
         assert_includes(actual, "-w")
@@ -131,7 +131,7 @@ class Tailwindcss::CommandsTest < ActiveSupport::TestCase
         refute_includes(actual, "-p")
         refute_includes(actual[4], "tailwind.css")
 
-        actual = Tailwindcss::Commands.watch_file_command(file: file, glob: "*.tailwind.css", exe_path: dir, debug: true)
+        actual = Tailwindcss::Commands.watch_file_command(file: file, exe_path: dir, debug: true)
         assert_kind_of(Array, actual)
         assert_equal(executable, actual.first)
         assert_includes(actual, "-w")
@@ -142,7 +142,7 @@ class Tailwindcss::CommandsTest < ActiveSupport::TestCase
         refute_includes(actual[4], "tailwind.css")
 
         file = Rails.root.join("../../fixtures/custom.tailwind.css")
-        actual = Tailwindcss::Commands.watch_file_command(file: file, glob: "*.tailwind.css", exe_path: dir, poll: true)
+        actual = Tailwindcss::Commands.watch_file_command(file: file, exe_path: dir, poll: true)
         assert_kind_of(Array, actual)
         assert_equal(executable, actual.first)
         assert_includes(actual, "-w")
