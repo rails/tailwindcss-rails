@@ -55,6 +55,11 @@ If you want unminified assets, you can pass a `debug` argument to the rake task,
 Note that you can combine task options, e.g. `rails tailwindcss:watch[debug,poll]`.
 
 
+### Multiple CSS files
+
+If you have a reason to break up your CSS into multiple CSS files (for example application.tailwind.css and admin.tailwind.css), as long as your files match the `*.tailwind.css` convention, then the build and watch tasks will create build files with the `tailwind.` removed.
+
+
 ### Custom inputs or outputs
 
 If you need to use a custom input or output file, you can run `bundle exec tailwindcss` to access the platform-specific executable, and give it your own build options.
