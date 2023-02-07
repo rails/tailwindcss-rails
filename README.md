@@ -50,7 +50,7 @@ If you are running `rails tailwindcss:watch` on a system that doesn't fully supp
 
 ### Using postcss
 
-The tailwind cli supports passing a postcss.config.js file. This might be necessary if you want to use postcss plugins (e.g. postcss-css-variables). In this case you can pass postcss as a task option `rails tailwindcss:build[postcss]` or `rails tailwindcss:watch[postcss]`.
+The tailwind cli supports passing a postcss.config.js file. This might be necessary if you want to use postcss plugins (e.g. postcss-css-variables). This gem checks if a postcss.config.js exists, in which case it is used for building tailwind assets.
 
 ### Debugging with unminified assets
 

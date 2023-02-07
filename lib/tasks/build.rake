@@ -2,8 +2,7 @@ namespace :tailwindcss do
   desc "Build your Tailwind CSS"
   task :build do |_, args|
     debug = args.extras.include?("debug")
-    postcss = args.extras.include?("postcss") || !ENV['TAILWIND_POSTCSS'].blank?
-    command = Tailwindcss::Commands.compile_command(debug: debug, postcss: postcss)
+    command = Tailwindcss::Commands.compile_command(debug: debug, postcss: use_postcss?)
     puts command.inspect if args.extras.include?("verbose")
     system(*command, exception: true)
   end
@@ -12,10 +11,13 @@ namespace :tailwindcss do
   task :watch do |_, args|
     debug = args.extras.include?("debug")
     poll = args.extras.include?("poll")
-    postcss = args.extras.include?("postcss")
-    command = Tailwindcss::Commands.watch_command(debug: debug, poll: poll, postcss: postcss)
+    command = Tailwindcss::Commands.watch_command(debug: debug, poll: poll, postcss: use_postcss?)
     puts command.inspect if args.extras.include?("verbose")
     system(*command)
+  end
+
+  def use_postcss?
+    File.exist?(Rails.root.join("postcss.config.js"))
   end
 end
 
