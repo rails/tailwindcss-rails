@@ -1,4 +1,12 @@
 
+## v2.0.22 / 2023-02-08
+
+* Update to [Tailwind CSS v3.2.6](https://github.com/tailwindlabs/tailwindcss/releases/tag/v3.2.6) by [@flavorjones](https://github.com/flavorjones).
+* Introduce a `verbose` task argument, and put verbose logging behind it by [@ghiculescu](https://github.com/ghiculescu).
+* Fix scaffold view generation for nested models (#227) by [@dixpac](https://github.com/dixpac).
+* Improved documentation by [@ghiculescu](https://github.com/ghiculescu) and [@flavorjones](https://github.com/flavorjones).
+
+
 ## v2.0.21 / 2022-11-11
 
 * Update to [Tailwind CSS v3.2.4](https://github.com/tailwindlabs/tailwindcss/releases/tag/v3.2.4) by [@flavorjones](https://github.com/flavorjones).
