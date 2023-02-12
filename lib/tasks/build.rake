@@ -1,7 +1,7 @@
 namespace :tailwindcss do
   desc "Build your Tailwind CSS"
   task :build do |_, args|
-    debug = args.extras.include?("debug")
+    debug = Tailwindcss::Commands.debug_option(args.extras)
     command = Tailwindcss::Commands.compile_command(debug: debug)
     puts command.inspect if args.extras.include?("verbose")
     system(*command, exception: true)
@@ -9,8 +9,8 @@ namespace :tailwindcss do
 
   desc "Watch and build your Tailwind CSS on file changes"
   task :watch do |_, args|
-    debug = args.extras.include?("debug")
-    poll = args.extras.include?("poll")
+    debug = Tailwindcss::Commands.debug_option(args.extras)
+    poll = Tailwindcss::Commands.poll_option(args.extras)
     command = Tailwindcss::Commands.watch_command(debug: debug, poll: poll)
     puts command.inspect if args.extras.include?("verbose")
     system(*command)

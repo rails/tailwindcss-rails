@@ -72,6 +72,14 @@ module Tailwindcss
           command << "-p" if poll
         end
       end
+
+      def debug_option(rake_task_args_extras)
+        rake_task_args_extras.include?("debug")
+      end
+
+      def poll_option(rake_task_args_extras)
+        rake_task_args_extras.include?("poll")
+      end
     end
   end
 end

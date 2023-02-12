@@ -84,4 +84,16 @@ class Tailwindcss::CommandsTest < ActiveSupport::TestCase
       end
     end
   end
+
+  test ".debug_option" do
+    refute(Tailwindcss::Commands.debug_option([]))
+    assert(Tailwindcss::Commands.debug_option(["debug"]))
+    refute(Tailwindcss::Commands.debug_option(["poll"]))
+  end
+
+  test ".poll_option" do
+    refute(Tailwindcss::Commands.poll_option([]))
+    refute(Tailwindcss::Commands.poll_option(["debug"]))
+    assert(Tailwindcss::Commands.poll_option(["poll"]))
+  end
 end
