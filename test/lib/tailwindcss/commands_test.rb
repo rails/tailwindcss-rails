@@ -18,6 +18,14 @@ class Tailwindcss::CommandsTest < ActiveSupport::TestCase
     end
   end
 
+  def with_env(env)
+    before = ENV.to_h.dup
+    env.each { |k, v| ENV[k] = v }
+    yield
+  ensure
+    ENV.replace(before)
+  end
+
   test ".executable returns the absolute path to the binary" do
     mock_exe_directory("sparc-solaris2.8") do |dir, executable|
       expected = File.expand_path(File.join(dir, "sparc-solaris2.8", "tailwindcss"))
@@ -89,11 +97,48 @@ class Tailwindcss::CommandsTest < ActiveSupport::TestCase
     refute(Tailwindcss::Commands.debug_option([]))
     assert(Tailwindcss::Commands.debug_option(["debug"]))
     refute(Tailwindcss::Commands.debug_option(["poll"]))
+
+    with_env({"TAILWINDCSS_RAILS_NO_MINIFY" => "f"}) do
+      refute(Tailwindcss::Commands.debug_option([]))
+    end
+
+    with_env({"TAILWINDCSS_RAILS_NO_MINIFY" => "t"}) do
+      assert(Tailwindcss::Commands.debug_option([]))
+    end
   end
 
   test ".poll_option" do
     refute(Tailwindcss::Commands.poll_option([]))
     refute(Tailwindcss::Commands.poll_option(["debug"]))
     assert(Tailwindcss::Commands.poll_option(["poll"]))
+  end
+
+  test ".truthy_string_value" do
+    [
+      nil,
+      "",
+      "F", "FALSE",
+      "f", "false",
+      "off", "OFF",
+      "0",
+    ].each do |value|
+      refute(
+        Tailwindcss::Commands.truthy_string_value(value),
+        "#{value.inspect} should be falsey",
+      )
+    end
+
+    [
+      "T", "TRUE",
+      "t", "true",
+      "on", "ON",
+      "1",
+      "anything not falsey really",
+    ].each do |value|
+      assert(
+        Tailwindcss::Commands.truthy_string_value(value),
+        "#{value.inspect} should be truthy",
+      )
+    end
   end
 end

@@ -74,11 +74,20 @@ module Tailwindcss
       end
 
       def debug_option(rake_task_args_extras)
-        rake_task_args_extras.include?("debug")
+        rake_task_args_extras.include?("debug") || truthy_string_value(ENV['TAILWINDCSS_RAILS_NO_MINIFY'])
       end
 
       def poll_option(rake_task_args_extras)
         rake_task_args_extras.include?("poll")
+      end
+
+      def truthy_string_value(value)
+        if !value.present? ||
+           ["f", "F", "false", "FALSE", "off", "OFF", "0"].include?(value)
+          false
+        else
+          true
+        end
       end
     end
   end

@@ -55,6 +55,11 @@ If you want unminified assets, you can pass a `debug` argument to the rake task,
 Note that you can combine task options, e.g. `rails tailwindcss:watch[debug,poll]`.
 
 
+### Never minify assets
+
+If you _always_ want unminified assets, you can set the environment variable `TAILWINDCSS_RAILS_NO_MINIFY` to something that [looks truthy](https://api.rubyonrails.org/classes/ActiveModel/Type/Boolean.html) (hint: "t" or "1" will work).
+
+
 ### Custom inputs or outputs
 
 If you need to use a custom input or output file, you can run `bundle exec tailwindcss` to access the platform-specific executable, and give it your own build options.
