@@ -6,7 +6,16 @@ module Tailwindcss
     class ScaffoldGenerator < Erb::Generators::ScaffoldGenerator
       include Rails::Generators::ResourceHelpers
 
-      source_root File.expand_path("../templates", __FILE__)
+
+      def self.source_root
+        fallback_path=File.expand_path("../templates", __FILE__)
+        if Rails.root.nil?
+          return fallback_path
+        else
+          custom_scaffold_templates_path = File.join(Rails.root,"lib", "templates", "erb", "scaffold")
+          return Dir.exist?(custom_scaffold_templates_path)? custom_scaffold_templates_path : fallback_path
+        end
+      end
 
       argument :attributes, type: :array, default: [], banner: "field:type field:type"
 
