@@ -1,4 +1,9 @@
 
+## v2.0.23 / 2023-02-19
+
+* Update to [Tailwind CSS v3.2.7](https://github.com/tailwindlabs/tailwindcss/releases/tag/v3.2.7) by [@flavorjones](https://github.com/flavorjones).
+
+
 ## v2.0.22 / 2023-02-08
 
 * Update to [Tailwind CSS v3.2.6](https://github.com/tailwindlabs/tailwindcss/releases/tag/v3.2.6) by [@flavorjones](https://github.com/flavorjones).
