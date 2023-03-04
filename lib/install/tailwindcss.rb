@@ -39,10 +39,15 @@ unless Rails.root.join("app/assets/stylesheets/application.tailwind.css").exist?
 end
 
 if Rails.root.join("Procfile.dev").exist?
-  append_to_file "Procfile.dev", "css: bin/rails tailwindcss:watch\n"
+  unless Gem.win_platform?
+    append_to_file "Procfile.dev", "css: bin/rails tailwindcss:watch\n"
+  else
+    append_to_file "Procfile.dev", "css: ruby bin/rails tailwindcss:watch\n"
+  end
 else
   say "Add default Procfile.dev"
   copy_file "#{__dir__}/Procfile.dev", "Procfile.dev"
+  gsub_file "Procfile.dev", /bin\/rails/, "ruby bin/rails" if Gem.win_platform?
 
   say "Ensure foreman is installed"
   run "gem install foreman"
@@ -51,6 +56,7 @@ end
 say "Add bin/dev to start foreman"
 copy_file "#{__dir__}/dev", "bin/dev"
 chmod "bin/dev", 0755, verbose: false
+copy_file "#{__dir__}/dev.bat", "bin/dev.bat" if Gem.win_platform?
 
 say "Compile initial Tailwind build"
 run "rails tailwindcss:build"
