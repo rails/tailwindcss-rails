@@ -1,4 +1,9 @@
 
+## v2.0.25 / 2023-03-14
+
+* Installer now includes all 5 official Tailwind plugins (adding `line-clamp` and `container-queries`). (#254) by @Kentasmic
+
+
 ## v2.0.24 / 2023-03-05
 
 * When Rails CSS compression is on, avoid generating minified tailwindcss assets. (#253) by [@flavorjones](https://github.com/flavorjones).
