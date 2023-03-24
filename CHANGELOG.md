@@ -1,4 +1,27 @@
 
+## v2.0.25 / 2023-03-14
+
+* Installer now includes all 5 official Tailwind plugins (adding `line-clamp` and `container-queries`). (#254) by @Kentasmic
+
+
+## v2.0.24 / 2023-03-05
+
+* When Rails CSS compression is on, avoid generating minified tailwindcss assets. (#253) by [@flavorjones](https://github.com/flavorjones).
+
+
+## v2.0.23 / 2023-02-19
+
+* Update to [Tailwind CSS v3.2.7](https://github.com/tailwindlabs/tailwindcss/releases/tag/v3.2.7) by [@flavorjones](https://github.com/flavorjones).
+
+
+## v2.0.22 / 2023-02-08
+
+* Update to [Tailwind CSS v3.2.6](https://github.com/tailwindlabs/tailwindcss/releases/tag/v3.2.6) by [@flavorjones](https://github.com/flavorjones).
+* Introduce a `verbose` task argument, and put verbose logging behind it by [@ghiculescu](https://github.com/ghiculescu).
+* Fix scaffold view generation for nested models (#227) by [@dixpac](https://github.com/dixpac).
+* Improved documentation by [@ghiculescu](https://github.com/ghiculescu) and [@flavorjones](https://github.com/flavorjones).
+
+
 ## v2.0.21 / 2022-11-11
 
 * Update to [Tailwind CSS v3.2.4](https://github.com/tailwindlabs/tailwindcss/releases/tag/v3.2.4) by [@flavorjones](https://github.com/flavorjones).

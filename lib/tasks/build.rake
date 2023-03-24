@@ -1,6 +1,6 @@
 namespace :tailwindcss do
   desc "Build your Tailwind CSS"
-  task :build do |_, args|
+  task build: :environment do |_, args|
     debug = args.extras.include?("debug")
 
     files = Rails.root.join("app/assets/stylesheets").glob("*.tailwind.css")
@@ -20,7 +20,7 @@ namespace :tailwindcss do
   end
 
   desc "Watch and build your Tailwind CSS on file changes"
-  task :watch do |_, args|
+  task watch: :environment do |_, args|
     debug = args.extras.include?("debug")
     poll = args.extras.include?("poll")
 

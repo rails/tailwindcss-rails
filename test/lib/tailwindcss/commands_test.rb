@@ -58,6 +58,25 @@ class Tailwindcss::CommandsTest < ActiveSupport::TestCase
     end
   end
 
+  test ".compile_command when Rails compression is on" do
+    mock_exe_directory("sparc-solaris2.8") do |dir, executable|
+      Rails.stub(:root, File) do # Rails.root won't work in this test suite
+        Tailwindcss::Commands.stub(:rails_css_compressor?, true) do
+          actual = Tailwindcss::Commands.compile_command(exe_path: dir)
+          assert_kind_of(Array, actual)
+          refute_includes(actual, "--minify")
+        end
+
+        Tailwindcss::Commands.stub(:rails_css_compressor?, false) do
+          actual = Tailwindcss::Commands.compile_command(exe_path: dir)
+          assert_kind_of(Array, actual)
+          assert_includes(actual, "--minify")
+        end
+      end
+    end
+  end
+
+
   test ".compile_file_command" do
     mock_exe_directory("sparc-solaris2.8") do |dir, executable|
       Rails.stub(:root, Pathname.new(File.dirname(__FILE__))) do

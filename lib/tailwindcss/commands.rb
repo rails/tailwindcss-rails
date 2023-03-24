@@ -62,7 +62,7 @@ module Tailwindcss
           "-o", Rails.root.join("app/assets/builds/tailwind.css").to_s,
           "-c", Rails.root.join("config/tailwind.config.js").to_s,
         ].tap do |command|
-          command << "--minify" unless debug
+          command << "--minify" unless (debug || rails_css_compressor?)
         end
       end
 
@@ -94,6 +94,10 @@ module Tailwindcss
           command << "-w"
           command << "-p" if poll
         end
+      end
+
+      def rails_css_compressor?
+        defined?(Rails) && Rails&.application&.config&.assets&.css_compressor.present?
       end
     end
   end
