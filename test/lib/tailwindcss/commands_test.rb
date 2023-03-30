@@ -2,11 +2,6 @@ require "test_helper"
 require "minitest/mock"
 
 class Tailwindcss::CommandsTest < ActiveSupport::TestCase
-  test ".platform is a string containing just the cpu and os (not the version)" do
-    expected = "#{Gem::Platform.local.cpu}-#{Gem::Platform.local.os}"
-    assert_equal(expected, Tailwindcss::Commands.platform)
-  end
-
   def mock_exe_directory(platform)
     Dir.mktmpdir do |dir|
       FileUtils.mkdir(File.join(dir, platform))
@@ -16,6 +11,19 @@ class Tailwindcss::CommandsTest < ActiveSupport::TestCase
         yield(dir, path)
       end
     end
+  end
+
+  def mock_local_tailwindcss_install
+    Dir.mktmpdir do |dir|
+      path = File.join(dir, "tailwindcss")
+      FileUtils.touch(path)
+      yield(dir, path)
+    end
+  end
+
+  test ".platform is a string containing just the cpu and os (not the version)" do
+    expected = "#{Gem::Platform.local.cpu}-#{Gem::Platform.local.os}"
+    assert_equal(expected, Tailwindcss::Commands.platform)
   end
 
   test ".executable returns the absolute path to the binary" do
@@ -39,6 +47,66 @@ class Tailwindcss::CommandsTest < ActiveSupport::TestCase
       assert_raises(Tailwindcss::Commands::ExecutableNotFoundException) do
         Tailwindcss::Commands.executable(exe_path: dir)
       end
+    end
+  end
+
+  test ".executable returns the executable in TAILWINDCSS_INSTALL_DIR when no packaged binary exists" do
+    mock_local_tailwindcss_install do |local_install_dir, expected|
+      result = nil
+      begin
+        ENV["TAILWINDCSS_INSTALL_DIR"] = local_install_dir
+        assert_output(nil, /using TAILWINDCSS_INSTALL_DIR/) do
+          result = Tailwindcss::Commands.executable(exe_path: "/does/not/exist")
+        end
+      ensure
+        ENV["TAILWINDCSS_INSTALL_DIR"] = nil
+      end
+      assert_equal(expected, result)
+    end
+  end
+
+  test ".executable returns the executable in TAILWINDCSS_INSTALL_DIR when we're not on a supported platform" do
+    Gem::Platform.stub(:match, false) do # nothing is supported
+      mock_local_tailwindcss_install do |local_install_dir, expected|
+        result = nil
+        begin
+          ENV["TAILWINDCSS_INSTALL_DIR"] = local_install_dir
+          assert_output(nil, /using TAILWINDCSS_INSTALL_DIR/) do
+            result = Tailwindcss::Commands.executable
+          end
+        ensure
+          ENV["TAILWINDCSS_INSTALL_DIR"] = nil
+        end
+        assert_equal(expected, result)
+      end
+    end
+  end
+
+  test ".executable returns the executable in TAILWINDCSS_INSTALL_DIR even when a packaged binary exists" do
+    mock_exe_directory("sparc-solaris2.8") do |dir, _executable|
+      mock_local_tailwindcss_install do |local_install_dir, expected|
+        result = nil
+        begin
+          ENV["TAILWINDCSS_INSTALL_DIR"] = local_install_dir
+          assert_output(nil, /using TAILWINDCSS_INSTALL_DIR/) do
+            result = Tailwindcss::Commands.executable(exe_path: dir)
+          end
+        ensure
+          ENV["TAILWINDCSS_INSTALL_DIR"] = nil
+        end
+        assert_equal(expected, result)
+      end
+    end
+  end
+
+  test ".executable raises ExecutableNotFoundException is TAILWINDCSS_INSTALL_DIR is set to a nonexistent dir" do
+    begin
+      ENV["TAILWINDCSS_INSTALL_DIR"] = "/does/not/exist"
+      assert_raises(Tailwindcss::Commands::DirectoryNotFoundException) do
+        Tailwindcss::Commands.executable
+      end
+    ensure
+      ENV["TAILWINDCSS_INSTALL_DIR"] = nil
     end
   end
 
