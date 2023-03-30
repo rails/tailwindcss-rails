@@ -26,6 +26,13 @@ class Tailwindcss::CommandsTest < ActiveSupport::TestCase
     end
   end
 
+  test ".executable accepts an override through the TAILWINDCSS_RAILS_EXECUTABLE_PATH environment variable" do
+    filename = "/nix/store/li4jwsd16y68yjyznbffaf98jccipg36-tailwindcss-3.2.7/bin/tailwindcss"
+    ENV["TAILWINDCSS_RAILS_EXECUTABLE_PATH"] = filename
+    assert_equal(filename, Tailwindcss::Commands.executable)
+    ENV["TAILWINDCSS_RAILS_EXECUTABLE_PATH"] = ""
+  end
+
   test ".executable raises UnsupportedPlatformException when we're not on a supported platform" do
     Gem::Platform.stub(:match, false) do # nothing is supported
       assert_raises(Tailwindcss::Commands::UnsupportedPlatformException) do

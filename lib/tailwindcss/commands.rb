@@ -25,11 +25,17 @@ module Tailwindcss
           MESSAGE
         end
 
-        exe_path = Dir.glob(File.expand_path(File.join(exe_path, "*", "tailwindcss"))).find do |f|
-          Gem::Platform.match(Gem::Platform.new(File.basename(File.dirname(f))))
+        # Let the user override the executable path with an environment variable
+        # Useful for when running under Nix
+        exe_file = ENV["TAILWINDCSS_RAILS_EXECUTABLE_PATH"]
+
+        if exe_file.nil? || exe_file.empty?
+          exe_file = Dir.glob(File.expand_path(File.join(exe_path, "*", "tailwindcss"))).find do |f|
+            Gem::Platform.match(Gem::Platform.new(File.basename(File.dirname(f))))
+          end
         end
 
-        if exe_path.nil?
+        if exe_file.nil? || exe_file.empty?
           raise ExecutableNotFoundException, <<~MESSAGE
             Cannot find the tailwindcss executable for #{platform} in #{exe_path}
 
@@ -52,7 +58,7 @@ module Tailwindcss
           MESSAGE
         end
 
-        exe_path
+        exe_file
       end
 
       def compile_command(debug: false, **kwargs)
