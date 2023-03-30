@@ -1,7 +1,7 @@
 module Tailwindcss
   # constants describing the upstream tailwindcss project
   module Upstream
-    VERSION = "v3.2.7"
+    VERSION = "v3.3.0"
 
     # rubygems platform name => upstream release filename
     NATIVE_PLATFORMS = {
