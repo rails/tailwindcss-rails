@@ -2,6 +2,7 @@
 ## next / unreleased
 
 * Update to [Tailwind CSS v3.3.0](https://github.com/tailwindlabs/tailwindcss/releases/tag/v3.3.0) by @tysongach
+* Users can use a locally-installed `tailwindcss` executable by setting a `TAILWINDCSS_INSTALL_DIR` environment variable. (#224, #226) by @flavorjones
 
 
 ## v2.0.25 / 2023-03-14

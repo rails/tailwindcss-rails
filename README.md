@@ -9,7 +9,34 @@ With Rails 7 you can generate a new application preconfigured with Tailwind by u
 1. Run `./bin/bundle add tailwindcss-rails`
 2. Run `./bin/rails tailwindcss:install`
 
-This gem wraps [the standalone executable version](https://tailwindcss.com/blog/standalone-cli) of the Tailwind CSS v3 framework. These executables are platform specific, so there are actually separate underlying gems per platform, but the correct gem will automatically be picked for your platform. Supported platforms are Linux x64, macOS arm64, macOS x64, and Windows x64. (Note that due to this setup, you must install the actual gems – you can't pin your gem to the github repo.)
+This gem wraps [the standalone executable version](https://tailwindcss.com/blog/standalone-cli) of the Tailwind CSS v3 framework. These executables are platform specific, so there are actually separate underlying gems per platform, but the correct gem will automatically be picked for your platform.
+
+Supported platforms are:
+
+- arm64-darwin (macos-arm64)
+- x64-mingw32 (windows-x64)
+- x64-mingw-ucr (windows-x64)
+- x86_64-darwin (macos-x64)
+- x86_64-linux (linux-x64)
+- aarch64-linux (linux-arm64)
+- arm-linux (linux-armv7)
+
+
+### Using a local installation of `tailwindcss`
+
+If you are not able to use the vendored standalone executables (for example, if you're on an unsupported platform), you can use a local installation of the `tailwindcss` executable by setting an environment variable named `TAILWINDCSS_INSTALL_DIR` to the directory containing the executable.
+
+For example, if you've installed `tailwindcss` so that the executable is found at `/node_modules/bin/tailwindcss`, then you should set your environment variable like so:
+
+``` sh
+TAILWINDCSS_INSTALL_DIR=/path/to/node_modules/bin
+```
+
+This also works with relative paths. If you've installed into your app's directory at `./node_modules/.bin/tailwindcss`:
+
+``` sh
+TAILWINDCSS_INSTALL_DIR=node_modules/.bin
+```
 
 
 ## Developing with Tailwindcss
