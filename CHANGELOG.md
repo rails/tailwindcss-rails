@@ -1,4 +1,9 @@
 
+## next / unreleased
+
+* Update to [Tailwind CSS v3.3.0](https://github.com/tailwindlabs/tailwindcss/releases/tag/v3.3.0) by @tysongach
+
+
 ## v2.0.25 / 2023-03-14
 
 * Installer now includes all 5 official Tailwind plugins (adding `line-clamp` and `container-queries`). (#254) by @Kentasmic
