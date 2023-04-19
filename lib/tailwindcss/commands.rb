@@ -90,6 +90,29 @@ module Tailwindcss
         end
       end
 
+      def compile_file_command(file:, debug: false, **kwargs)
+        file = Pathname.new(file.to_s)
+        input = file
+        output = Rails.root.join("app/assets/builds", file.basename.sub("tailwind.", ""))
+        config = input.open(&:readline).start_with?("@config") ? nil : Rails.root.join("config/tailwind.config.js")
+        [
+          executable(**kwargs),
+          "-i", input.to_s,
+          "-o", output.to_s
+        ].tap do |command|
+          command << "-c" if config
+          command << config.to_s if config
+          command << "--minify" unless debug
+        end
+      end
+
+      def watch_file_command(poll: false, **kwargs)
+        compile_file_command(**kwargs).tap do |command|
+          command << "-w"
+          command << "-p" if poll
+        end
+      end
+
       def rails_css_compressor?
         defined?(Rails) && Rails&.application&.config&.assets&.css_compressor.present?
       end
