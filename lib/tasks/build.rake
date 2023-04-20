@@ -11,7 +11,8 @@ namespace :tailwindcss do
   task watch: :environment do |_, args|
     debug = args.extras.include?("debug")
     poll = args.extras.include?("poll")
-    command = Tailwindcss::Commands.watch_command(debug: debug, poll: poll)
+    always = args.extras.include?("always")
+    command = Tailwindcss::Commands.watch_command(always: always, debug: debug, poll: poll)
     puts command.inspect if args.extras.include?("verbose")
     system(*command)
   end
