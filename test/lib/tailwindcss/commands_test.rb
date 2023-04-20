@@ -165,8 +165,15 @@ class Tailwindcss::CommandsTest < ActiveSupport::TestCase
         assert_kind_of(Array, actual)
         assert_equal(executable, actual.first)
         assert_includes(actual, "-w")
+        refute_includes(actual, "always")
         assert_includes(actual, "-p")
         assert_includes(actual, "--minify")
+
+        actual = Tailwindcss::Commands.watch_command(exe_path: dir, always: true)
+        assert_kind_of(Array, actual)
+        assert_equal(executable, actual.first)
+        assert_includes(actual, "-w")
+        assert_includes(actual, "always")
       end
     end
   end
