@@ -1,4 +1,9 @@
 
+## v2.0.28 / 2023-04-21
+
+* The `watch` task accepts an `always` argument to keep the watcher alive when stdin is closed: `rails tailwindcss:watch[always]`. #262 by @GoodForOneFare
+
+
 ## v2.0.27 / 2023-04-02
 
 * Update to [Tailwind CSS v3.3.1](https://github.com/tailwindlabs/tailwindcss/releases/tag/v3.3.1) by @flavorjones
