@@ -70,9 +70,11 @@ While you're developing your application, you want to run Tailwind in "watch" mo
 - running `rails tailwindcss:watch` as a separate process,
 - or by running `./bin/dev` which uses [foreman](https://github.com/ddollar/foreman) to start both the Tailwind watch process and the rails server in development mode.
 
+If you are running `rails tailwindcss:watch` on a system that doesn't fully support file system events, pass a `poll` argument to the task to instruct tailwindcss to instead use polling: `rails tailwindcss:watch[poll]`. If you use `bin/dev` then you should modify your `Procfile.dev`.
+
 If you are running `rails tailwindcss:watch` as a process in a Docker container, set `tty: true` in `docker-compose.yml` for the appropriate container to keep the watch process running.
 
-If you are running `rails tailwindcss:watch` on a system that doesn't fully support file system events, pass a `poll` argument to the task to instruct tailwindcss to instead use polling: `rails tailwindcss:watch[poll]`. If you use `bin/dev` then you should modify your `Procfile.dev`.
+If you are running `rails tailwindcss:watch` in a docker container without a tty, pass the `always` argument to the task to instruct tailwindcss to keep the watcher alive even when `stdin` is closed: `rails tailwindcss:watch[always]`. If you use `bin/dev` then you should modify your `Procfile.dev`.
 
 
 ### Debugging with unminified assets
