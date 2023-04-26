@@ -1,5 +1,5 @@
 
-## next / unreleased
+## v2.0.29 / 2023-04-26
 
 * Update to [Tailwind CSS v3.3.2](https://github.com/tailwindlabs/tailwindcss/releases/tag/v3.3.2) by @flavorjones
 
