@@ -1,6 +1,7 @@
 
 ## next / unreleased
 
+* Update to [Tailwind CSS v3.3.3](https://github.com/tailwindlabs/tailwindcss/releases/tag/v3.3.3) by @flavorjones
 * If defined, the `spec:prepare` rake task will be decorated with `tailwindcss:build` (#271) by @rmehner
 
 
