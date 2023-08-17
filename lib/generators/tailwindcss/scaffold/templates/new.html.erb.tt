@@ -3,5 +3,5 @@
 
   <%%= render "form", <%= singular_table_name %>: @<%= singular_table_name %> %>
 
-  <%%= link_to 'Back to <%= human_name.pluralize.downcase %>', <%= index_helper %>_path, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+  <%%= link_to "Back to <%= human_name.pluralize.downcase %>", <%= index_helper %>_path, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
 </div>

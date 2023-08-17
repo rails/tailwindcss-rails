@@ -16,7 +16,7 @@
 <% end -%>
   <%% if action_name != "show" %>
     <%%= link_to "Show this <%= human_name.downcase %>", <%= singular_name %>, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-    <%%= link_to 'Edit this <%= human_name.downcase %>', edit_<%= singular_name %>_path(<%= singular_name %>), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
+    <%%= link_to "Edit this <%= human_name.downcase %>", edit_<%= singular_name %>_path(<%= singular_name %>), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
     <hr class="mt-6">
   <%% end %>
 </div>
