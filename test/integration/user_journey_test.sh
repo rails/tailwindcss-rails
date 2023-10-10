@@ -23,5 +23,11 @@ bundle install
 
 bin/rails tailwindcss:install
 
+cat <<EOF >> Rakefile
+task :still_here do
+  puts "Rake process did not exit early"
+end
+EOF
+
 # ensure rake tasks don't exec (#188)
-bin/rails tailwindcss:build about | grep "About your application"
+bin/rails tailwindcss:build still_here | grep "Rake process did not exit early"
