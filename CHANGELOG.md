@@ -1,3 +1,6 @@
+## next / unreleased
+
+* Update Procfile.dev to run foreman with `--open` option allowing remote sessions with `rdbg --attach` by @duduribeiro
 
 ## v2.0.30 / 2023-07-13
 
