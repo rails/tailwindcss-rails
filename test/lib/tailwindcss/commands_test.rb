@@ -7,9 +7,16 @@ class Tailwindcss::CommandsTest < ActiveSupport::TestCase
       FileUtils.mkdir(File.join(dir, platform))
       path = File.join(dir, platform, "tailwindcss")
       FileUtils.touch(path)
-      Gem::Platform.stub(:match_gem?, true) do
+      stub_gem_platform_match_gem(true) do
         yield(dir, path)
       end
+    end
+  end
+
+  def stub_gem_platform_match_gem(value)
+    assert_respond_to(Gem::Platform, :match_gem?)
+    Gem::Platform.stub(:match_gem?, value) do
+      yield
     end
   end
 
@@ -35,7 +42,7 @@ class Tailwindcss::CommandsTest < ActiveSupport::TestCase
   end
 
   test ".executable raises UnsupportedPlatformException when we're not on a supported platform" do
-    Gem::Platform.stub(:match_gem?, false) do # nothing is supported
+    stub_gem_platform_match_gem(false) do # nothing is supported
       assert_raises(Tailwindcss::Commands::UnsupportedPlatformException) do
         Tailwindcss::Commands.executable
       end
@@ -66,7 +73,7 @@ class Tailwindcss::CommandsTest < ActiveSupport::TestCase
   end
 
   test ".executable returns the executable in TAILWINDCSS_INSTALL_DIR when we're not on a supported platform" do
-    Gem::Platform.stub(:match_gem?, false) do # nothing is supported
+    stub_gem_platform_match_gem(false) do # nothing is supported
       mock_local_tailwindcss_install do |local_install_dir, expected|
         result = nil
         begin
