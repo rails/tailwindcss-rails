@@ -14,6 +14,8 @@ Gem::Specification.new do |spec|
     "rubygems_mfa_required" => "true"
   }
 
+  spec.required_rubygems_version = ">= 3.2.0" # for Gem::Platform#match_gem?
+
   spec.files = Dir["{app,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
   spec.bindir = "exe"
   spec.executables << "tailwindcss"
