@@ -1,7 +1,8 @@
-## next / unreleased
+## v2.0.32 / 2023-10-27
 
 * Update to [Tailwind CSS v3.3.5](https://github.com/tailwindlabs/tailwindcss/releases/tag/v3.3.5) from v3.3.3 by @flavorjones
   * Also see [v3.3.4 release notes](https://github.com/tailwindlabs/tailwindcss/releases/tag/v3.3.4)
+* Restore support for Ruby 2.7, broken in v2.0.31, by explicitly setting `required_rubygems_version = ">= 3.2.0"`. (#286) by @flavorjones
 
 
 ## v2.0.31 / 2023-10-10
