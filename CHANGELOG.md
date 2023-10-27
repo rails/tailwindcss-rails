@@ -1,3 +1,9 @@
+## next / unreleased
+
+* Update to [Tailwind CSS v3.3.5](https://github.com/tailwindlabs/tailwindcss/releases/tag/v3.3.5) from v3.3.3 by @flavorjones
+  * Also see [v3.3.4 release notes](https://github.com/tailwindlabs/tailwindcss/releases/tag/v3.3.4)
+
+
 ## v2.0.31 / 2023-10-10
 
 * Update Procfile.dev to run foreman with `--open` option allowing remote sessions with `rdbg --attach` (#281) by @duduribeiro
