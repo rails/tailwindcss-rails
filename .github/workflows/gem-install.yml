@@ -26,7 +26,7 @@ jobs:
       - run: rm Gemfile.lock
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: "3.1"
+          ruby-version: "3.2"
           bundler: latest
           bundler-cache: true
       - run: "bundle exec rake gem:${{matrix.platform}}"
@@ -42,7 +42,7 @@ jobs:
     steps:
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: "3.1"
+          ruby-version: "3.2"
       - uses: actions/download-artifact@v3
         with:
           name: gem-ruby
@@ -56,7 +56,7 @@ jobs:
     steps:
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: "3.1"
+          ruby-version: "3.2"
       - uses: actions/download-artifact@v3
         with:
           name: gem-x86_64-linux
@@ -68,12 +68,13 @@ jobs:
     needs: ["package"]
     runs-on: ubuntu-latest
     container:
-      image: ruby:3.1-alpine
+      image: ruby:3.2-alpine
     steps:
       - uses: actions/download-artifact@v3
         with:
           name: gem-x86_64-linux
           path: pkg
+      - run: "apk add build-base" # to compile racc, etc.
       - run: "gem update --system" # let's make sure the latest is working for us (upstream test, see #200)
       - run: "gem install pkg/tailwindcss-rails-*.gem"
       - run: "tailwindcss --help"
@@ -88,7 +89,7 @@ jobs:
           path: pkg
       - run: |
           docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
-          docker run --rm -v "$(pwd):/test" -w /test --platform=linux/arm/v7 ruby:3.1 \
+          docker run --rm -v "$(pwd):/test" -w /test --platform=linux/arm/v7 ruby:3.2 \
             /bin/bash -c "
               set -ex
               gem install pkg/tailwindcss-rails-*.gem
@@ -101,7 +102,7 @@ jobs:
     steps:
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: "3.1"
+          ruby-version: "3.2"
       - uses: actions/download-artifact@v3
         with:
           name: gem-x86_64-darwin
@@ -129,7 +130,7 @@ jobs:
     steps:
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: "3.1"
+          ruby-version: "3.2"
       - uses: actions/download-artifact@v3
         with:
           name: gem-x64-mingw-ucrt
