@@ -16,5 +16,6 @@ on:
 jobs:
   rails:
     name: empty job
+    runs-on: ubuntu-latest
     steps:
       - run: echo hello world
