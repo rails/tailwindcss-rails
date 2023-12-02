@@ -14,8 +14,20 @@ on:
       - .github/workflows/upstream.yml # this file
 
 jobs:
-  rails:
-    name: empty job
-    runs-on: ubuntu-latest
+  user-journey:
+    name: "user-journey (rails main)"
+    strategy:
+      fail-fast: false
+      matrix:
+        plat: ["ubuntu", "windows", "macos"]
+    runs-on: ${{matrix.plat}}-latest
+    env:
+      RAILSOPTS: --git=https://github.com/rails/rails --branch main
     steps:
-      - run: echo hello world
+      - uses: actions/checkout@v3
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.2"
+          bundler: latest
+      - run: test/integration/user_journey_test.sh
+        shell: bash

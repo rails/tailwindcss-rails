@@ -5,29 +5,45 @@
 set -o pipefail
 set -eux
 
+# set up dependencies
+rm -f Gemfile.lock
+bundle remove actionmailer
+bundle add rails --skip-install ${RAILSOPTS:-}
+bundle install
+
 # fetch the upstream executables
 bundle exec rake download
 
-# create a rails app in a directory with spaces in the name (#176, #184)
-rm -rf "Has A Space"
-mkdir "Has A Space"
-pushd "Has A Space"
+# do our work a directory with spaces in the name (#176, #184)
+rm -rf "My Workspace"
+mkdir "My Workspace"
+pushd "My Workspace"
 
-gem install rails
-rails new test-app --skip-bundle
+# create a rails app
+bundle exec rails -v
+bundle exec rails new test-app --skip-bundle
 pushd test-app
 
-# install tailwindcss-rails
+# make sure to use the same version of rails (e.g., install from git source if necessary)
+bundle remove rails
+bundle add rails --skip-install ${RAILSOPTS:-}
+
+# use the tailwindcss-rails under test
 bundle add tailwindcss-rails --path="../.."
 bundle install
+bundle show --paths
 
+# install tailwindcss
 bin/rails tailwindcss:install
 
+# TEST: tailwind was installed correctly
+grep tailwind app/views/layouts/application.html.erb
+
+# TEST: rake tasks don't exec (#188)
 cat <<EOF >> Rakefile
 task :still_here do
   puts "Rake process did not exit early"
 end
 EOF
 
-# ensure rake tasks don't exec (#188)
 bin/rails tailwindcss:build still_here | grep "Rake process did not exit early"
