@@ -1,0 +1,20 @@
+name: upstream
+concurrency:
+  group: "${{github.workflow}}-${{github.ref}}"
+  cancel-in-progress: true
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 8 * * 3" # At 08:00 on Wednesday # https://crontab.guru/#0_8_*_*_3
+  pull_request:
+    types: [opened, synchronize]
+    branches:
+      - '*'
+    paths:
+      - .github/workflows/upstream.yml # this file
+
+jobs:
+  rails:
+    name: empty job
+    steps:
+      run: echo hello world
