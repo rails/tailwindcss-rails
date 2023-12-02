@@ -74,6 +74,7 @@ jobs:
         with:
           name: gem-x86_64-linux
           path: pkg
+      - run: "apk add build-base" # to compile racc, etc.
       - run: "gem update --system" # let's make sure the latest is working for us (upstream test, see #200)
       - run: "gem install pkg/tailwindcss-rails-*.gem"
       - run: "tailwindcss --help"
