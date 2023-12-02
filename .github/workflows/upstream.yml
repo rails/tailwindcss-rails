@@ -17,4 +17,4 @@ jobs:
   rails:
     name: empty job
     steps:
-      run: echo hello world
+      - run: echo hello world
