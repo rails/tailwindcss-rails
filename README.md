@@ -171,6 +171,13 @@ The inline version also works:
 <section class="bg-[url('image.svg')]">Has the image as it's background</section>
 ```
 
+## Puma plugin
+We provide a Puma plugin if you want to run the Tailwind watcher together with Puma and have Puma monitor and manage it. Add
+```ruby
+plugin :tailwindcss if ENV.fetch("RAILS_ENV", "development") == "development"
+```
+to your `puma.rb` configuration.
+
 ## License
 
 Tailwind for Rails is released under the [MIT License](https://opensource.org/licenses/MIT).
