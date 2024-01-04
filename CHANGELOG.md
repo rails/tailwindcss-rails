@@ -1,4 +1,4 @@
-## next / unreleased
+## v2.2.0 / 2023-01-04
 
 * Introduce a Puma plugin to manage the Tailwind "watch" process from `rails server`. (#300) @npezza93
 * Lazily load the debugger gem when running `bin/dev` (#292) @elia
