@@ -1,6 +1,8 @@
 ## next / unreleased
 
 * Introduce a Puma plugin to manage the Tailwind "watch" process from `rails server`. (#300) @npezza93
+* Lazily load the debugger gem when running `bin/dev` (#292) @elia
+* Allow choosing a custom port with a `PORT` environment variable when running `bin/dev` (#292) @elia
 
 
 ## v2.1.0 / 2023-12-19
