@@ -60,16 +60,37 @@ The `tailwindcss:build` task is automatically attached to the `test:prepare` Rak
 
 ### Update assets automatically
 
-While you're developing your application, you want to run Tailwind in "watch" mode, so changes are automatically reflected in the generated CSS output. You can do this by:
+While you're developing your application, you want to run Tailwind in "watch" mode, so changes are automatically reflected in the generated CSS output. You can do this in a few different ways:
 
-- running `rails tailwindcss:watch` as a separate process,
-- or by running `./bin/dev` which uses [foreman](https://github.com/ddollar/foreman) to start both the Tailwind watch process and the rails server in development mode.
+- use the [Puma](https://puma.io/) plugin to integrate "watch" with `rails server`, or
+- run `rails tailwindcss:watch` as a separate process, or
+- run `bin/dev` which uses [Foreman](https://github.com/ddollar/foreman)
+
+#### Puma plugin
+
+The Puma plugin requires you to add this line to your `puma.rb` configuration:
+
+```ruby
+plugin :tailwindcss if ENV.fetch("RAILS_ENV", "development") == "development"
+```
+
+and then running `rails server` will run the Tailwind watch process in the background
+
+
+#### Run `rails tailwindcss:watch`
+
+This is a flexible command, which can be run with a few different options.
 
 If you are running `rails tailwindcss:watch` on a system that doesn't fully support file system events, pass a `poll` argument to the task to instruct tailwindcss to instead use polling: `rails tailwindcss:watch[poll]`. If you use `bin/dev` then you should modify your `Procfile.dev`.
 
 If you are running `rails tailwindcss:watch` as a process in a Docker container, set `tty: true` in `docker-compose.yml` for the appropriate container to keep the watch process running.
 
 If you are running `rails tailwindcss:watch` in a docker container without a tty, pass the `always` argument to the task to instruct tailwindcss to keep the watcher alive even when `stdin` is closed: `rails tailwindcss:watch[always]`. If you use `bin/dev` then you should modify your `Procfile.dev`.
+
+
+#### Foreman
+
+Running `bin/dev` invokes Foreman to start both the Tailwind watch process and the rails server in development mode based on your `Procfile.dev` file.
 
 
 ### Debugging with unminified assets
