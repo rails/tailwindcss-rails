@@ -1,3 +1,8 @@
+## next / unreleased
+
+* Introduce a Puma plugin to manage the Tailwind "watch" process from `rails server`. (#300) @npezza93
+
+
 ## v2.1.0 / 2023-12-19
 
 * Update to [Tailwind CSS v3.4.0](https://github.com/tailwindlabs/tailwindcss/releases/tag/v3.4.0) from v3.3.6 by @flavorjones
