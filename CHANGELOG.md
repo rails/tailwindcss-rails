@@ -2,6 +2,7 @@
 
 * Update to [Tailwind CSS v3.4.1](https://github.com/tailwindlabs/tailwindcss/releases/tag/v3.4.1) from v3.4.0 by @flavorjones
 * Fix `password` form field styling in generated scaffold forms. (#304, #307) @flavorjones
+* Fix namespaced mailer generation. (#272, #308) @flavorjones
 
 
 ## v2.2.0 / 2023-01-04
