@@ -192,6 +192,12 @@ The inline version also works:
 <section class="bg-[url('image.svg')]">Has the image as it's background</section>
 ```
 
+### Conflict with pre-existing asset pipeline stylesheets
+
+If you get a warning `Unrecognized at-rule or error parsing at-rule ‘@tailwind’.` in the browser console after installation, you incorrectly double-process `application.tailwind.css`. This is a misconfiguration, even though the styles will be fully effective in many cases. The file `application.tailwind.css` is installed when running `rails tailwindcss:install` and is placed alongside the common `application.css` in `app/assets/stylesheets`. Because the `application.css` in a newly generated Rails app includes a `require_tree .` directive, the asset pipeline incorrectly processes `application.tailwind.css`, where it should be taken care of by `tailwindcss`. The asset pipeline ignores TailwindCSS's at-directives, and the browser can't process them.
+
+To fix the warning, you can either remove the `application.css`, if you don't plan to use the asset pipeline for stylesheets, and instead rely on TailwindCSS completely for styles. This is what this installer assumes. Else, if you do want to keep using the asset pipeline in parallel, make sure to remove the `require_tree .` line from the `application.css`.
+
 ## License
 
 Tailwind for Rails is released under the [MIT License](https://opensource.org/licenses/MIT).
