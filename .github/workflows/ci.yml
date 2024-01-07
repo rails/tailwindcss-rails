@@ -33,6 +33,24 @@ jobs:
       - name: Run tests
         run: bin/test
 
+  rails6:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: rm Gemfile.lock
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.2"
+          bundler: latest
+      - name: "Pin to Rails 6.1"
+        run: |
+          bundle remove actionmailer
+          bundle add actionmailer --version "~> 6.1" --skip-install
+          bundle add railties --version "~> 6.1" --skip-install
+          bundle install
+      - name: Run tests
+        run: bin/test
+
   user-journey:
     strategy:
       fail-fast: false
