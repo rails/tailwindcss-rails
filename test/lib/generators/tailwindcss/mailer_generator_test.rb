@@ -4,7 +4,7 @@ require "generators/tailwindcss/mailer/mailer_generator"
 
 class Tailwindcss::Generators::MailerGeneratorTest < Rails::Generators::TestCase
   tests Tailwindcss::Generators::MailerGenerator
-  destination Dir.mktmpdir
+  destination TAILWINDCSS_TEST_APP_ROOT
 
   arguments %w(Notifications invoice)
 

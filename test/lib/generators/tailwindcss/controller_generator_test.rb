@@ -3,7 +3,7 @@ require "generators/tailwindcss/controller/controller_generator"
 
 class Tailwindcss::Generators::ControllerGeneratorTest < Rails::Generators::TestCase
   tests Tailwindcss::Generators::ControllerGenerator
-  destination Dir.mktmpdir
+  destination TAILWINDCSS_TEST_APP_ROOT
 
   arguments %w(Messages index show)
 
