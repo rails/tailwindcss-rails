@@ -74,6 +74,9 @@ end
 
 TAILWINDCSS_RAILS_GEMSPEC = Bundler.load_gemspec("tailwindcss-rails.gemspec")
 
+# prepend the download task before the Gem::PackageTask tasks
+task :package => :download
+
 gem_path = Gem::PackageTask.new(TAILWINDCSS_RAILS_GEMSPEC).define
 desc "Build the ruby gem"
 task "gem:ruby" => [gem_path]
@@ -110,7 +113,33 @@ Tailwindcss::Upstream::NATIVE_PLATFORMS.each do |platform, filename|
   end
 end
 
+desc "Validate checksums for tailwindcss binaries"
+task "check" => exepaths do
+  sha_filename = "sha256sums.txt"
+  sha_url = tailwindcss_download_url(sha_filename)
+  gemspec = TAILWINDCSS_RAILS_GEMSPEC
+
+  checksums = URI.open(sha_url).each_line.map do |line|
+    checksum, file = line.split
+    [File.basename(file), checksum]
+  end.to_h
+
+  Tailwindcss::Upstream::NATIVE_PLATFORMS.each do |platform, filename|
+    exedir = File.join(gemspec.bindir, platform) # "exe/x86_64-linux"
+    exepath = File.join(exedir, "tailwindcss") # "exe/x86_64-linux/tailwindcss"
+
+    local_sha256 = Digest::SHA256.file(exepath).hexdigest
+    remote_sha256 = checksums.fetch(filename)
+
+    if local_sha256 == remote_sha256
+      puts "Checksum OK for #{exepath} (#{local_sha256})"
+    else
+      abort "Checksum mismatch for #{exepath} (#{local_sha256} != #{remote_sha256})"
+    end
+  end
+end
+
 desc "Download all tailwindcss binaries"
-task "download" => exepaths
+task "download" => :check
 
 CLOBBER.add(exepaths.map { |p| File.dirname(p) })
