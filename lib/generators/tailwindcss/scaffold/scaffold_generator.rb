@@ -7,6 +7,7 @@ module Tailwindcss
       include Rails::Generators::ResourceHelpers
 
       source_root File.expand_path("templates", __dir__)
+      source_paths << "lib/templates/erb/scaffold"
 
       argument :attributes, type: :array, default: [], banner: "field:type field:type"
 
