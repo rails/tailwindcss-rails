@@ -1,4 +1,4 @@
-## next / unreleased
+## v2.2.1 / 2023-01-07
 
 * Update to [Tailwind CSS v3.4.1](https://github.com/tailwindlabs/tailwindcss/releases/tag/v3.4.1) from v3.4.0 by @flavorjones
 * Fix `password` form field styling in generated scaffold forms. (#304, #307) @flavorjones
