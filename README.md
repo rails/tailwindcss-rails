@@ -38,6 +38,20 @@ This also works with relative paths. If you've installed into your app's directo
 TAILWINDCSS_INSTALL_DIR=node_modules/.bin
 ```
 
+### Using a custom postcss.config.js
+
+If you want to use a custom `postcss.config.js`, for example to enable nesting, you can place it in the `config` folder and it will be loaded automatically.
+
+```
+module.exports = {
+  plugins: {
+    'postcss-import': {},
+    'tailwindcss/nesting': {},
+    tailwindcss: {},
+    autoprefixer: {},
+  },
+}
+```
 
 ## Developing with Tailwindcss
 
