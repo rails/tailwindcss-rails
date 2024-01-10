@@ -1,4 +1,4 @@
-## next / unreleased
+## v2.3.0 / 2023-01-10
 
 * Allow applications to override the generator templates. (#314) @flavorjones
 * Support using PostCSS as a preprocessor. (#316) @ahmeij
