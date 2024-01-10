@@ -38,21 +38,6 @@ This also works with relative paths. If you've installed into your app's directo
 TAILWINDCSS_INSTALL_DIR=node_modules/.bin
 ```
 
-### Using a custom postcss.config.js
-
-If you want to use a custom `postcss.config.js`, for example to enable nesting, you can place it in the `config` folder and it will be loaded automatically.
-
-```
-module.exports = {
-  plugins: {
-    'postcss-import': {},
-    'tailwindcss/nesting': {},
-    tailwindcss: {},
-    autoprefixer: {},
-  },
-}
-```
-
 ## Developing with Tailwindcss
 
 ### Configuration
@@ -113,6 +98,24 @@ If you want unminified assets, you can pass a `debug` argument to the rake task,
 
 Note that you can combine task options, e.g. `rails tailwindcss:watch[debug,poll]`.
 
+
+### Using with PostCSS
+
+If you want to use PostCSS as a preprocessor, create a custom `config/postcss.config.js` and it will be loaded automatically.
+
+For example, to enable nesting:
+
+```js
+// config/postcss.config.js
+module.exports = {
+  plugins: {
+    'postcss-import': {},
+    'tailwindcss/nesting': {},
+    tailwindcss: {},
+    autoprefixer: {},
+  },
+}
+```
 
 ### Custom inputs or outputs
 
