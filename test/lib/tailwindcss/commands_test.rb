@@ -151,6 +151,29 @@ class Tailwindcss::CommandsTest < ActiveSupport::TestCase
     end
   end
 
+  test ".compile_command when postcss.config.js exists" do
+    mock_exe_directory("sparc-solaris2.8") do |dir, executable|
+      Dir.mktmpdir do |tmpdir|
+        Rails.stub(:root, Pathname.new(tmpdir))  do # Rails.root won't work in this test suite
+          actual = Tailwindcss::Commands.compile_command(exe_path: dir)
+          assert_kind_of(Array, actual)
+          assert_equal(executable, actual.first)
+          refute_includes(actual, "--postcss")
+
+          config_file = Rails.root.join("config/postcss.config.js")
+          FileUtils.mkdir_p(Rails.root.join("config"))
+          FileUtils.touch(config_file)
+          actual = Tailwindcss::Commands.compile_command(exe_path: dir)
+          assert_kind_of(Array, actual)
+          assert_equal(executable, actual.first)
+          assert_includes(actual, "--postcss")
+          postcss_index = actual.index("--postcss")
+          assert_equal(actual[postcss_index + 1], config_file.to_s)
+        end
+      end
+    end
+  end
+
   test ".watch_command" do
     mock_exe_directory("sparc-solaris2.8") do |dir, executable|
       Rails.stub(:root, File) do # Rails.root won't work in this test suite
