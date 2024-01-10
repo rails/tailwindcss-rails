@@ -74,15 +74,19 @@ module Tailwindcss
       end
 
       def compile_command(debug: false, **kwargs)
-        [
+        command = [
           executable(**kwargs),
           "-i", Rails.root.join("app/assets/stylesheets/application.tailwind.css").to_s,
           "-o", Rails.root.join("app/assets/builds/tailwind.css").to_s,
           "-c", Rails.root.join("config/tailwind.config.js").to_s,
-        ].tap do |command|
-          command << "--minify" unless (debug || rails_css_compressor?)
-          command << "--postcss #{Rails.root.join("config/postcss.config.js")}" if File.exist?(Rails.root.join("config/postcss.config.js"))
-        end
+        ]
+
+        command << "--minify" unless (debug || rails_css_compressor?)
+
+        postcss_path = Rails.root.join("config/postcss.config.js")
+        command += ["--postcss", postcss_path.to_s] if File.exist?(postcss_path)
+
+        command
       end
 
       def watch_command(always: false, poll: false, **kwargs)
