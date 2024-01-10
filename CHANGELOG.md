@@ -1,3 +1,9 @@
+## next / unreleased
+
+* Allow applications to override the generator templates. (#314) @flavorjones
+* Support using PostCSS as a preprocessor. (#316) @ahmeij
+
+
 ## v2.2.1 / 2023-01-07
 
 * Update to [Tailwind CSS v3.4.1](https://github.com/tailwindlabs/tailwindcss/releases/tag/v3.4.1) from v3.4.0 by @flavorjones
