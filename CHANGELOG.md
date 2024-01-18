@@ -1,10 +1,10 @@
-## v2.3.0 / 2023-01-10
+## v2.3.0 / 2024-01-10
 
 * Allow applications to override the generator templates. (#314) @flavorjones
 * Support using PostCSS as a preprocessor. (#316) @ahmeij
 
 
-## v2.2.1 / 2023-01-07
+## v2.2.1 / 2024-01-07
 
 * Update to [Tailwind CSS v3.4.1](https://github.com/tailwindlabs/tailwindcss/releases/tag/v3.4.1) from v3.4.0 by @flavorjones
 * Fix `password` form field styling in generated scaffold forms. (#304, #307) @flavorjones
@@ -12,7 +12,7 @@
 * Allow overriding the generator templates by placing application templates in either `lib/templates/tailwindcss/{scaffold,mailer,controller}` or `lib/templates/erb/{scaffold,mailer,controller}`. (#164, #314) @flavorjones
 
 
-## v2.2.0 / 2023-01-04
+## v2.2.0 / 2024-01-04
 
 * Introduce a Puma plugin to manage the Tailwind "watch" process from `rails server`. (#300) @npezza93
 * Lazily load the debugger gem when running `bin/dev` (#292) @elia
