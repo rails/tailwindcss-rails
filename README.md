@@ -88,7 +88,6 @@ If you are running `rails tailwindcss:watch` in a docker container without a tty
 
 Additionally, you must ensure that `config.assets.debug = true` is set in `development.rb`.
 
-
 #### Foreman
 
 Running `bin/dev` invokes Foreman to start both the Tailwind watch process and the rails server in development mode based on your `Procfile.dev` file.
