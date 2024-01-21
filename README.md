@@ -86,6 +86,8 @@ If you are running `rails tailwindcss:watch` as a process in a Docker container,
 
 If you are running `rails tailwindcss:watch` in a docker container without a tty, pass the `always` argument to the task to instruct tailwindcss to keep the watcher alive even when `stdin` is closed: `rails tailwindcss:watch[always]`. If you use `bin/dev` then you should modify your `Procfile.dev`.
 
+Additionally, you must ensure that `config.assets.debug = true` is set in `development.rb`.
+
 
 #### Foreman
 
