@@ -42,7 +42,7 @@ module Tailwindcss
             MESSAGE
           end
 
-          exe_file = Dir.glob(File.expand_path(File.join(exe_path, "*", "tailwindcss"))).find do |f|
+          exe_file = Dir.glob(File.expand_path(File.join(exe_path, "**", "tailwindcss"))).find do |f|
             Gem::Platform.match_gem?(Gem::Platform.new(File.basename(File.dirname(f))), GEM_NAME)
           end
         end
