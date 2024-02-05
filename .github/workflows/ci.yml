@@ -22,7 +22,7 @@ jobs:
       matrix:
         ruby: ["2.7", "3.0", "3.1", "3.2", "3.3", "head"]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - run: rm Gemfile.lock
       - uses: ruby/setup-ruby@v1
         with:
@@ -36,7 +36,7 @@ jobs:
   rails6:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - run: rm Gemfile.lock
       - uses: ruby/setup-ruby@v1
         with:
@@ -58,7 +58,7 @@ jobs:
         plat: ["ubuntu", "windows", "macos"]
     runs-on: ${{matrix.plat}}-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: "3.2"
