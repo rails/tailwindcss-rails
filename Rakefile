@@ -12,3 +12,15 @@ Rake::TestTask.new(:test) do |t|
 end
 
 task default: :test
+
+namespace "format" do
+  desc "Regenerate table of contents in README"
+  task "toc" do
+    require "mkmf"
+    if find_executable0("markdown-toc")
+      sh "markdown-toc --maxdepth=3 -i README.md"
+    else
+      puts "WARN: cannot find markdown-toc, skipping. install with 'npm install markdown-toc'"
+    end
+  end
+end

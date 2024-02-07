@@ -2,6 +2,31 @@
 
 [Tailwind CSS](https://tailwindcss.com) is a utility-first CSS framework packed with classes like flex, pt-4, text-center and rotate-90 that can be composed to build any design, directly in your markup.
 
+<!-- regenerate TOC with `rake format:toc` -->
+
+<!-- toc -->
+
+- [Installation](#installation)
+  * [Using a local installation of `tailwindcss`](#using-a-local-installation-of-tailwindcss)
+- [Developing with Tailwindcss](#developing-with-tailwindcss)
+  * [Configuration and commands](#configuration-and-commands)
+  * [Building for production](#building-for-production)
+  * [Building for testing](#building-for-testing)
+  * [Building unminified assets](#building-unminified-assets)
+  * [Live rebuild](#live-rebuild)
+  * [Using with PostCSS](#using-with-postcss)
+  * [Custom inputs or outputs](#custom-inputs-or-outputs)
+- [Troubleshooting](#troubleshooting)
+  * [Running in a docker container exits prematurely](#running-in-a-docker-container-exits-prematurely)
+  * [Conflict with sassc-rails](#conflict-with-sassc-rails)
+  * [Class names must be spelled out](#class-names-must-be-spelled-out)
+  * [`ERROR: Cannot find the tailwindcss executable` for supported platform](#error-cannot-find-the-tailwindcss-executable-for-supported-platform)
+  * [Using asset-pipeline assets](#using-asset-pipeline-assets)
+  * [Conflict with pre-existing asset pipeline stylesheets](#conflict-with-pre-existing-asset-pipeline-stylesheets)
+- [License](#license)
+
+<!-- tocstop -->
+
 ## Installation
 
 With Rails 7 you can generate a new application preconfigured with Tailwind by using `--css tailwind`. If you're adding Tailwind later, you need to:
@@ -24,27 +49,56 @@ Supported platforms are:
 
 ### Using a local installation of `tailwindcss`
 
-If you are not able to use the vendored standalone executables (for example, if you're on an unsupported platform), you can use a local installation of the `tailwindcss` executable by setting an environment variable named `TAILWINDCSS_INSTALL_DIR` to the directory containing the executable.
+If you are not able to use the vendored standalone executables (for example, if you're on an unsupported platform), you can use a local installation of the `tailwindcss` executable by setting an environment variable named `TAILWINDCSS_INSTALL_DIR` to the directory path containing the executable.
 
-For example, if you've installed `tailwindcss` so that the executable is found at `/node_modules/bin/tailwindcss`, then you should set your environment variable like so:
+For example, if you've installed `tailwindcss` so that the executable is found at `/path/to/node_modules/bin/tailwindcss`, then you should set your environment variable like so:
 
 ``` sh
 TAILWINDCSS_INSTALL_DIR=/path/to/node_modules/bin
 ```
 
-This also works with relative paths. If you've installed into your app's directory at `./node_modules/.bin/tailwindcss`:
+or, for relative paths like `./node_modules/.bin/tailwindcss`:
 
 ``` sh
 TAILWINDCSS_INSTALL_DIR=node_modules/.bin
 ```
 
+
 ## Developing with Tailwindcss
 
-### Configuration
+### Configuration and commands
+
+#### Configuration file: `config/tailwind.config.js`
 
 You can customize the Tailwind build through the `config/tailwind.config.js` file, just like you would if Tailwind was running in a traditional node installation. All the first-party plugins are supported.
 
-The installer will create your Tailwind input file in `app/assets/stylesheets/application.tailwind.css`. This is where you import the plugins you want to use, and where you can setup your custom `@apply` rules. When you run `rails tailwindcss:build`, this input file will be used to generate the output in `app/assets/builds/tailwind.css`. That's the output CSS that you'll include in your app (the installer automatically configures this, alongside the Inter font as well).
+#### Input file: `app/assets/stylesheets/application.tailwind.css`
+
+The installer will generate a Tailwind input file in `app/assets/stylesheets/application.tailwind.css`. This is where you import the plugins you want to use, and where you can setup your custom `@apply` rules.
+
+#### Output file: `app/assets/builds/tailwind.css`
+
+When you run `rails tailwindcss:build`, the input file will be used to generate the output in `app/assets/builds/tailwind.css`. That's the output CSS that you'll include in your app (the installer automatically configures this, alongside the Inter font as well).
+
+#### Commands
+
+This gem makes several Rails tasks available, some of which have multiple options which can be combined.
+
+Synopsis:
+
+- `bin/rails tailwindcss:install` - installs the configuration file, output file, and `Procfile.dev`
+- `bin/rails tailwindcss:build` - generate the output file
+  - `bin/rails tailwindcss:build[debug]` - generate unminimized output
+- `bin/rails tailwindcss:watch` - start live rebuilds, generating output on file changes
+  - `bin/rails tailwindcss:watch[debug]` - generate unminimized output
+  - `bin/rails tailwindcss:watch[poll]` - for systems without file system events
+  - `bin/rails tailwindcss:watch[always]` - for systems without TTY (e.g., some docker containers)
+
+Note that you can combine task options, e.g. `rails tailwindcss:watch[debug,poll]`.
+
+This gem also makes available a Puma plugin to manage a live rebuild process when you run `rails server` (see "Live Rebuild" section below).
+
+This gem also generates a `Procfile.dev` file which will run both the rails server and a live rebuild process (see "Live Rebuild" section below).
 
 
 ### Building for production
@@ -57,17 +111,23 @@ The `tailwindcss:build` is automatically attached to `assets:precompile`, so bef
 The `tailwindcss:build` task is automatically attached to the `test:prepare` Rake task. This task runs before test commands. If you run `bin/rails test` in your CI environment, your Tailwind output will be generated before tests run.
 
 
-### Update assets automatically
+### Building unminified assets
+
+If you want unminified assets, you can pass a `debug` argument to the rake task, i.e. `rails tailwindcss:build[debug]` or `rails tailwindcss:watch[debug]`.
+
+
+### Live rebuild
 
 While you're developing your application, you want to run Tailwind in "watch" mode, so changes are automatically reflected in the generated CSS output. You can do this in a few different ways:
 
-- use the [Puma](https://puma.io/) plugin to integrate "watch" with `rails server`, or
-- run `rails tailwindcss:watch` as a separate process, or
-- run `bin/dev` which uses [Foreman](https://github.com/ddollar/foreman)
+- use this gem's [Puma](https://puma.io/) plugin to integrate "watch" with `rails server`,
+- or run `rails tailwindcss:watch` as a separate process,
+- or run `bin/dev` which uses [Foreman](https://github.com/ddollar/foreman)
+
 
 #### Puma plugin
 
-The Puma plugin requires you to add this line to your `puma.rb` configuration:
+This gem ships with a Puma plugin. To use it, add this line to your `puma.rb` configuration:
 
 ```ruby
 plugin :tailwindcss if ENV.fetch("RAILS_ENV", "development") == "development"
@@ -80,7 +140,13 @@ and then running `rails server` will run the Tailwind watch process in the backg
 
 This is a flexible command, which can be run with a few different options.
 
-If you are running `rails tailwindcss:watch` on a system that doesn't fully support file system events, pass a `poll` argument to the task to instruct tailwindcss to instead use polling: `rails tailwindcss:watch[poll]`. If you use `bin/dev` then you should modify your `Procfile.dev`.
+If you are running `rails tailwindcss:watch` on a system that doesn't fully support file system events, pass a `poll` argument to the task to instruct tailwindcss to instead use polling:
+
+```
+rails tailwindcss:watch[poll]
+```
+
+(If you use `bin/dev` then you should modify your `Procfile.dev` to use the `poll` option.)
 
 If you are running `rails tailwindcss:watch` as a process in a Docker container, set `tty: true` in `docker-compose.yml` for the appropriate container to keep the watch process running.
 
@@ -90,13 +156,6 @@ If you are running `rails tailwindcss:watch` in a docker container without a tty
 #### Foreman
 
 Running `bin/dev` invokes Foreman to start both the Tailwind watch process and the rails server in development mode based on your `Procfile.dev` file.
-
-
-### Debugging with unminified assets
-
-If you want unminified assets, you can pass a `debug` argument to the rake task, i.e. `rails tailwindcss:build[debug]` or `rails tailwindcss:watch[debug]`.
-
-Note that you can combine task options, e.g. `rails tailwindcss:watch[debug,poll]`.
 
 
 ### Using with PostCSS
@@ -126,6 +185,12 @@ If you need to use a custom input or output file, you can run `bundle exec tailw
 
 Some common problems experienced by users ...
 
+### Running in a docker container exits prematurely
+
+If you are running `rails tailwindcss:watch` as a process in a Docker container, set `tty: true` in `docker-compose.yml` for the appropriate container to keep the watch process running.
+
+If you are running `rails tailwindcss:watch` in a docker container without a tty, pass the `always` argument to the task to instruct tailwindcss to keep the watcher alive even when `stdin` is closed: `rails tailwindcss:watch[always]`. If you use `bin/dev` then you should modify your `Procfile.dev`.
+
 ### Conflict with sassc-rails
 
 Tailwind uses modern CSS features that are not recognized by the `sassc-rails` extension that was included by default in the Gemfile for Rails 6. In order to avoid any errors like `SassC::SyntaxError`, you must remove that gem from your Gemfile.
@@ -134,7 +199,7 @@ Tailwind uses modern CSS features that are not recognized by the `sassc-rails` e
 
 For Tailwind to work, your class names need to be spelled out. If you need to make sure Tailwind generates class names that don't exist in your content files or that are programmatically composed, use the [safelist option](https://tailwindcss.com/docs/content-configuration#safelisting-classes).
 
-### ERROR: Cannot find the tailwindcss executable for &lt;supported platform&gt;
+### `ERROR: Cannot find the tailwindcss executable` for supported platform
 
 Some users are reporting this error even when running on one of the supported native platforms:
 
@@ -172,24 +237,11 @@ and re-bundle.
 See https://bundler.io/man/bundle-config.1.html for more information.
 
 
-### "No such file or directory" running on Alpine (musl)
-
-When running `tailwindcss` on an Alpine system, some users report a "No such file or directory" error message.
-
-
-#### Install gnu libc compatibility
-
-The cause of this is the upstream `tailwindcss` binary executables being built on a gnu libc system, making them incompatible with standard musl libc systems.
-
-A fix for this has been proposed upstream at https://github.com/tailwindlabs/tailwindcss/discussions/6785, but in the meantime a workaround is to install compatibility libraries:
-
-``` sh
-apk add build-base gcompat
-```
-
 ### Using asset-pipeline assets
 
-In Rails, you want to use [assets from the asset pipeline to get fingerprinting](https://guides.rubyonrails.org/asset_pipeline.html#what-is-fingerprinting-and-why-should-i-care-questionmark). However, Tailwind isn't aware of those assets. To use assets from the pipeline, use `url(image.svg)`. [Since Sprockets v3.3.0](https://github.com/rails/sprockets-rails/pull/476) `url(image.svg)` will then automatically be rewritten to `/path/to/assets/image-7801e7538c6f1cc57aa75a5876ab0cac.svg`. So the output CSS will have the correct path to those assets.
+In Rails, you want to use [assets from the asset pipeline to get fingerprinting](https://guides.rubyonrails.org/asset_pipeline.html#what-is-fingerprinting-and-why-should-i-care-questionmark). However, Tailwind isn't aware of those assets.
+
+To use assets from the pipeline, use `url(image.svg)`. [Since Sprockets v3.3.0](https://github.com/rails/sprockets-rails/pull/476) `url(image.svg)` is rewritten to `/path/to/assets/image-7801e7538c6f1cc57aa75a5876ab0cac.svg` so output CSS will have the correct path to those assets.
 
 ```js
 module.exports = {
@@ -211,9 +263,14 @@ The inline version also works:
 
 ### Conflict with pre-existing asset pipeline stylesheets
 
-If you get a warning `Unrecognized at-rule or error parsing at-rule ‘@tailwind’.` in the browser console after installation, you incorrectly double-process `application.tailwind.css`. This is a misconfiguration, even though the styles will be fully effective in many cases. The file `application.tailwind.css` is installed when running `rails tailwindcss:install` and is placed alongside the common `application.css` in `app/assets/stylesheets`. Because the `application.css` in a newly generated Rails app includes a `require_tree .` directive, the asset pipeline incorrectly processes `application.tailwind.css`, where it should be taken care of by `tailwindcss`. The asset pipeline ignores TailwindCSS's at-directives, and the browser can't process them.
+If you get a warning `Unrecognized at-rule or error parsing at-rule ‘@tailwind’.` in the browser console after installation, you are incorrectly double-processing `application.tailwind.css`. This is a misconfiguration, even though the styles will be fully effective in many cases.
 
-To fix the warning, you can either remove the `application.css`, if you don't plan to use the asset pipeline for stylesheets, and instead rely on TailwindCSS completely for styles. This is what this installer assumes. Else, if you do want to keep using the asset pipeline in parallel, make sure to remove the `require_tree .` line from the `application.css`.
+The file `application.tailwind.css` is installed when running `rails tailwindcss:install` and is placed alongside the common `application.css` in `app/assets/stylesheets`. Because the `application.css` in a newly generated Rails app includes a `require_tree .` directive, the asset pipeline incorrectly processes `application.tailwind.css`, where it should be taken care of by `tailwindcss`. The asset pipeline ignores TailwindCSS's at-directives, and the browser can't process them.
+
+To fix the warning, you can either remove the `application.css`, if you don't plan to use the asset pipeline for stylesheets, and instead rely on TailwindCSS completely for styles. This is what this installer assumes.
+
+Or, if you do want to keep using the asset pipeline in parallel, make sure to remove the `require_tree .` line from the `application.css`.
+
 
 ## License
 
