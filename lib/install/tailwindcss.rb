@@ -38,19 +38,24 @@ unless Rails.root.join("app/assets/stylesheets/application.tailwind.css").exist?
   copy_file "#{__dir__}/application.tailwind.css", "app/assets/stylesheets/application.tailwind.css"
 end
 
-if Rails.root.join("Procfile.dev").exist?
-  append_to_file "Procfile.dev", "css: bin/rails tailwindcss:watch\n"
+if Rails.root.join("config/puma.rb").exist?
+  say "Add tailwindcss as Puma plugin"
+  append_to_file "config/puma.rb", "\nplugin :tailwindcss if ENV.fetch(\"RAILS_ENV\", \"development\") == \"development\"\n"
 else
-  say "Add default Procfile.dev"
-  copy_file "#{__dir__}/Procfile.dev", "Procfile.dev"
+  if Rails.root.join("Procfile.dev").exist?
+    append_to_file "Procfile.dev", "css: bin/rails tailwindcss:watch\n"
+  else
+    say "Add default Procfile.dev"
+    copy_file "#{__dir__}/Procfile.dev", "Procfile.dev"
 
-  say "Ensure foreman is installed"
-  run "gem install foreman"
+    say "Ensure foreman is installed"
+    run "gem install foreman"
+  end
+
+  say "Add bin/dev to start foreman"
+  copy_file "#{__dir__}/dev", "bin/dev"
+  chmod "bin/dev", 0755, verbose: false
 end
-
-say "Add bin/dev to start foreman"
-copy_file "#{__dir__}/dev", "bin/dev"
-chmod "bin/dev", 0755, verbose: false
 
 say "Compile initial Tailwind build"
 run "rails tailwindcss:build"
