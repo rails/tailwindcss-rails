@@ -1,3 +1,8 @@
+## next / unreleased
+
+* The `tailwindcss:watch` task handles interrupts more cleanly. (#318, #336) @davidcelis
+
+
 ## v2.3.0 / 2024-01-10
 
 * Allow applications to override the generator templates. (#314) @flavorjones
