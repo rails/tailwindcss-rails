@@ -15,6 +15,8 @@ namespace :tailwindcss do
     command = Tailwindcss::Commands.watch_command(always: always, debug: debug, poll: poll)
     puts command.inspect if args.extras.include?("verbose")
     system(*command)
+  rescue Interrupt
+    puts "Received interrupt, exiting tailwindcss:watch" if args.extras.include?("verbose")
   end
 end
 
