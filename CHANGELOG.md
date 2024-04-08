@@ -1,5 +1,6 @@
-## next / unreleased
+## v2.4.0 / 2024-04-08
 
+* Update to [Tailwind CSS v3.4.3](https://github.com/tailwindlabs/tailwindcss/releases/tag/v3.4.3) from v3.4.1 by @flavorjones
 * The `tailwindcss:watch` task handles interrupts more cleanly. (#318, #336) @davidcelis
 
 
