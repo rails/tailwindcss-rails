@@ -17,6 +17,7 @@
   * [Using with PostCSS](#using-with-postcss)
   * [Custom inputs or outputs](#custom-inputs-or-outputs)
 - [Troubleshooting](#troubleshooting)
+  * [Lost keystrokes or hanging when using `ruby/debug` with the Puma plugin](#lost-keystrokes-or-hanging-when-using-rubydebug-with-the-puma-plugin)
   * [Running in a docker container exits prematurely](#running-in-a-docker-container-exits-prematurely)
   * [Conflict with sassc-rails](#conflict-with-sassc-rails)
   * [Class names must be spelled out](#class-names-must-be-spelled-out)
@@ -184,6 +185,17 @@ If you need to use a custom input or output file, you can run `bundle exec tailw
 ## Troubleshooting
 
 Some common problems experienced by users ...
+
+### Lost keystrokes or hanging when using `ruby/debug` with the Puma plugin
+
+If you are using the `ruby/debug` debugger while using the Puma plugin from this gem, and you're experiencing what looks like hanging or lost keystrokes, then you'll need to disable Reline.
+
+You can read the [`debug` documentation](https://github.com/ruby/debug?tab=readme-ov-file#configuration) for more information, but the easiest thing to do is to set the environment variable `RUBY_DEBUG_NO_RELINE`:
+
+``` sh
+RUBY_DEBUG_NO_RELINE=1 rails server
+```
+
 
 ### Running in a docker container exits prematurely
 
