@@ -8,7 +8,12 @@ Puma::Plugin.create do
     @puma_pid = $$
     @tailwind_pid = fork do
       Thread.new { monitor_puma }
-      system(*Tailwindcss::Commands.watch_command)
+      # Using IO.popen(command, 'r+') will avoid watch_command read from $stdin.
+      # If we use system(*command) instead, IRB and Debug can't read from $stdin
+      # correctly bacause some keystrokes will be taken by watch_command.
+      IO.popen(Tailwindcss::Commands.watch_command, 'r+') do |io|
+        IO.copy_stream(io, $stdout)
+      end
     end
 
     launcher.events.on_stopped { stop_tailwind }
