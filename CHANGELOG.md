@@ -1,3 +1,8 @@
+## v2.4.1 / 2024-04-25
+
+* Fix debugger repl when using the Puma plugin. (#349) @tompng
+
+
 ## v2.4.0 / 2024-04-08
 
 * Update to [Tailwind CSS v3.4.3](https://github.com/tailwindlabs/tailwindcss/releases/tag/v3.4.3) from v3.4.1 by @flavorjones
