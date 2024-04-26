@@ -186,16 +186,9 @@ If you need to use a custom input or output file, you can run `bundle exec tailw
 
 Some common problems experienced by users ...
 
-### Lost keystrokes or hanging when using `ruby/debug` with the Puma plugin
+### Lost keystrokes or hanging when using terminal-based debugging tools (e.g. IRB, Pry, `ruby/debug`...etc.) with the Puma plugin
 
-If you are using the `ruby/debug` debugger while using the Puma plugin from this gem, and you're experiencing what looks like hanging or lost keystrokes, then you'll need to disable Reline.
-
-You can read the [`debug` documentation](https://github.com/ruby/debug?tab=readme-ov-file#configuration) for more information, but the easiest thing to do is to set the environment variable `RUBY_DEBUG_NO_RELINE`:
-
-``` sh
-RUBY_DEBUG_NO_RELINE=1 rails server
-```
-
+We've addressed the issue and you can avoid the problem by upgrading `tailwindcss-rails` to [v2.4.1](https://github.com/rails/tailwindcss-rails/releases/tag/v2.4.1) or later versions.
 
 ### Running in a docker container exits prematurely
 
