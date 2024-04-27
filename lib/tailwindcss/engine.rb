@@ -16,7 +16,11 @@ module Tailwindcss
 
     server do
       tailwind_pid = fork do
-        exec(*Tailwindcss::Commands.watch_command(always: true))
+        # To avoid stealing keystrokes from the debug gem's IRB console in the main process (which
+        # needs to be able to read from $stdin), we use `IO.open(..., 'r+')`.
+        IO.popen(Tailwindcss::Commands.watch_command, 'r+') do |io|
+          IO.copy_stream(io, $stdout)
+        end
       end
       at_exit do
         Process.kill(:INT, tailwind_pid)
