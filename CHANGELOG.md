@@ -1,3 +1,8 @@
+## next / unreleased
+
+* Remove the `@tailwindcss/aspect-ratio` plugin from the `tailwind.config.js` that gets installed by the generator. (#344) @flavorjones @searls
+
+
 ## v2.4.1 / 2024-04-25
 
 * Fix debugger repl when using the Puma plugin. (#349) @tompng
