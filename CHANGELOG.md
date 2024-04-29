@@ -1,3 +1,8 @@
+## unreleased
+
+* Bring the scaffold templates up to date with rails/rails as much as possible without breaking 6.1 compatibility. (#357) @kinsomicrote
+
+
 ## v2.5.0 / 2024-04-27
 
 * Remove the `@tailwindcss/aspect-ratio` plugin from the `tailwind.config.js` that gets installed by the generator. This plugin was originally a polyfill until Safari 15 was released (in Fall 2021), and so is beyond its useful lifetime for anyone not targetting ancient browsers. (#344) @flavorjones @searls
