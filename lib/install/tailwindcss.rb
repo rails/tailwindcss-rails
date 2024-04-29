@@ -1,5 +1,6 @@
 APPLICATION_LAYOUT_PATH             = Rails.root.join("app/views/layouts/application.html.erb")
 CENTERING_CONTAINER_INSERTION_POINT = /^\s*<%= yield %>/.freeze
+DEVELOPMENT_ENVIRONMENT_CONFIG_PATH = Rails.root.join("config/environments/development.rb")
 
 if APPLICATION_LAYOUT_PATH.exist?
   say "Add Tailwindcss include tags and container element in application layout"
@@ -14,6 +15,15 @@ if APPLICATION_LAYOUT_PATH.exist?
 else
   say "Default application.html.erb is missing!", :red
   say %(        Add <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %> within the <head> tag in your custom layout.)
+end
+
+if DEVELOPMENT_ENVIRONMENT_CONFIG_PATH.exist?
+  say "Enable Tailwindcss server process in development"
+  insert_into_file DEVELOPMENT_ENVIRONMENT_CONFIG_PATH.to_s, <<~ERB.indent(2), before: /^end$/
+
+    # Automatically watch and build Tailwindcss when 'rails server' is started.
+    config.tailwindcss.server_process = true
+  ERB
 end
 
 say "Build into app/assets/builds"

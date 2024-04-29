@@ -3,7 +3,7 @@ require "rails"
 module Tailwindcss
   class Engine < ::Rails::Engine
     config.tailwindcss = ActiveSupport::OrderedOptions.new
-    config.tailwindcss.server_process = Rails.env.development?
+    config.tailwindcss.server_process = false # Rails.env.development?
 
     initializer "tailwindcss.assets" do
       Rails.application.config.assets.precompile += %w( inter-font.css )
