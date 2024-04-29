@@ -14,7 +14,7 @@
     <%% @<%= plural_table_name %>.each do |<%= singular_table_name %>| %>
       <%%= render <%= singular_table_name %> %>
       <p>
-        <%%= link_to "Show this <%= human_name.downcase %>", <%= singular_name %>, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+        <%%= link_to "Show this <%= human_name.downcase %>", <%= model_resource_name(singular_table_name) %>, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
       </p>
     <%% end %>
   </div>
