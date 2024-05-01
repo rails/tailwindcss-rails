@@ -1,6 +1,7 @@
 ## unreleased
 
 * Bring the scaffold templates up to date with rails/rails as much as possible without breaking 6.1 compatibility. (#357) @kinsomicrote
+* Drop support for Rails 6.0, which reached end-of-life in June 2023.
 
 
 ## v2.5.0 / 2024-04-27
