@@ -2,7 +2,7 @@ PATH
   remote: .
   specs:
     tailwindcss-rails (2.5.0)
-      railties (>= 6.1.0)
+      railties (>= 7.0.0)
 
 GEM
   remote: https://rubygems.org/
@@ -141,7 +141,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-  actionmailer (>= 6.1.0)
+  actionmailer (>= 7.0.0)
   debug (>= 1.0.0)
   tailwindcss-rails!
 
