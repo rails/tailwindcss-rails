@@ -43,7 +43,7 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: "3.2"
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: gem-ruby
           path: pkg
@@ -57,7 +57,7 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: "3.2"
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: gem-x86_64-linux
           path: pkg
@@ -70,7 +70,7 @@ jobs:
     container:
       image: ruby:3.2-alpine
     steps:
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: gem-x86_64-linux
           path: pkg
@@ -83,7 +83,7 @@ jobs:
     needs: ["package"]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: gem-arm-linux
           path: pkg
@@ -103,7 +103,7 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: "3.2"
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: gem-x86_64-darwin
           path: pkg
@@ -117,7 +117,7 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: "3.2"
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: gem-arm64-darwin
           path: pkg
@@ -131,7 +131,7 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: "3.0"
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: gem-x64-mingw32
           path: pkg
@@ -145,7 +145,7 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: "3.2"
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: gem-x64-mingw-ucrt
           path: pkg
