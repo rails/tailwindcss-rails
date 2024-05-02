@@ -5,5 +5,5 @@ gemspec
 gem "debug", ">= 1.0.0"
 
 group :test do
-  gem "actionmailer", ">= 6.1.0"
+  gem "actionmailer", ">= 7.0.0"
 end
