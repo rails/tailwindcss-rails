@@ -1,8 +1,9 @@
-## unreleased
+## v2.6.0 / 2024-05-04
 
+* Increase form input field border contrast. (#356) @olivierlacan
 * Bring the scaffold templates up to date with rails/rails. (#357, #359) @kinsomicrote
-* Drop support for Rails 6.0, which reached end-of-life in June 2023.
-* Drop feature and bug fix support for Rails 6.1. The previous minor release will still receive security support while Rails 6.1 is supported.
+* Drop support for Rails 6.0, which reached end-of-life in June 2023. (#358) @flavorjones
+* Drop feature and bug fix support for Rails 6.1. The previous minor release will still receive security support while Rails 6.1 is supported. (#359) @flavorjones
 
 
 ## v2.5.0 / 2024-04-27
