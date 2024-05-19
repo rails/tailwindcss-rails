@@ -25,8 +25,11 @@ bundle exec rails new test-app --skip-bundle
 pushd test-app
 
 # make sure to use the same version of rails (e.g., install from git source if necessary)
-bundle remove rails
+bundle remove rails --skip-install
 bundle add rails --skip-install ${RAILSOPTS:-}
+
+# work around https://github.com/net-ssh/bcrypt_pbkdf-ruby/issues/24
+bundle add bcrypt_pbkdf -v 1.1.1.rc2 --skip-install
 
 # use the tailwindcss-rails under test
 bundle add tailwindcss-rails --path="../.."
