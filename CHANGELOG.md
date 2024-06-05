@@ -1,3 +1,8 @@
+## v2.6.1 / 2024-06-05
+
+* Update to [Tailwind CSS v3.4.4](https://github.com/tailwindlabs/tailwindcss/releases/tag/v3.4.4) (#373) @flavorjones
+
+
 ## v2.6.0 / 2024-05-04
 
 * Increase form input field border contrast. (#356) @olivierlacan
