@@ -115,8 +115,12 @@ end
 
 desc "Validate checksums for tailwindcss binaries"
 task "check" => exepaths do
-  sha_filename = "sha256sums.txt"
-  sha_url = tailwindcss_download_url(sha_filename)
+  sha_filename = File.absolute_path("../package/tailwindcss-#{Tailwindcss::Upstream::VERSION}-checksums.txt", __dir__)
+  sha_url = if File.exist?(sha_filename)
+    sha_filename
+  else
+    sha_url = tailwindcss_download_url("sha256sums.txt")
+  end
   gemspec = TAILWINDCSS_RAILS_GEMSPEC
 
   checksums = URI.open(sha_url).each_line.map do |line|
