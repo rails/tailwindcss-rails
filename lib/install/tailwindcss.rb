@@ -49,7 +49,7 @@ else
 end
 
 say "Add bin/dev to start foreman"
-copy_file "#{__dir__}/dev", "bin/dev"
+copy_file "#{__dir__}/dev", "bin/dev", force: true
 chmod "bin/dev", 0755, verbose: false
 
 say "Compile initial Tailwind build"
