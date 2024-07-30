@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    tailwindcss-rails (2.6.4)
+    tailwindcss-rails (2.6.5)
       railties (>= 7.0.0)
 
 GEM

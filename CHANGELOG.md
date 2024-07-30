@@ -1,3 +1,8 @@
+## v2.6.5 / 2024-07-30
+
+* During installation, clobber the Rails v8 default `bin/dev` file without requiring human intervention. (#385) @jeromedalbert
+
+
 ## v2.6.4 / 2024-07-27
 
 * Update to [Tailwind CSS v3.4.7](https://github.com/tailwindlabs/tailwindcss/releases/tag/v3.4.7) (#383) @flavorjones
