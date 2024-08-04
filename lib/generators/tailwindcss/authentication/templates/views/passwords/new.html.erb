@@ -1,9 +1,9 @@
 <div class="mx-auto md:w-2/3 w-full">
-  <h1 class="font-bold text-4xl">Forgot your password?</h1>
-
   <%% if alert = flash[:alert] %>
     <p class="py-2 px-3 bg-red-50 mb-5 text-red-500 font-medium rounded-lg inline-block" id="alert"><%%= alert %></p>
   <%% end %>
+
+  <h1 class="font-bold text-4xl">Forgot your password?</h1>
 
   <%%= form_with url: passwords_path, class: "contents" do |form| %>
     <div class="my-5">
