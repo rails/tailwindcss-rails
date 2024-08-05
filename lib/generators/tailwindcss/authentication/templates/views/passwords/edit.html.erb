@@ -1,0 +1,21 @@
+<div class="mx-auto md:w-2/3 w-full">
+  <%% if alert = flash[:alert] %>
+    <p class="py-2 px-3 bg-red-50 mb-5 text-red-500 font-medium rounded-lg inline-block" id="alert"><%%= alert %></p>
+  <%% end %>
+
+  <h1 class="font-bold text-4xl">Update your password</h1>
+
+  <%%= form_with url: password_path(params[:token]), method: :put, class: "contents" do |form| %>
+    <div class="my-5">
+      <%%= form.password_field :password, required: true, autocomplete: "new-password", placeholder: "Enter new password", maxlength: 72, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
+    </div>
+
+    <div class="my-5">
+      <%%= form.password_field :password_confirmation, required: true, autocomplete: "new-password", placeholder: "Repeat new password", maxlength: 72, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
+    </div>
+
+    <div class="inline">
+      <%%= form.submit "Save", class: "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
+    </div>
+  <%% end %>
+</div>

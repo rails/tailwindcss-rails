@@ -14,20 +14,42 @@ on:
       - .github/workflows/upstream.yml # this file
 
 jobs:
+  tests:
+    name: "tests (rails main)"
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby: ["3.3"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{matrix.ruby}}
+      - run: |
+          rm Gemfile.lock
+          bundle remove actionmailer
+          git clone --depth 1 --branch main https://github.com/rails/rails
+          bundle add actionmailer --path=rails
+          bundle add railties --path=rails
+          bundle install
+      - name: Run tests
+        run: bin/test
+
   user-journey:
     name: "user-journey (rails main)"
+    runs-on: ${{matrix.plat}}-latest
     strategy:
       fail-fast: false
       matrix:
         plat: ["ubuntu", "windows", "macos"]
-    runs-on: ${{matrix.plat}}-latest
     env:
       RAILSOPTS: --git=https://github.com/rails/rails --branch main
     steps:
       - uses: actions/checkout@v4
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: "3.2"
+          ruby-version: "3.3"
           bundler: latest
       - run: test/integration/user_journey_test.sh
         shell: bash
