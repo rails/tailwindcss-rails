@@ -1,3 +1,8 @@
+## v2.7.0 / 2024-08-05
+
+* Add specialized views for the new authentication generator coming in Rails 8. (#384) @yshmarov @dhh @flavorjones
+
+
 ## v2.6.5 / 2024-07-30
 
 * During installation, clobber the Rails v8 default `bin/dev` file without requiring human intervention. (#385) @jeromedalbert
