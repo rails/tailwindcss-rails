@@ -1,3 +1,8 @@
+## v2.7.1 / 2024-08-07
+
+* Update to [Tailwind CSS v3.4.8](https://github.com/tailwindlabs/tailwindcss/releases/tag/v3.4.8) @flavorjones
+
+
 ## v2.7.0 / 2024-08-05
 
 * Add specialized views for the new authentication generator coming in Rails 8. (#384) @yshmarov @dhh @flavorjones
