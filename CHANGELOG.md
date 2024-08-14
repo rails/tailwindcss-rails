@@ -1,3 +1,8 @@
+## next / unreleased
+
+* Update to [Tailwind CSS v3.4.10](https://github.com/tailwindlabs/tailwindcss/releases/tag/v3.4.10) @flavorjones
+
+
 ## v2.7.2 / 2024-08-08
 
 * Update to [Tailwind CSS v3.4.9](https://github.com/tailwindlabs/tailwindcss/releases/tag/v3.4.9) @flavorjones
