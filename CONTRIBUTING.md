@@ -29,7 +29,7 @@ Update `lib/tailwindcss/upstream.rb` with the upstream version.
 
 Run `bundle exec rake clobber` then `bundle exec rake download` to ensure the tailwindcss binaries can be downloaded, and that you have the correct versions on local disk.
 
-## Cutting a release
+## Cutting a release of tailwindcss-rails
 
 - bump the version
   - [ ] update `lib/tailwindcss/version.rb`
@@ -40,6 +40,6 @@ Run `bundle exec rake clobber` then `bundle exec rake download` to ensure the ta
   - [ ] `bundle exec rake package`
 - push
   - [ ] `for g in pkg/*.gem ; do gem push $g ; done`
-  - [ ] `git push`
+  - [ ] `git push && git push --tags`
 - announce
   - [ ] create a release at https://github.com/rails/tailwindcss-rails/releases
