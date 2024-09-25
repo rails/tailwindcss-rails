@@ -23,23 +23,14 @@ gem "tailwindcss-rails", path: "/path/to/tailwindcss-rails"
 ```
 
 
-## Updating to the latest upstream tailwindcss version
-
-Update `lib/tailwindcss/upstream.rb` with the upstream version.
-
-Run `bundle exec rake clobber` then `bundle exec rake download` to ensure the tailwindcss binaries can be downloaded, and that you have the correct versions on local disk.
-
 ## Cutting a release of tailwindcss-rails
 
 - bump the version
   - [ ] update `lib/tailwindcss/version.rb`
   - [ ] update `CHANGELOG.md`
   - [ ] commit and create a git tag
-- build the native gems:
-  - [ ] `bundle exec rake clobber` to clean up possibly-old tailwindcss executables
-  - [ ] `bundle exec rake package`
 - push
-  - [ ] `for g in pkg/*.gem ; do gem push $g ; done`
+  - [ ] `gem push pkg/*.gem`
   - [ ] `git push && git push --tags`
 - announce
   - [ ] create a release at https://github.com/rails/tailwindcss-rails/releases

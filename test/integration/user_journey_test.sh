@@ -11,9 +11,6 @@ bundle remove actionmailer
 bundle add rails --skip-install ${RAILSOPTS:-}
 bundle install
 
-# fetch the upstream executables
-bundle exec rake download
-
 # do our work a directory with spaces in the name (#176, #184)
 rm -rf "My Workspace"
 mkdir "My Workspace"

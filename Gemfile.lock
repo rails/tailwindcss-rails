@@ -3,6 +3,7 @@ PATH
   specs:
     tailwindcss-rails (2.7.7)
       railties (>= 7.0.0)
+      tailwindcss-ruby
 
 GEM
   remote: https://rubygems.org/
@@ -128,6 +129,7 @@ GEM
       io-console (~> 0.5)
     securerandom (0.3.1)
     stringio (3.1.1)
+    tailwindcss-ruby (0.1.0-x86_64-linux)
     thor (1.3.1)
     timeout (0.4.1)
     tzinfo (2.0.6)

@@ -1,3 +1,14 @@
+## next / unreleased
+
+### Notable changes
+
+* The upstream `tailwindcss` executable has been extracted from this gem into a new dependency, `tailwindcss-ruby`.
+
+  In advance of the upcoming TailwindCSS v4 release, we are decoupling the `tailwindcss` executable
+  from the Rails integration. This will allow users to upgrade TailwindCSS at a time of their
+  choosing, and allow early adopters to start using the beta releases.
+
+
 ## v2.7.7 / 2024-10-02
 
 * Proactively support changes to Rails's authentication templates shipping in Rails 8.0.0.beta2 (which is not yet released). (#407, #408) @seanpdoyle @flavorjones
