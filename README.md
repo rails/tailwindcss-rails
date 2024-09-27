@@ -7,6 +7,7 @@
 <!-- toc -->
 
 - [Installation](#installation)
+  * [Choosing a specific version of `tailwindcss`](#choosing-a-specific-version-of-tailwindcss)
   * [Using a local installation of `tailwindcss`](#using-a-local-installation-of-tailwindcss)
 - [Developing with Tailwindcss](#developing-with-tailwindcss)
   * [Configuration and commands](#configuration-and-commands)
@@ -17,7 +18,7 @@
   * [Using with PostCSS](#using-with-postcss)
   * [Custom inputs or outputs](#custom-inputs-or-outputs)
 - [Troubleshooting](#troubleshooting)
-  * [Lost keystrokes or hanging when using `ruby/debug` with the Puma plugin](#lost-keystrokes-or-hanging-when-using-rubydebug-with-the-puma-plugin)
+  * [Lost keystrokes or hanging when using terminal-based debugging tools (e.g. IRB, Pry, `ruby/debug`...etc.) with the Puma plugin](#lost-keystrokes-or-hanging-when-using-terminal-based-debugging-tools-eg-irb-pry-rubydebugetc-with-the-puma-plugin)
   * [Running in a docker container exits prematurely](#running-in-a-docker-container-exits-prematurely)
   * [Conflict with sassc-rails](#conflict-with-sassc-rails)
   * [Class names must be spelled out](#class-names-must-be-spelled-out)
@@ -35,7 +36,23 @@ With Rails 7 you can generate a new application preconfigured with Tailwind by u
 1. Run `./bin/bundle add tailwindcss-rails`
 2. Run `./bin/rails tailwindcss:install`
 
-This gem depends on the `tailwindcss-ruby` gem to install a working tailwind executable. You can also use a local (npm-based) installation if you prefer, please go to https://github.com/flavorjones/tailwindcss-ruby for more information.
+This gem depends on the `tailwindcss-ruby` gem to install a working tailwind executable.
+
+
+### Choosing a specific version of `tailwindcss`
+
+The `tailwindcss-ruby` gem is declared as a floating dependency of this gem, so by default you will get the most recent stable version. However, you can select a specific version of tailwind by pinning that gem to the analogous version in your application's `Gemfile`. For example,
+
+``` ruby
+gem "tailwindcss-rails"
+
+# pin to tailwindcss version 3.4.13
+gem "tailwindcss-ruby", "3.4.13"
+```
+
+### Using a local installation of `tailwindcss`
+
+You can also use a local (npm-based) installation if you prefer, please go to https://github.com/flavorjones/tailwindcss-ruby for more information.
 
 
 ## Developing with Tailwindcss
