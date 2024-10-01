@@ -32,12 +32,13 @@ bundle add rails --skip-install ${RAILSOPTS:-}
 bundle add tailwindcss-rails --path="../.."
 bundle install
 bundle show --paths
+bundle binstubs --all
 
 # install tailwindcss
 bin/rails tailwindcss:install
 
 # TEST: tailwind was installed correctly
-grep tailwind app/views/layouts/application.html.erb
+grep -q tailwind app/views/layouts/application.html.erb
 
 # TEST: rake tasks don't exec (#188)
 cat <<EOF >> Rakefile
@@ -47,3 +48,13 @@ end
 EOF
 
 bin/rails tailwindcss:build still_here | grep "Rake process did not exit early"
+
+if [[ $(rails -v) > "Rails 8.0.0.beta" ]] ; then
+  # TEST: presence of the generated file
+  bin/rails generate authentication
+  grep -q PasswordsController app/controllers/passwords_controller.rb
+fi
+
+# TEST: presence of the generated file
+bin/rails generate scaffold post title:string body:text published:boolean
+grep -q "Show this post" app/views/posts/index.html.erb
