@@ -1,0 +1,17 @@
+<div class="mx-auto md:w-2/3 w-full">
+  <%% if alert = flash[:alert] %>
+    <p class="py-2 px-3 bg-red-50 mb-5 text-red-500 font-medium rounded-lg inline-block" id="alert"><%%= alert %></p>
+  <%% end %>
+
+  <h1 class="font-bold text-4xl">Forgot your password?</h1>
+
+  <%%= form_with url: passwords_path, class: "contents" do |form| %>
+    <div class="my-5">
+      <%%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", placeholder: "Enter your email address", value: params[:email_address], class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
+    </div>
+
+    <div class="inline">
+      <%%= form.submit "Email reset instructions", class: "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
+    </div>
+  <%% end %>
+</div>

@@ -10,8 +10,6 @@ on:
     types: [opened, synchronize]
     branches:
       - '*'
-    paths:
-      - .github/workflows/upstream.yml # this file
 
 jobs:
   tests:
@@ -37,14 +35,15 @@ jobs:
         run: bin/test
 
   user-journey:
-    name: "user-journey (rails main)"
+    name: "user-journey (rails ${{ matrix.ref }})"
     runs-on: ${{matrix.plat}}-latest
     strategy:
       fail-fast: false
       matrix:
-        plat: ["ubuntu", "windows", "macos"]
+        plat: ["ubuntu"]
+        ref: ["7-2-stable", "v8.0.0.beta1", "main"]
     env:
-      RAILSOPTS: --git=https://github.com/rails/rails --branch main
+      RAILSOPTS: --git=https://github.com/rails/rails --ref=${{ matrix.ref }}
     steps:
       - uses: actions/checkout@v4
       - uses: ruby/setup-ruby@v1
