@@ -1,3 +1,8 @@
+## v2.7.7 / 2024-10-02
+
+* Proactively support changes to Rails's authentication templates shipping in Rails 8.0.0.beta2 (which is not yet released). (#407, #408) @seanpdoyle @flavorjones
+
+
 ## v2.7.6 / 2024-09-23
 
 * Update to [Tailwind CSS v3.4.13](https://github.com/tailwindlabs/tailwindcss/releases/tag/v3.4.13) @flavorjones
