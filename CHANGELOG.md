@@ -1,4 +1,4 @@
-## v3.0.0rc1
+## v3.0.0.rc1
 
 ### Notable changes
 
