@@ -1,4 +1,4 @@
-## next / unreleased
+## v3.0.0rc1
 
 ### Notable changes
 

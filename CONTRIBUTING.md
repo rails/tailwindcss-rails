@@ -29,7 +29,8 @@ gem "tailwindcss-rails", path: "/path/to/tailwindcss-rails"
   - [ ] update `lib/tailwindcss/version.rb`
   - [ ] update `CHANGELOG.md`
   - [ ] commit and create a git tag
-- push
+- package and push
+  - [ ] `bundle exec rake build`
   - [ ] `gem push pkg/*.gem`
   - [ ] `git push && git push --tags`
 - announce

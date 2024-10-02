@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    tailwindcss-rails (2.7.7)
+    tailwindcss-rails (3.0.0.rc1)
       railties (>= 7.0.0)
       tailwindcss-ruby
 
