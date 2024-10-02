@@ -17,8 +17,7 @@ Gem::Specification.new do |spec|
   spec.required_rubygems_version = ">= 3.2.0" # for Gem::Platform#match_gem?
 
   spec.files = Dir["{app,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
-  spec.bindir = "exe"
-  spec.executables << "tailwindcss"
 
   spec.add_dependency "railties", ">= 7.0.0"
+  spec.add_dependency "tailwindcss-ruby"
 end

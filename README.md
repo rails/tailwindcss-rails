@@ -7,6 +7,7 @@
 <!-- toc -->
 
 - [Installation](#installation)
+  * [Choosing a specific version of `tailwindcss`](#choosing-a-specific-version-of-tailwindcss)
   * [Using a local installation of `tailwindcss`](#using-a-local-installation-of-tailwindcss)
 - [Developing with Tailwindcss](#developing-with-tailwindcss)
   * [Configuration and commands](#configuration-and-commands)
@@ -17,7 +18,7 @@
   * [Using with PostCSS](#using-with-postcss)
   * [Custom inputs or outputs](#custom-inputs-or-outputs)
 - [Troubleshooting](#troubleshooting)
-  * [Lost keystrokes or hanging when using `ruby/debug` with the Puma plugin](#lost-keystrokes-or-hanging-when-using-rubydebug-with-the-puma-plugin)
+  * [Lost keystrokes or hanging when using terminal-based debugging tools (e.g. IRB, Pry, `ruby/debug`...etc.) with the Puma plugin](#lost-keystrokes-or-hanging-when-using-terminal-based-debugging-tools-eg-irb-pry-rubydebugetc-with-the-puma-plugin)
   * [Running in a docker container exits prematurely](#running-in-a-docker-container-exits-prematurely)
   * [Conflict with sassc-rails](#conflict-with-sassc-rails)
   * [Class names must be spelled out](#class-names-must-be-spelled-out)
@@ -35,34 +36,23 @@ With Rails 7 you can generate a new application preconfigured with Tailwind by u
 1. Run `./bin/bundle add tailwindcss-rails`
 2. Run `./bin/rails tailwindcss:install`
 
-This gem wraps [the standalone executable version](https://tailwindcss.com/blog/standalone-cli) of the Tailwind CSS v3 framework. These executables are platform specific, so there are actually separate underlying gems per platform, but the correct gem will automatically be picked for your platform.
+This gem depends on the `tailwindcss-ruby` gem to install a working tailwind executable.
 
-Supported platforms are:
 
-- arm64-darwin (macos-arm64)
-- x64-mingw32 (windows-x64)
-- x64-mingw-ucr (windows-x64)
-- x86_64-darwin (macos-x64)
-- x86_64-linux (linux-x64)
-- aarch64-linux (linux-arm64)
-- arm-linux (linux-armv7)
+### Choosing a specific version of `tailwindcss`
 
+The `tailwindcss-ruby` gem is declared as a floating dependency of this gem, so by default you will get the most recent stable version. However, you can select a specific version of tailwind by pinning that gem to the analogous version in your application's `Gemfile`. For example,
+
+``` ruby
+gem "tailwindcss-rails"
+
+# pin to tailwindcss version 3.4.13
+gem "tailwindcss-ruby", "3.4.13"
+```
 
 ### Using a local installation of `tailwindcss`
 
-If you are not able to use the vendored standalone executables (for example, if you're on an unsupported platform), you can use a local installation of the `tailwindcss` executable by setting an environment variable named `TAILWINDCSS_INSTALL_DIR` to the directory path containing the executable.
-
-For example, if you've installed `tailwindcss` so that the executable is found at `/path/to/node_modules/bin/tailwindcss`, then you should set your environment variable like so:
-
-``` sh
-TAILWINDCSS_INSTALL_DIR=/path/to/node_modules/bin
-```
-
-or, for relative paths like `./node_modules/.bin/tailwindcss`:
-
-``` sh
-TAILWINDCSS_INSTALL_DIR=node_modules/.bin
-```
+You can also use a local (npm-based) installation if you prefer, please go to https://github.com/flavorjones/tailwindcss-ruby for more information.
 
 
 ## Developing with Tailwindcss
@@ -206,41 +196,7 @@ For Tailwind to work, your class names need to be spelled out. If you need to ma
 
 ### `ERROR: Cannot find the tailwindcss executable` for supported platform
 
-Some users are reporting this error even when running on one of the supported native platforms:
-
-- arm64-darwin
-- x64-mingw32
-- x64-mingw-ucrt
-- x86_64-darwin
-- x86_64-linux
-- aarch64-linux
-
-#### Check Bundler PLATFORMS
-
-A possible cause of this is that Bundler has not been told to include native gems for your current platform. Please check your `Gemfile.lock` file to see whether your native platform is included in the `PLATFORMS` section. If necessary, run:
-
-``` sh
-bundle lock --add-platform <platform-name>
-```
-
-and re-bundle.
-
-
-#### Check BUNDLE_FORCE_RUBY_PLATFORM
-
-Another common cause of this is that bundler is configured to always use the "ruby" platform via the
-`BUNDLE_FORCE_RUBY_PLATFORM` config parameter being set to `true`. Please remove this configuration:
-
-``` sh
-bundle config unset force_ruby_platform
-# or
-bundle config set --local force_ruby_platform false
-```
-
-and re-bundle.
-
-See https://bundler.io/man/bundle-config.1.html for more information.
-
+See https://github.com/flavorjones/tailwindcss-ruby for help.
 
 ### Using asset-pipeline assets
 
@@ -280,5 +236,4 @@ Or, if you do want to keep using the asset pipeline in parallel, make sure to re
 ## License
 
 Tailwind for Rails is released under the [MIT License](https://opensource.org/licenses/MIT).
-Tailwind CSS is released under the [MIT License](https://opensource.org/licenses/MIT).
 The Inter font is released under the [SIL Open Font License, Version 1.1](https://github.com/rsms/inter/blob/master/LICENSE.txt).

@@ -3,6 +3,7 @@ PATH
   specs:
     tailwindcss-rails (2.7.7)
       railties (>= 7.0.0)
+      tailwindcss-ruby
 
 GEM
   remote: https://rubygems.org/
@@ -59,13 +60,13 @@ GEM
     erubi (1.13.0)
     globalid (1.2.1)
       activesupport (>= 6.1)
-    i18n (1.14.5)
+    i18n (1.14.6)
       concurrent-ruby (~> 1.0)
     io-console (0.7.2)
-    irb (1.14.0)
+    irb (1.14.1)
       rdoc (>= 4.0.0)
       reline (>= 0.4.2)
-    logger (1.6.0)
+    logger (1.6.1)
     loofah (2.22.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
@@ -75,9 +76,8 @@ GEM
       net-pop
       net-smtp
     mini_mime (1.1.5)
-    mini_portile2 (2.8.7)
     minitest (5.25.1)
-    net-imap (0.4.14)
+    net-imap (0.4.16)
       date
       net-protocol
     net-pop (0.1.2)
@@ -86,10 +86,13 @@ GEM
       timeout
     net-smtp (0.5.0)
       net-protocol
-    nokogiri (1.16.7)
-      mini_portile2 (~> 2.8.2)
+    nokogiri (1.16.7-aarch64-linux)
+      racc (~> 1.4)
+    nokogiri (1.16.7-arm-linux)
       racc (~> 1.4)
     nokogiri (1.16.7-arm64-darwin)
+      racc (~> 1.4)
+    nokogiri (1.16.7-x86-linux)
       racc (~> 1.4)
     nokogiri (1.16.7-x86_64-darwin)
       racc (~> 1.4)
@@ -124,21 +127,29 @@ GEM
     rake (13.2.1)
     rdoc (6.7.0)
       psych (>= 4.0.0)
-    reline (0.5.9)
+    reline (0.5.10)
       io-console (~> 0.5)
     securerandom (0.3.1)
     stringio (3.1.1)
-    thor (1.3.1)
+    tailwindcss-ruby (3.4.13)
+    tailwindcss-ruby (3.4.13-aarch64-linux)
+    tailwindcss-ruby (3.4.13-arm-linux)
+    tailwindcss-ruby (3.4.13-arm64-darwin)
+    tailwindcss-ruby (3.4.13-x86_64-darwin)
+    tailwindcss-ruby (3.4.13-x86_64-linux)
+    thor (1.3.2)
     timeout (0.4.1)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     useragent (0.16.10)
     webrick (1.8.2)
-    zeitwerk (2.6.17)
+    zeitwerk (2.6.18)
 
 PLATFORMS
+  aarch64-linux
+  arm-linux
   arm64-darwin
-  ruby
+  x86-linux
   x86_64-darwin
   x86_64-linux
 
@@ -148,4 +159,4 @@ DEPENDENCIES
   tailwindcss-rails!
 
 BUNDLED WITH
-   2.5.4
+   2.5.20
