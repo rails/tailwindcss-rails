@@ -28,7 +28,7 @@
     <%%= form.label :<%= attribute.column_name %> %>
 <% if attribute.field_type == :text_area -%>
     <%%= form.<%= attribute.field_type %> :<%= attribute.column_name %>, rows: 4, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
-<% elsif attribute.field_type == :check_box -%>
+<% elsif attribute.field_type == :checkbox -%>
     <%%= form.<%= attribute.field_type %> :<%= attribute.column_name %>, class: "block mt-2 h-5 w-5" %>
 <% else -%>
     <%%= form.<%= attribute.field_type %> :<%= attribute.column_name %>, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
