@@ -1,3 +1,8 @@
+## v2.7.8 / 2024-10-08
+
+* Fix the scaffold form template to render checkboxes properly. (#416) @enderahmetyurt
+
+
 ## v2.7.7 / 2024-10-02
 
 * Proactively support changes to Rails's authentication templates shipping in Rails 8.0.0.beta2 (which is not yet released). (#407, #408) @seanpdoyle @flavorjones
