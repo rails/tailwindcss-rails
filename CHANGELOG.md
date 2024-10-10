@@ -1,3 +1,8 @@
+## v2.7.9 / 2024-10-10
+
+* Fix the scaffold form template to render text forms and check boxes properly in all versions of Rails. (#418) @Earlopain
+
+
 ## v2.7.8 / 2024-10-08
 
 * Fix the scaffold form template to render checkboxes properly. (#416) @enderahmetyurt
