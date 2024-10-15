@@ -7,6 +7,11 @@
   In advance of the upcoming TailwindCSS v4 release, we are decoupling the `tailwindcss` executable from the Rails integration. This will allow users to upgrade TailwindCSS at a time of their choosing, and allow early adopters to start using the beta releases.
 
 
+## v2.7.9 / 2024-10-10
+
+* Fix the scaffold form template to render text forms and check boxes properly in all versions of Rails. (#418) @Earlopain
+
+
 ## v2.7.8 / 2024-10-08
 
 * Fix the scaffold form template to render checkboxes properly. (#416) @enderahmetyurt
