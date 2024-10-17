@@ -26,7 +26,8 @@ bundle remove rails --skip-install
 bundle add rails --skip-install ${RAILSOPTS:-}
 
 # use the tailwindcss-rails under test
-bundle add tailwindcss-rails --path="../.."
+bundle add tailwindcss-rails --skip-install --path="../.."
+bundle add tailwindcss-ruby --skip-install ${TAILWINDCSSOPTS:-}
 bundle install
 bundle show --paths
 bundle binstubs --all
@@ -55,3 +56,9 @@ fi
 # TEST: presence of the generated file
 bin/rails generate scaffold post title:string body:text published:boolean
 grep -q "Show this post" app/views/posts/index.html.erb
+
+# TEST: contents of the css file
+bin/rails tailwindcss:build[verbose]
+grep -q "py-2" app/assets/builds/tailwind.css
+
+echo "OK"
