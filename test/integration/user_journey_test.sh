@@ -32,6 +32,12 @@ bundle install
 bundle show --paths
 bundle binstubs --all
 
+if bundle show | fgrep tailwindcss-ruby | fgrep -q "(4." ; then
+  TAILWIND4=1
+else
+  TAILWIND4=0
+fi
+
 # install tailwindcss
 bin/rails tailwindcss:install
 
@@ -44,6 +50,13 @@ task :still_here do
   puts "Rake process did not exit early"
 end
 EOF
+
+if [[ $TAILWIND4 = 1 ]] ; then
+  cat > app/assets/stylesheets/application.tailwind.css <<EOF
+@import "tailwindcss";
+@theme { --color-special: #abc12399; }
+EOF
+fi
 
 bin/rails tailwindcss:build still_here | grep "Rake process did not exit early"
 
@@ -60,5 +73,10 @@ grep -q "Show this post" app/views/posts/index.html.erb
 # TEST: contents of the css file
 bin/rails tailwindcss:build[verbose]
 grep -q "py-2" app/assets/builds/tailwind.css
+
+if [[ $TAILWIND4 = 1 ]] ; then
+  # TEST: contents include application.tailwind.css
+  grep -q "#abc12399" app/assets/builds/tailwind.css
+fi
 
 echo "OK"

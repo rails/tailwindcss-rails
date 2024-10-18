@@ -3,22 +3,13 @@ require "tailwindcss/ruby"
 module Tailwindcss
   module Commands
     class << self
-      def tailwindcss_version
-        Tailwindcss::Ruby::VERSION
-      end
-
       def compile_command(debug: false, **kwargs)
         command = [
           Tailwindcss::Ruby.executable(**kwargs),
-          "-o", Rails.root.join("app/assets/builds/tailwind.css").to_s
+          "-i", Rails.root.join("app/assets/stylesheets/application.tailwind.css").to_s,
+          "-o", Rails.root.join("app/assets/builds/tailwind.css").to_s,
+          "-c", Rails.root.join("config/tailwind.config.js").to_s,
         ]
-
-        unless tailwindcss_version >= "4.0"
-          command += [
-            "-i", Rails.root.join("app/assets/stylesheets/application.tailwind.css").to_s,
-            "-c", Rails.root.join("config/tailwind.config.js").to_s,
-          ]
-        end
 
         command << "--minify" unless (debug || rails_css_compressor?)
 
