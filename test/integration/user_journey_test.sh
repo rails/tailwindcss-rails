@@ -61,4 +61,11 @@ grep -q "Show this post" app/views/posts/index.html.erb
 bin/rails tailwindcss:build[verbose]
 grep -q "py-2" app/assets/builds/tailwind.css
 
+# TEST: edit the css file by adding a custom property to the @theme block 
+tailwind_application_css_file_path="app/assets/stylesheets/application.tailwind.css"
+echo -e "\n@theme { --color-tomato: #fafafa; }" >> "$tailwind_application_css_file_path"
+
+bin/rails tailwindcss:build[verbose]
+grep -q "fafafa" app/assets/builds/tailwind.css
+
 echo "OK"
