@@ -1,6 +1,6 @@
 ## next / unreleased
 
-* Add experimental support for Tailwind CSS v4. (#420) @flavorjones
+* Add experimental support for Tailwind CSS v4. (#420, #423) @flavorjones
 
 
 ## v3.0.0

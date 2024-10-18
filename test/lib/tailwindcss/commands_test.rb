@@ -9,29 +9,14 @@ class Tailwindcss::CommandsTest < ActiveSupport::TestCase
     @executable = Tailwindcss::Ruby.executable
   end
 
-  test ".compile_command with tailwindcss v3" do
+  test ".compile_command" do
     Rails.stub(:root, File) do # Rails.root won't work in this test suite
-      Tailwindcss::Commands.stub(:tailwindcss_version, "3.4.13") do
-        actual = Tailwindcss::Commands.compile_command
-        assert_kind_of(Array, actual)
-        assert_equal(executable, actual.first)
-        assert_includes(actual, "-i")
-        assert_includes(actual, "-c")
-        assert_includes(actual, "-o")
-      end
-    end
-  end
-
-  test ".compile_command with tailwindcss v4" do
-    Rails.stub(:root, File) do # Rails.root won't work in this test suite
-      Tailwindcss::Commands.stub(:tailwindcss_version, "4.0.0") do
-        actual = Tailwindcss::Commands.compile_command
-        assert_kind_of(Array, actual)
-        assert_equal(executable, actual.first)
-        refute_includes(actual, "-i")
-        refute_includes(actual, "-c")
-        assert_includes(actual, "-o")
-      end
+      actual = Tailwindcss::Commands.compile_command
+      assert_kind_of(Array, actual)
+      assert_equal(executable, actual.first)
+      assert_includes(actual, "-i")
+      assert_includes(actual, "-c")
+      assert_includes(actual, "-o")
     end
   end
 
