@@ -1,6 +1,13 @@
 ## next / unreleased
 
-## v3.0.0
+## v3.1.0 / 2024-12-29
+
+### Notable changes
+
+The tailwindcss plugins "form", "typography", and "container-queries" have been dropped from the default generated `tailwind.config.js` file. If you'd like to use them, you can re-add them to your project by uncommenting the appropriate lines in your config file. (#446) @flavorjones
+
+
+## v3.0.0 / 2024-10-15
 
 ### Notable changes
 
