@@ -167,6 +167,8 @@ module.exports = {
 }
 ```
 
+Installing additional postcss plugins such as tailwindcss/nesting requires a JavaScript package manager. 
+
 ### Custom inputs or outputs
 
 If you need to use a custom input or output file, you can run `bundle exec tailwindcss` to access the platform-specific executable, and give it your own build options.
