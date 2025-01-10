@@ -12,6 +12,5 @@
     <%%= <%= singular_name %>.<%= attribute.column_name %> %>
 <% end -%>
   </p>
-
 <% end -%>
 </div>

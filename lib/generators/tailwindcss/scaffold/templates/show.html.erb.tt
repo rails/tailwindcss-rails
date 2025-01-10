@@ -1,15 +1,17 @@
-<div class="mx-auto md:w-2/3 w-full flex">
-  <div class="mx-auto">
-    <%% if notice.present? %>
-      <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%%= notice %></p>
-    <%% end %>
+<%% content_for :title, "Showing <%= human_name.downcase %>" %>
 
-    <%%= render @<%= singular_table_name %> %>
+<div class="md:w-2/3 w-full">
+  <%% if notice.present? %>
+    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-md inline-block" id="notice"><%%= notice %></p>
+  <%% end %>
 
-    <%%= link_to "Edit this <%= human_name.downcase %>", <%= edit_helper(type: :path) %>, class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-    <%%= link_to "Back to <%= human_name.pluralize.downcase %>", <%= index_helper %>_path, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-    <div class="inline-block ml-2">
-      <%%= button_to "Destroy this <%= human_name.downcase %>", <%= model_resource_name(prefix: "@") %>, method: :delete, class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 font-medium" %>
-    </div>
+  <h1 class="font-bold text-4xl">Showing <%= human_name.downcase %></h1>
+
+  <%%= render @<%= singular_table_name %> %>
+
+  <%%= link_to "Edit this <%= human_name.downcase %>", <%= edit_helper(type: :path) %>, class: "mt-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
+  <%%= link_to "Back to <%= human_name.pluralize.downcase %>", <%= index_helper %>_path, class: "ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
+  <div class="inline-block ml-2">
+    <%%= button_to "Destroy this <%= human_name.downcase %>", <%= model_resource_name(prefix: "@") %>, method: :delete, class: "mt-2 rounded-md px-3.5 py-2.5 text-white bg-red-600 hover:bg-red-500 font-medium" %>
   </div>
 </div>
