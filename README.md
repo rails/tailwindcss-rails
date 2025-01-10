@@ -151,7 +151,7 @@ Running `bin/dev` invokes Foreman to start both the Tailwind watch process and t
 
 ### Using with PostCSS
 
-If you want to use PostCSS as a preprocessor, create a custom `config/postcss.config.js` and it will be loaded automatically.
+If you want to use PostCSS as a preprocessor, create a custom `config/postcss.config.js` and that file will be loaded by tailwind automatically.
 
 For example, to enable nesting:
 
@@ -166,6 +166,25 @@ module.exports = {
   },
 }
 ```
+
+⚠ Note that PostCSS is a javascript tool with its own prerequisites! By default `tailwindcss-rails` does not require any javascript tooling, so in order to use PostCSS, a `package.json` with dependencies for your plugins and a package manager like `yarn` or `npm` is required, for example:
+
+```json
+// package.json
+{
+  "name": "my app",
+  "private": true,
+  "dependencies": {
+    "postcss-advanced-variables": "^4.0.0",
+    "postcss-import": "^16.0.1",
+    "postcss-mixins": "^9.0.4",
+    "tailwindcss": "^3.4.1"
+  }
+}
+```
+
+Then you can use yarn or npm to install the dependencies.
+
 
 ### Custom inputs or outputs
 
