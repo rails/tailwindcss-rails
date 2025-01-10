@@ -20,11 +20,11 @@
 
     <div class="col-span-6 sm:flex sm:items-center sm:gap-4">
       <div class="inline">
-        <%%= form.submit "Sign in", class: "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
+        <%%= form.submit "Sign in", class: "rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer" %>
       </div>
 
       <div class="mt-4 text-sm text-gray-500 sm:mt-0">
-        <%%= link_to "Forgot password?", new_password_path, class: "text-gray-700 underline" %>
+        <%%= link_to "Forgot password?", new_password_path, class: "text-gray-700 underline hover:no-underline" %>
       </div>
     </div>
   <%% end %>
