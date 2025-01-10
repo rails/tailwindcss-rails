@@ -12,7 +12,7 @@
   <%% end %>
 
 <% attributes.each do |attribute| -%>
-  <div class="my-5">
+  <div class="my-5<%= " flex items-center gap-2" if attribute.field_type == :checkbox || attribute.field_type == :check_box %>">
 <% if attribute.password_digest? -%>
     <%%= form.label :password %>
     <%%= form.password_field :password, class: ["block shadow-sm rounded-md border outline-hidden px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": <%= model_resource_name %>.errors[:password].none?, "border-red-400 focus:outline-red-600": <%= model_resource_name %>.errors[:password].any?}] %>
@@ -29,7 +29,7 @@
 <% if attribute.field_type == :textarea || attribute.field_type == :text_area -%>
     <%%= form.<%= attribute.field_type %> :<%= attribute.column_name %>, rows: 4, class: ["block shadow-sm rounded-md border outline-hidden px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": <%= model_resource_name %>.errors[:<%= attribute.column_name %>].none?, "border-red-400 focus:outline-red-600": <%= model_resource_name %>.errors[:<%= attribute.column_name %>].any?}] %>
 <% elsif attribute.field_type == :checkbox || attribute.field_type == :check_box -%>
-    <%%= form.<%= attribute.field_type %> :<%= attribute.column_name %>, class: ["block shadow-sm rounded-md border outline-hidden mt-2 h-5 w-5", {"border-gray-400 focus:outline-blue-600": <%= model_resource_name %>.errors[:<%= attribute.column_name %>].none?, "border-red-400 focus:outline-red-600": <%= model_resource_name %>.errors[:<%= attribute.column_name %>].any?}] %>
+    <%%= form.<%= attribute.field_type %> :<%= attribute.column_name %>, class: ["block shadow-sm rounded-md border outline-hidden order-first h-5 w-5", {"border-gray-400 focus:outline-blue-600": <%= model_resource_name %>.errors[:<%= attribute.column_name %>].none?, "border-red-400 focus:outline-red-600": <%= model_resource_name %>.errors[:<%= attribute.column_name %>].any?}] %>
 <% else -%>
     <%%= form.<%= attribute.field_type %> :<%= attribute.column_name %>, class: ["block shadow-sm rounded-md border outline-hidden px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": <%= model_resource_name %>.errors[:<%= attribute.column_name %>].none?, "border-red-400 focus:outline-red-600": <%= model_resource_name %>.errors[:<%= attribute.column_name %>].any?}] %>
 <% end -%>
