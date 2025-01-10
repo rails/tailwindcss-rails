@@ -1,5 +1,10 @@
 ## next / unreleased
 
+## v3.2.0 / 2025-01-10
+
+* Improve the scaffold views by making positions, padding, and sizes more consistent, add titles to all pages, add hover states and semantic colors to buttons and links, and change border and focus colors on fields with errors. (#452) @patriciomacadden
+
+
 ## v3.1.0 / 2024-12-29
 
 ### Notable changes
