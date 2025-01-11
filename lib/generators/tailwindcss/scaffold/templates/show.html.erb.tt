@@ -1,11 +1,9 @@
 <%% content_for :title, "Showing <%= human_name.downcase %>" %>
 
-<div class="md:w-2/3 w-full">
-  <%% if notice.present? %>
-    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-md inline-block" id="notice"><%%= notice %></p>
-  <%% end %>
+<div class="w-full md:w-2/3">
+  <%%= render "flashes" %>
 
-  <h1 class="font-bold text-4xl">Showing <%= human_name.downcase %></h1>
+  <h1 class="text-4xl font-bold">Showing <%= human_name.downcase %></h1>
 
   <%%= render @<%= singular_table_name %> %>
 

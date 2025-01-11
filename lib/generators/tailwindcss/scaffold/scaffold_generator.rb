@@ -24,6 +24,7 @@ module Tailwindcss
         end
 
         template "partial.html.erb", File.join("app/views", controller_file_path, "_#{singular_name}.html.erb")
+        template "_flashes.html.erb", "app/views/application/_flashes.html.erb"
       end
 
       private
