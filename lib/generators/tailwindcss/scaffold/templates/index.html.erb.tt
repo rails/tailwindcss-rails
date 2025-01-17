@@ -2,24 +2,40 @@
 
 <div class="w-full">
   <%% if notice.present? %>
-    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-md inline-block" id="notice"><%%= notice %></p>
+    <p class="inline-block px-3 py-2 mb-5 font-medium text-green-500 rounded-md bg-green-50" id="notice"><%%= notice %></p>
   <%% end %>
 
-  <div class="flex justify-between items-center">
-    <h1 class="font-bold text-4xl"><%= human_name.pluralize %></h1>
+  <div class="flex items-center justify-between">
+    <h1 class="text-4xl font-bold"><%= human_name.pluralize %></h1>
     <%%= link_to "New <%= human_name.downcase %>", new_<%= singular_route_name %>_path, class: "rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white block font-medium" %>
   </div>
 
-  <div id="<%= plural_table_name %>" class="min-w-full">
+  <div id="<%= plural_table_name %>" class="inline-block min-w-full mt-10">
     <%% if @<%= plural_table_name %>.any? %>
-      <%% @<%= plural_table_name %>.each do |<%= singular_table_name %>| %>
-        <%%= render <%= singular_table_name %> %>
-        <p>
-          <%%= link_to "Show this <%= human_name.downcase %>", <%= model_resource_name(singular_table_name) %>, class: "ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
-        </p>
-      <%% end %>
+      <table class="min-w-full divide-y divide-gray-300">
+        <thead>
+          <tr>
+<% attributes.reject(&:password_digest?).each do |attribute| -%>
+            <th class="py-3.5 text-left font-semibold"><%= attribute.human_name %></th>
+<% end -%>
+            <th class="py-3.5 text-left font-semibold">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200">
+          <%% @users.each do |user| %>
+            <tr class="border-b">
+<% attributes.reject(&:password_digest?).each do |attribute| -%>
+              <td class="py-4 whitespace-nowrap"><%%= <%= singular_name %>.<%= attribute.column_name %> %></td>
+<% end -%>
+              <td class="py-4 space-x-4 whitespace-nowrap">
+                <%%= link_to "Show", <%= model_resource_name(singular_table_name) %>, class: "text-blue-600 hover:text-blue-900" %>
+              </td>
+            </tr>
+          <%% end %>
+        </tbody>
+      </table>
     <%% else %>
-      <p class="text-center my-10">No <%= human_name.downcase.pluralize %> found.</p>
+      <p class="my-10 text-center">No <%= human_name.downcase.pluralize %> found.</p>
     <%% end %>
   </div>
 </div>
