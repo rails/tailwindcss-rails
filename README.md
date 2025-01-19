@@ -124,7 +124,7 @@ This gem ships with a Puma plugin. To use it, add this line to your `puma.rb` co
 plugin :tailwindcss if ENV.fetch("RAILS_ENV", "development") == "development"
 ```
 
-and then running `rails server` will run the Tailwind watch process in the background
+and then running `rails server` (or just `puma`) will run the Tailwind watch process in the background.
 
 
 #### Run `rails tailwindcss:watch`
