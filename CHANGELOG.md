@@ -1,8 +1,8 @@
 ## next / unreleased
 
-## v3.3.0 / unreleased
+## v3.3.0 / 2025-01-19
 
-* Add support for running the puma plugin outside of `rails server`. (#458) @flavorjones
+* Add support for using the puma plugin in a standalone puma process (outside of `rails server`). (#458) @flavorjones
 
 
 ## v3.2.0 / 2025-01-10
