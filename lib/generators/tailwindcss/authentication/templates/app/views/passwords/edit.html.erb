@@ -1,15 +1,15 @@
-<div class="w-full mx-auto md:w-2/3">
+<div class="mx-auto md:w-2/3 w-full">
   <%%= render "flashes" %>
 
-  <h1 class="text-4xl font-bold">Update your password</h1>
+  <h1 class="font-bold text-4xl">Update your password</h1>
 
   <%%= form_with url: password_path(params[:token]), method: :put, class: "contents" do |form| %>
     <div class="my-5">
-      <%%= form.password_field :password, required: true, autocomplete: "new-password", placeholder: "Enter new password", maxlength: 72, class: "block w-full px-3 py-2 mt-2 border border-gray-400 rounded-md shadow outline-none focus:outline-blue-600" %>
+      <%%= form.password_field :password, required: true, autocomplete: "new-password", placeholder: "Enter new password", maxlength: 72, class: "block shadow rounded-md border border-gray-400 outline-none focus:outline-blue-600 px-3 py-2 mt-2 w-full" %>
     </div>
 
     <div class="my-5">
-      <%%= form.password_field :password_confirmation, required: true, autocomplete: "new-password", placeholder: "Repeat new password", maxlength: 72, class: "block w-full px-3 py-2 mt-2 border border-gray-400 rounded-md shadow outline-none focus:outline-blue-600" %>
+      <%%= form.password_field :password_confirmation, required: true, autocomplete: "new-password", placeholder: "Repeat new password", maxlength: 72, class: "block shadow rounded-md border border-gray-400 outline-none focus:outline-blue-600 px-3 py-2 mt-2 w-full" %>
     </div>
 
     <div class="inline">
