@@ -2,11 +2,11 @@
 
 <div class="w-full">
   <%% if notice.present? %>
-    <p class="inline-block px-3 py-2 mb-5 font-medium text-green-500 rounded-md bg-green-50" id="notice"><%%= notice %></p>
+    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-md inline-block" id="notice"><%%= notice %></p>
   <%% end %>
 
-  <div class="flex items-center justify-between">
-    <h1 class="text-4xl font-bold"><%= human_name.pluralize %></h1>
+  <div class="flex justify-between items-center">
+    <h1 class="font-bold text-4xl"><%= human_name.pluralize %></h1>
     <%%= link_to "New <%= human_name.downcase %>", new_<%= singular_route_name %>_path, class: "rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white block font-medium" %>
   </div>
 
@@ -22,20 +22,34 @@
           </tr>
         </thead>
         <tbody class="divide-y divide-gray-200">
-          <%% @users.each do |user| %>
+          <%% @<%= plural_table_name %>.each do |<%= singular_name %>| %>
             <tr class="border-b">
 <% attributes.reject(&:password_digest?).each do |attribute| -%>
+<% if attribute.attachment? -%>
+              <td class="py-4 whitespace-nowrap"><%%= link_to <%= singular_name %>.<%= attribute.column_name %>.filename, <%= singular_name %>.<%= attribute.column_name %> if <%= singular_name %>.<%= attribute.column_name %>.attached? %></td>
+<% elsif attribute.attachments? -%>
+              <td class="py-4 whitespace-nowrap">
+                <%% <%= singular_name %>.<%= attribute.column_name %>.each do |<%= attribute.singular_name %>| %>
+                  <div><%%= link_to <%= attribute.singular_name %>.filename, <%= attribute.singular_name %> %></div>
+                <%% end %>
+              </td>
+<% else -%>
               <td class="py-4 whitespace-nowrap"><%%= <%= singular_name %>.<%= attribute.column_name %> %></td>
+<% end -%>
 <% end -%>
               <td class="py-4 space-x-4 whitespace-nowrap">
                 <%%= link_to "Show", <%= model_resource_name(singular_table_name) %>, class: "text-blue-600 hover:text-blue-900" %>
+                <%%= link_to "Edit", edit_<%= singular_route_name %>_path(<%= singular_table_name %>), class: "text-blue-600 hover:text-blue-900" %>
+                <div class="inline-block ml-2">
+                  <%%= button_to "Destroy", <%= model_resource_name %>, method: :delete, class: "text-red-600 hover:text-red-900" %>
+                </div>
               </td>
             </tr>
           <%% end %>
         </tbody>
       </table>
     <%% else %>
-      <p class="my-10 text-center">No <%= human_name.downcase.pluralize %> found.</p>
+      <p class="text-center my-10">No <%= human_name.downcase.pluralize %> found.</p>
     <%% end %>
   </div>
 </div>
