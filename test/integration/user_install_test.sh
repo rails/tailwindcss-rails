@@ -61,7 +61,7 @@ fi
 
 # TEST: presence of the generated file
 bin/rails generate scaffold post title:string body:text published:boolean
-grep -q "Show this post" app/views/posts/index.html.erb
+grep -q "Show" app/views/posts/index.html.erb
 
 # TEST: contents of the css file
 bin/rails tailwindcss:build[verbose]

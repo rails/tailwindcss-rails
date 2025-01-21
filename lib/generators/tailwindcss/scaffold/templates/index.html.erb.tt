@@ -10,13 +10,19 @@
     <%%= link_to "New <%= human_name.downcase %>", new_<%= singular_route_name %>_path, class: "rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white block font-medium" %>
   </div>
 
-  <div id="<%= plural_table_name %>" class="min-w-full">
+  <div id="<%= plural_table_name %>" class="min-w-full divide-y divide-gray-200 space-y-5">
     <%% if @<%= plural_table_name %>.any? %>
       <%% @<%= plural_table_name %>.each do |<%= singular_table_name %>| %>
-        <%%= render <%= singular_table_name %> %>
-        <p>
-          <%%= link_to "Show this <%= human_name.downcase %>", <%= model_resource_name(singular_table_name) %>, class: "ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
-        </p>
+        <div class="flex justify-between items-center">
+          <%%= render <%= singular_table_name %> %>
+          <div class="space-x-2">
+            <%%= link_to "Show", <%= model_resource_name(singular_table_name) %>, class: "rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
+            <%%= link_to "Edit", edit_<%= singular_route_name %>_path(<%= singular_table_name %>), class: "rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
+            <div class="inline-block">
+              <%%= button_to "Destroy", <%= model_resource_name %>, method: :delete, class: "rounded-md px-3.5 py-2.5 text-white bg-red-600 hover:bg-red-500 font-medium" %>
+            </div>
+          </div>
+        </div>
       <%% end %>
     <%% else %>
       <p class="text-center my-10">No <%= human_name.downcase.pluralize %> found.</p>
