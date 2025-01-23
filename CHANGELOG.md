@@ -1,5 +1,12 @@
 ## next / unreleased
 
+## v3.3.1 / 2025-01-23
+
+* Pin the dependency on `tailwindcss-ruby` to `~> 3.0` to avoid users from upgrading Tailwind while still on v3 of this gem.
+
+  While it was useful during the Tailwind v4 beta period to allow users to float this dependency to try upgrading, we know (now that v4.0.0.rc1 of this gem is out) that not everything will work well if combining Tailwind v4 with `tailwindcss-rails` v3. Pinning this dependency should protect developers against unexpected issues.
+
+
 ## v3.3.0 / 2025-01-19
 
 * Add support for using the puma plugin in a standalone puma process (outside of `rails server`). (#458) @flavorjones
