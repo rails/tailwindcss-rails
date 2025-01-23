@@ -1,9 +1,7 @@
 <%% content_for :title, "<%= human_name.pluralize %>" %>
 
 <div class="w-full">
-  <%% if notice.present? %>
-    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-md inline-block" id="notice"><%%= notice %></p>
-  <%% end %>
+  <%%= render "flashes" %>
 
   <div class="flex justify-between items-center">
     <h1 class="font-bold text-4xl"><%= human_name.pluralize %></h1>
