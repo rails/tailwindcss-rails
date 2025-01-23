@@ -57,11 +57,26 @@ bundle install --prefer-local
 bundle show --paths
 bundle binstubs --all
 
+# create a postcss file
+cat <<EOF > config/postcss.config.js
+module.exports = {
+  plugins: {
+    autoprefixer: {},
+  },
+}
+EOF
+
 bin/rails tailwindcss:upgrade
 
 # TEST: removal of inter-font CSS
 if grep -q inter-font app/views/layouts/application.html.erb ; then
   echo "FAIL: inter-font CSS not removed"
+  exit 1
+fi
+
+# TEST: moving the postcss file
+if [ ! -f postcss.config.js ] ; then
+  echo "FAIL: postcss.config.js not moved"
   exit 1
 fi
 
