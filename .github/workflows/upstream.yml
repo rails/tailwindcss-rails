@@ -52,3 +52,22 @@ jobs:
           bundler: latest
       - run: test/integration/user_install_test.sh
         shell: bash
+
+  user-upgrade:
+    name: "user-upgrade (rails ${{ matrix.ref }})"
+    runs-on: ${{matrix.plat}}-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        plat: ["ubuntu"]
+        ref: ["7-2-stable", "8-0-stable", "main"]
+    env:
+      RAILSOPTS: --git=https://github.com/rails/rails --ref=${{ matrix.ref }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+          bundler: latest
+      - run: test/integration/user_upgrade_test.sh
+        shell: bash
