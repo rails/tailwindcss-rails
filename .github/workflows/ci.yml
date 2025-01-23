@@ -37,10 +37,7 @@ jobs:
       fail-fast: false
       matrix:
         plat: ["ubuntu", "windows", "macos"]
-        tailwind: ["--version=~>3.4.14", "--version=~>4.0.0.alpha.27"]
     runs-on: ${{matrix.plat}}-latest
-    env:
-      TAILWINDCSSOPTS: ${{ matrix.tailwind }}
     steps:
       - uses: actions/checkout@v4
       - uses: ruby/setup-ruby@v1

@@ -59,17 +59,13 @@ You can also use a local (npm-based) installation if you prefer, please go to ht
 
 ### Configuration and commands
 
-#### Configuration file: `config/tailwind.config.js`
-
-You can customize the Tailwind build through the `config/tailwind.config.js` file, just like you would if Tailwind was running in a traditional node installation. All the first-party plugins are supported.
-
 #### Input file: `app/assets/stylesheets/application.tailwind.css`
 
-The installer will generate a Tailwind input file in `app/assets/stylesheets/application.tailwind.css`. This is where you import the plugins you want to use, and where you can setup your custom `@apply` rules.
+The installer will generate a Tailwind input file in `app/assets/stylesheets/application.tailwind.css`. This is where you import the plugins you want to use and where you can setup your custom `@apply` rules.
 
 #### Output file: `app/assets/builds/tailwind.css`
 
-When you run `rails tailwindcss:build`, the input file will be used to generate the output in `app/assets/builds/tailwind.css`. That's the output CSS that you'll include in your app (the installer automatically configures this, alongside the Inter font as well).
+When you run `rails tailwindcss:build`, the input file will be used to generate the output in `app/assets/builds/tailwind.css`. That's the output CSS that you'll include in your app.
 
 #### Commands
 

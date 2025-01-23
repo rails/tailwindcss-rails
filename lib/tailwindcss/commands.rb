@@ -10,7 +10,6 @@ module Tailwindcss
           Tailwindcss::Ruby.executable(**kwargs),
           "-i", rails_root.join("app/assets/stylesheets/application.tailwind.css").to_s,
           "-o", rails_root.join("app/assets/builds/tailwind.css").to_s,
-          "-c", rails_root.join("config/tailwind.config.js").to_s,
         ]
 
         command << "--minify" unless (debug || rails_css_compressor?)

@@ -15,7 +15,6 @@ class Tailwindcss::CommandsTest < ActiveSupport::TestCase
       assert_kind_of(Array, actual)
       assert_equal(executable, actual.first)
       assert_includes(actual, "-i")
-      assert_includes(actual, "-c")
       assert_includes(actual, "-o")
     end
   end
