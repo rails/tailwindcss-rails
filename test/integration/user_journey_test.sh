@@ -9,7 +9,7 @@ set -eux
 rm -f Gemfile.lock
 bundle remove actionmailer
 bundle add rails --skip-install ${RAILSOPTS:-}
-bundle install
+bundle install --prefer-local
 
 # do our work a directory with spaces in the name (#176, #184)
 rm -rf "My Workspace"
@@ -27,15 +27,9 @@ bundle add rails --skip-install ${RAILSOPTS:-}
 
 # use the tailwindcss-rails under test
 bundle add tailwindcss-rails --skip-install --path="../.."
-bundle install
+bundle install --prefer-local
 bundle show --paths
 bundle binstubs --all
-
-if bundle show | fgrep tailwindcss-ruby | fgrep -q "(4." ; then
-  TAILWIND4=1
-else
-  TAILWIND4=0
-fi
 
 # install tailwindcss
 bin/rails tailwindcss:install
@@ -50,12 +44,9 @@ task :still_here do
 end
 EOF
 
-if [[ $TAILWIND4 = 1 ]] ; then
-  cat > app/assets/stylesheets/application.tailwind.css <<EOF
-@import "tailwindcss";
+cat >> app/assets/stylesheets/application.tailwind.css <<EOF
 @theme { --color-special: #abc12399; }
 EOF
-fi
 
 bin/rails tailwindcss:build still_here | grep "Rake process did not exit early"
 
@@ -73,9 +64,7 @@ grep -q "Show this post" app/views/posts/index.html.erb
 bin/rails tailwindcss:build[verbose]
 grep -q "py-2" app/assets/builds/tailwind.css
 
-if [[ $TAILWIND4 = 1 ]] ; then
-  # TEST: contents include application.tailwind.css
-  grep -q "#abc12399" app/assets/builds/tailwind.css
-fi
+# TEST: contents include application.tailwind.css
+grep -q "#abc12399" app/assets/builds/tailwind.css
 
 echo "OK"
