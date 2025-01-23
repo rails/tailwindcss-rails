@@ -42,10 +42,8 @@ jobs:
       matrix:
         plat: ["ubuntu"]
         ref: ["7-2-stable", "8-0-stable", "main"]
-        tailwind: ["--version=~>3.4.14", "--version=~>4.0.0.alpha.27"]
     env:
       RAILSOPTS: --git=https://github.com/rails/rails --ref=${{ matrix.ref }}
-      TAILWINDCSSOPTS: ${{ matrix.tailwind }}
     steps:
       - uses: actions/checkout@v4
       - uses: ruby/setup-ruby@v1
