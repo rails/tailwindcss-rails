@@ -18,8 +18,8 @@ pushd "My Workspace"
 
 # create a rails app
 bundle exec rails -v
-bundle exec rails new test-app --skip-bundle
-pushd test-app
+bundle exec rails new test-install --skip-bundle
+pushd test-install
 
 # make sure to use the same version of rails (e.g., install from git source if necessary)
 bundle remove rails --skip-install

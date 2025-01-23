@@ -32,7 +32,7 @@ jobs:
       - name: Run tests
         run: bin/test
 
-  user-journey:
+  user-install:
     strategy:
       fail-fast: false
       matrix:
@@ -44,5 +44,5 @@ jobs:
         with:
           ruby-version: "3.4"
           bundler: latest
-      - run: test/integration/user_journey_test.sh
+      - run: test/integration/user_install_test.sh
         shell: bash

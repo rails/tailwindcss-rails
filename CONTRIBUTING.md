@@ -9,7 +9,7 @@ This doc is a brief introduction on modifying and maintaining this gem.
 
 The unit tests are run with `bundle exec rake test`
 
-There is an additional integration test which runs in CI, `test/integration/user_journey_test.sh` which you may also want to run.
+There is an additional integration test which runs in CI, `test/integration/user_install_test.sh` which you may also want to run.
 
 
 ### Testing in a Rails app

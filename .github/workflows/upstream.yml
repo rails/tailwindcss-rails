@@ -34,8 +34,8 @@ jobs:
       - name: Run tests
         run: bin/test
 
-  user-journey:
-    name: "user-journey (rails ${{ matrix.ref }})"
+  user-install:
+    name: "user-install (rails ${{ matrix.ref }})"
     runs-on: ${{matrix.plat}}-latest
     strategy:
       fail-fast: false
@@ -50,5 +50,5 @@ jobs:
         with:
           ruby-version: "3.3"
           bundler: latest
-      - run: test/integration/user_journey_test.sh
+      - run: test/integration/user_install_test.sh
         shell: bash
