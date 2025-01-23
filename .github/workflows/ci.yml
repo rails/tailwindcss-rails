@@ -32,7 +32,7 @@ jobs:
       - name: Run tests
         run: bin/test
 
-  user-journey:
+  user-install:
     strategy:
       fail-fast: false
       matrix:
@@ -44,5 +44,20 @@ jobs:
         with:
           ruby-version: "3.4"
           bundler: latest
-      - run: test/integration/user_journey_test.sh
+      - run: test/integration/user_install_test.sh
+        shell: bash
+
+  user-upgrade:
+    strategy:
+      fail-fast: false
+      matrix:
+        plat: ["ubuntu", "macos"] # TODO: on windows the tailwind upgrader tests are failing
+    runs-on: ${{matrix.plat}}-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.4"
+          bundler: latest
+      - run: test/integration/user_upgrade_test.sh
         shell: bash
