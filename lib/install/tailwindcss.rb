@@ -38,6 +38,12 @@ unless Rails.root.join("app/assets/stylesheets/application.tailwind.css").exist?
   copy_file "#{__dir__}/application.tailwind.css", "app/assets/stylesheets/application.tailwind.css"
 end
 
+empty_directory "app/views/application"
+unless Rails.root.join("app/views/application/_flashes.html.erb").exist?
+  say "Add default app/views/application/_flashes.html.erb"
+  copy_file "#{__dir__}/_flashes.html.erb", "app/views/application/_flashes.html.erb"
+end
+
 if Rails.root.join("Procfile.dev").exist?
   append_to_file "Procfile.dev", "css: bin/rails tailwindcss:watch\n"
 else
