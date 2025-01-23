@@ -71,7 +71,14 @@ This gem will help with some of the mechanics of the upgrade, however.
 
 Keep in mind that you don't _need_ to upgrade. You can stay on Tailwind v3 for the foreseeable future if you prefer not to migrate now, or if your migration runs into problems.
 
-Just make sure you're pinning the version of **both** `tailwindcss-rails` and `tailwindcss-ruby`:
+Just make sure you're either pinned to v3.3.1 of this gem:
+
+``` ruby
+# Gemfile
+gem "tailwindcss-rails", "3.3.1" # which transitively pins tailwindcss-ruby to v3
+```
+
+or if you're on an earlier version of this gem, make sure you're pinning the version of **both** `tailwindcss-rails` and `tailwindcss-ruby`:
 
 ``` ruby
 # Gemfile
@@ -86,7 +93,7 @@ First, update to `tailwindcss-rails` v4.0.0 or higher. This will also ensure you
 
 ``` html
 # Gemfile
-gem "tailwindcss-rails", "~> 4.0"
+gem "tailwindcss-rails", "~> 4.0" # which transitively pins tailwindcss-ruby to v4
 ```
 
 Then, run the `tailwindcss:upgrade` task. Among other things, this will try to run the official Tailwind upgrade utility. It requires `npx` in order to run, but it's a one-time operation and is *highly recommended* for a successful upgrade.
