@@ -9,6 +9,10 @@
 - [Installation](#installation)
   * [Choosing a specific version of `tailwindcss`](#choosing-a-specific-version-of-tailwindcss)
   * [Using a local installation of `tailwindcss`](#using-a-local-installation-of-tailwindcss)
+- [Upgrading your application from Tailwind v3 to v4](#upgrading-your-application-from-tailwind-v3-to-v4)
+  * [You don't _have_ to upgrade](#you-dont-_have_-to-upgrade)
+  * [Upgrade steps](#upgrade-steps)
+  * [Troubleshooting](#troubleshooting)
 - [Developing with Tailwindcss](#developing-with-tailwindcss)
   * [Configuration and commands](#configuration-and-commands)
   * [Building for production](#building-for-production)
@@ -17,7 +21,7 @@
   * [Live rebuild](#live-rebuild)
   * [Using with PostCSS](#using-with-postcss)
   * [Custom inputs or outputs](#custom-inputs-or-outputs)
-- [Troubleshooting](#troubleshooting)
+- [Troubleshooting](#troubleshooting-1)
   * [Lost keystrokes or hanging when using terminal-based debugging tools (e.g. IRB, Pry, `ruby/debug`...etc.) with the Puma plugin](#lost-keystrokes-or-hanging-when-using-terminal-based-debugging-tools-eg-irb-pry-rubydebugetc-with-the-puma-plugin)
   * [Running in a docker container exits prematurely](#running-in-a-docker-container-exits-prematurely)
   * [Conflict with sassc-rails](#conflict-with-sassc-rails)
@@ -53,6 +57,106 @@ gem "tailwindcss-ruby", "3.4.13"
 ### Using a local installation of `tailwindcss`
 
 You can also use a local (npm-based) installation if you prefer, please go to https://github.com/flavorjones/tailwindcss-ruby for more information.
+
+
+## Upgrading your application from Tailwind v3 to v4
+
+v4.x of this gem has been updated to work with Tailwind v4, including providing some help with upgrading your application.
+
+A full explanation of a Tailwind v4 upgrade is out of scope for this README, so we strongly urge you to read the [official Tailwind v4 upgrade guide](https://tailwindcss.com/docs/upgrade-guide) before embarking on an upgrade to an existing large app.
+
+This gem will help with some of the mechanics of the upgrade, however.
+
+### You don't _have_ to upgrade
+
+Keep in mind that you don't _need_ to upgrade. You can stay on Tailwind v3 for the foreseeable future if you prefer not to migrate now, or if your migration runs into problems.
+
+Just make sure you're pinning the version of **both** `tailwindcss-rails` and `tailwindcss-ruby`:
+
+``` ruby
+# Gemfile
+gem "tailwindcss-rails", "~> 3.3"
+gem "tailwindcss-ruby", "~> 3.4"
+```
+
+
+### Upgrade steps
+
+First, update to `tailwindcss-rails` v4.0.0 or higher. This will also ensure you're transitively depending on `tailwindcss-ruby` v4.
+
+``` html
+# Gemfile
+gem "tailwindcss-rails", "~> 4.0"
+```
+
+Then, run the `tailwindcss:upgrade` task. Among other things, this will try to run the official Tailwind upgrade utility. It requires `npx` in order to run, but it's a one-time operation and is *highly recommended* for a successful upgrade.
+
+Here's what the upgrade task does:
+
+- Cleans up some things in the generated `config/tailwind.config.js`.
+- Runs the upstream upgrader (note: requires `npx` to run the one-time upgrade, but highly recommended).
+- Removes references to the Inter font from the application layout.
+- If present, moves `config/postcss.config.js` to the root directory.
+
+Here's what that upgrade looks like on a vanilla Rails app:
+
+``` sh
+$ bin/rails tailwindcss:upgrade
+       apply  /path/to/tailwindcss-rails/lib/install/upgrade_tailwindcss.rb
+  Removing references to 'defaultTheme' from /home/user/myapp/config/tailwind.config.js
+        gsub    config/tailwind.config.js
+  Running the upstream Tailwind CSS upgrader
+         run    npx @tailwindcss/upgrade@next --force --config /home/user/myapp/config/tailwind.config.js from "."
+≈ tailwindcss v4.0.0
+
+│ Searching for CSS files in the current directory and its subdirectories…
+
+│ ↳ Linked `./config/tailwind.config.js` to `./app/assets/stylesheets/application.tailwind.css`
+
+│ Migrating JavaScript configuration files…
+
+│ ↳ The configuration file at `./config/tailwind.config.js` could not be automatically migrated to the new CSS
+│   configuration format, so your CSS has been updated to load your existing configuration file.
+
+│ Migrating templates…
+
+│ ↳ Migrated templates for configuration file: `./config/tailwind.config.js`
+
+│ Migrating stylesheets…
+
+│ ↳ Migrated stylesheet: `./app/assets/stylesheets/application.tailwind.css`
+
+│ ↳ No PostCSS config found, skipping migration.
+
+│ Updating dependencies…
+
+│ Could not detect a package manager. Please manually update `tailwindcss` to v4.
+
+│ Verify the changes and commit them to your repository.
+
+  Strip Inter font CSS from application layout
+        gsub    app/views/layouts/application.html.erb
+  Compile initial Tailwind build
+         run    rails tailwindcss:build from "."
+≈ tailwindcss v4.0.0
+
+Done in 52ms
+         run  bundle install --quiet
+```
+
+If this doesn't succeed, it's likely that you've customized your Tailwind configuration and you'll need to do some work to make sure your application upgrades. Please read the [official upgrade guide](https://tailwindcss.com/docs/upgrade-guide)!
+
+
+### Troubleshooting
+
+You may want to check out [TailwindCSS v4 - upgrade experience report · rails/tailwindcss-rails · Discussion #450](https://github.com/rails/tailwindcss-rails/discussions/450) if you're having trouble upgrading.
+
+We know there are some cases we haven't addressed with the upgrade task:
+
+- If the user isn’t using PostCSS, some migrations (e.g., updating class names in the view files) may fail
+- In setups without JavaScript tooling, the update process may fail to fully migrate `tailwind.config.js` because the tool assumes that the imported packages (e.g., tailwind plugins) are installed via a package manager, allowing them to be called.
+
+We'll try to improve the upgrade process over time, but for now you may need to do some manual work to upgrade.
 
 
 ## Developing with Tailwindcss
@@ -147,12 +251,12 @@ Running `bin/dev` invokes Foreman to start both the Tailwind watch process and t
 
 ### Using with PostCSS
 
-If you want to use PostCSS as a preprocessor, create a custom `config/postcss.config.js` and that file will be loaded by tailwind automatically.
+If you want to use PostCSS as a preprocessor, create a custom `postcss.config.js` in your project root directory, and that file will be loaded by tailwind automatically.
 
 For example, to enable nesting:
 
 ```js
-// config/postcss.config.js
+// postcss.config.js
 module.exports = {
   plugins: {
     'postcss-import': {},
