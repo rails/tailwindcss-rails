@@ -4,7 +4,7 @@ CENTERING_CONTAINER_INSERTION_POINT = /^\s*<%= yield %>/.freeze
 if APPLICATION_LAYOUT_PATH.exist?
   say "Add Tailwindcss include tags and container element in application layout"
   insert_into_file APPLICATION_LAYOUT_PATH.to_s, <<~ERB.indent(4), before: /^\s*<%= stylesheet_link_tag/
-    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
   ERB
 
   if File.open(APPLICATION_LAYOUT_PATH).read =~ /<body>\n\s*<%= yield %>\n\s*<\/body>/
@@ -13,7 +13,7 @@ if APPLICATION_LAYOUT_PATH.exist?
   end
 else
   say "Default application.html.erb is missing!", :red
-  say %(        Add <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %> within the <head> tag in your custom layout.)
+  say %(        Add <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %> within the <head> tag in your custom layout.)
 end
 
 say "Build into app/assets/builds"

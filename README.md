@@ -65,7 +65,7 @@ The installer will generate a Tailwind input file in `app/assets/stylesheets/app
 
 #### Output file: `app/assets/builds/tailwind.css`
 
-When you run `rails tailwindcss:build`, the input file will be used to generate the output in `app/assets/builds/tailwind.css`. That's the output CSS that you'll include in your app (the installer automatically configures this, alongside the Inter font as well).
+When you run `rails tailwindcss:build`, the input file will be used to generate the output in `app/assets/builds/tailwind.css`. That's the output CSS that you'll include in your app.
 
 #### Commands
 
