@@ -1,9 +1,9 @@
 PATH
   remote: .
   specs:
-    tailwindcss-rails (3.2.0)
+    tailwindcss-rails (3.3.1)
       railties (>= 7.0.0)
-      tailwindcss-ruby
+      tailwindcss-ruby (~> 3.0)
 
 GEM
   remote: https://rubygems.org/
