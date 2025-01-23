@@ -1,5 +1,30 @@
 ## next / unreleased
 
+## v4.0.0.rc1 / unreleased
+
+### Upgrade to Tailwind CSS v4
+
+General changes:
+
+- Dependency on `tailwindcss-ruby` set to `~> 4.0`.
+- The location of (optional) `postcss.config.js` has moved from the `config/` directory to the app root.
+
+Changes to the `tailwindcss:install` task:
+
+- The `tailwindcss:install` task no longer installs `config/tailwind.config.js`.
+- The Inter font is no longer packaged with the gem.
+- Some Tailwind class names are updated for v4.
+
+New task `tailwindcss:upgrade` upgrades many apps cleanly:
+
+- Cleans up some things in the generated `config/tailwind.config.js`.
+- Runs the upstream upgrader (note: requires `npx` to run the one-time upgrade, but highly recommended).
+- Removes references to the Inter font from the application layout.
+- If present, moves `config/postcss.config.js` to the root directory.
+
+Thanks to @EricGusmao and @excid3 for their help and advice on this work.
+
+
 ## v3.3.0 / 2025-01-19
 
 * Add support for using the puma plugin in a standalone puma process (outside of `rails server`). (#458) @flavorjones
