@@ -1,6 +1,6 @@
 ## next / unreleased
 
-## v4.0.0.rc1 / unreleased
+## v4.0.0.rc1 / 2025-01-23
 
 ### Upgrade to Tailwind CSS v4
 
