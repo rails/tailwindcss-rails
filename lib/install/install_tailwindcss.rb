@@ -1,5 +1,6 @@
 APPLICATION_LAYOUT_PATH             = Rails.root.join("app/views/layouts/application.html.erb")
 CENTERING_CONTAINER_INSERTION_POINT = /^\s*<%= yield %>/.freeze
+TAILWIND_ASSET_PATH                 = Rails.root.join("app/assets/tailwind")
 
 if APPLICATION_LAYOUT_PATH.exist?
   unless File.read(APPLICATION_LAYOUT_PATH).match?(/stylesheet_link_tag :app/)
@@ -31,9 +32,9 @@ if Rails.root.join(".gitignore").exist?
   append_to_file(".gitignore", %(\n/app/assets/builds/*\n!/app/assets/builds/.keep\n))
 end
 
-unless Rails.root.join("app/assets/stylesheets/application.tailwind.css").exist?
-  say "Add default app/assets/stylesheets/application.tailwind.css"
-  copy_file "#{__dir__}/application.tailwind.css", "app/assets/stylesheets/application.tailwind.css"
+unless TAILWIND_ASSET_PATH.join("application.tailwind.css").exist?
+  say "Add default #{TAILWIND_ASSET_PATH}/application.tailwind.css"
+  copy_file "#{__dir__}/application.tailwind.css", TAILWIND_ASSET_PATH.join("application.tailwind.css")
 end
 
 if Rails.root.join("Procfile.dev").exist?

@@ -8,7 +8,7 @@ module Tailwindcss
 
         command = [
           Tailwindcss::Ruby.executable(**kwargs),
-          "-i", rails_root.join("app/assets/stylesheets/application.tailwind.css").to_s,
+          "-i", rails_root.join("app/assets/tailwind/application.tailwind.css").to_s,
           "-o", rails_root.join("app/assets/builds/tailwind.css").to_s,
         ]
 
