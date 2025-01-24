@@ -29,7 +29,7 @@ bundle add rails --skip-install ${RAILSOPTS:-}
 bundle add tailwindcss-rails --skip-install --version 3.3.0
 bundle add tailwindcss-ruby  --skip-install --version 3.4.17
 bundle install --prefer-local
-bundle show --paths
+bundle show --paths | fgrep tailwind
 bundle binstubs --all
 
 # install tailwindcss
@@ -51,10 +51,10 @@ bundle remove tailwindcss-rails --skip-install
 bundle remove tailwindcss-ruby --skip-install
 
 bundle add tailwindcss-rails --skip-install --path="../.."
-bundle add tailwindcss-ruby  --skip-install --version 4.0.0
+bundle add tailwindcss-ruby --skip-install ${TAILWINDCSSOPTS:---version 4.0.0}
 
 bundle install --prefer-local
-bundle show --paths
+bundle show --paths | fgrep tailwind
 bundle binstubs --all
 
 # create a postcss file
