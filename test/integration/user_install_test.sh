@@ -36,7 +36,8 @@ bundle binstubs --all
 bin/rails tailwindcss:install
 
 # TEST: tailwind was installed correctly
-grep -q tailwind app/views/layouts/application.html.erb
+grep -q "<main class=\"container" app/views/layouts/application.html.erb
+test -a app/assets/stylesheets/application.tailwind.css
 
 # TEST: rake tasks don't exec (#188)
 cat <<EOF >> Rakefile
