@@ -115,32 +115,19 @@ $ bin/rails tailwindcss:upgrade
   Running the upstream Tailwind CSS upgrader
          run    npx @tailwindcss/upgrade@next --force --config /home/user/myapp/config/tailwind.config.js from "."
 ≈ tailwindcss v4.0.0
-
 │ Searching for CSS files in the current directory and its subdirectories…
-
 │ ↳ Linked `./config/tailwind.config.js` to `./app/assets/stylesheets/application.tailwind.css`
-
 │ Migrating JavaScript configuration files…
-
 │ ↳ The configuration file at `./config/tailwind.config.js` could not be automatically migrated to the new CSS
 │   configuration format, so your CSS has been updated to load your existing configuration file.
-
 │ Migrating templates…
-
 │ ↳ Migrated templates for configuration file: `./config/tailwind.config.js`
-
 │ Migrating stylesheets…
-
 │ ↳ Migrated stylesheet: `./app/assets/stylesheets/application.tailwind.css`
-
 │ ↳ No PostCSS config found, skipping migration.
-
 │ Updating dependencies…
-
 │ Could not detect a package manager. Please manually update `tailwindcss` to v4.
-
 │ Verify the changes and commit them to your repository.
-
   Strip Inter font CSS from application layout
         gsub    app/views/layouts/application.html.erb
   Compile initial Tailwind build
