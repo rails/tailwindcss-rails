@@ -18,6 +18,12 @@ if POSTCSS_CONFIG_PATH.exist?
 end
 
 if APPLICATION_LAYOUT_PATH.exist?
+  if File.read(APPLICATION_LAYOUT_PATH).match?(/stylesheet_link_tag :app/) &&
+     File.read(APPLICATION_LAYOUT_PATH).match?(/stylesheet_link_tag "tailwind"/)
+    say "Remove unnecessary stylesheet_link_tag from application layout"
+    gsub_file APPLICATION_LAYOUT_PATH.to_s, %r{^\s*<%= stylesheet_link_tag "tailwind".*%>$}, ""
+  end
+
   if File.read(APPLICATION_LAYOUT_PATH).match?(/"inter-font"/)
     say "Strip Inter font CSS from application layout"
     gsub_file APPLICATION_LAYOUT_PATH.to_s, %r{, "inter-font"}, ""
