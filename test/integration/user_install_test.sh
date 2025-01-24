@@ -27,8 +27,9 @@ bundle add rails --skip-install ${RAILSOPTS:-}
 
 # use the tailwindcss-rails under test
 bundle add tailwindcss-rails --skip-install --path="../.."
+bundle add tailwindcss-ruby --skip-install ${TAILWINDCSSOPTS:-}
 bundle install --prefer-local
-bundle show --paths
+bundle show --paths | fgrep tailwind
 bundle binstubs --all
 
 # install tailwindcss
