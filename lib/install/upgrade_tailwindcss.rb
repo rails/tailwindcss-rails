@@ -17,6 +17,18 @@ if POSTCSS_CONFIG_PATH.exist?
   FileUtils.mv(POSTCSS_CONFIG_PATH, Rails.root, verbose: true) || abort
 end
 
+if APPLICATION_LAYOUT_PATH.exist?
+  if File.read(APPLICATION_LAYOUT_PATH).match?(/"inter-font"/)
+    say "Strip Inter font CSS from application layout"
+    gsub_file APPLICATION_LAYOUT_PATH.to_s, %r{, "inter-font"}, ""
+  else
+    say "Inter font CSS not detected.", :green
+  end
+else
+  say "Default application.html.erb is missing!", :red
+  say %(        Please check your layouts and remove any "inter-font" stylesheet links.)
+end
+
 if system("npx --version")
   say "Running the upstream Tailwind CSS upgrader"
   command = Shellwords.join(["npx", "@tailwindcss/upgrade@next", "--force", "--config", TAILWIND_CONFIG_PATH.to_s])
@@ -30,18 +42,6 @@ if system("npx --version")
 else
   say "Could not run the Tailwind upgrade tool. Please see https://tailwindcss.com/docs/upgrade-guide for manual instructions.", :red
   abort
-end
-
-if APPLICATION_LAYOUT_PATH.exist?
-  if File.read(APPLICATION_LAYOUT_PATH).match?(/"inter-font"/)
-    say "Strip Inter font CSS from application layout"
-    gsub_file APPLICATION_LAYOUT_PATH.to_s, %r{, "inter-font"}, ""
-  else
-    say "Inter font CSS not detected.", :green
-  end
-else
-  say "Default application.html.erb is missing!", :red
-  say %(        Please check your layouts and remove any "inter-font" stylesheet links.)
 end
 
 say "Compile initial Tailwind build"
