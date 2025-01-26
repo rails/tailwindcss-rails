@@ -12,6 +12,7 @@
 - [Upgrading your application from Tailwind v3 to v4](#upgrading-your-application-from-tailwind-v3-to-v4)
   * [You don't _have_ to upgrade](#you-dont-_have_-to-upgrade)
   * [Upgrade steps](#upgrade-steps)
+  * [Plugins](#plugins)
   * [Troubleshooting](#troubleshooting)
 - [Developing with Tailwindcss](#developing-with-tailwindcss)
   * [Configuration and commands](#configuration-and-commands)
@@ -28,7 +29,6 @@
   * [Class names must be spelled out](#class-names-must-be-spelled-out)
   * [`ERROR: Cannot find the tailwindcss executable` for supported platform](#error-cannot-find-the-tailwindcss-executable-for-supported-platform)
   * [Using asset-pipeline assets](#using-asset-pipeline-assets)
-  * [Conflict with pre-existing asset pipeline stylesheets](#conflict-with-pre-existing-asset-pipeline-stylesheets)
 - [License](#license)
 
 <!-- tocstop -->
@@ -66,6 +66,7 @@ v4.x of this gem has been updated to work with Tailwind v4, including providing 
 A full explanation of a Tailwind v4 upgrade is out of scope for this README, so we strongly urge you to read the [official Tailwind v4 upgrade guide](https://tailwindcss.com/docs/upgrade-guide) before embarking on an upgrade to an existing large app.
 
 This gem will help with some of the mechanics of the upgrade, however.
+
 
 ### You don't _have_ to upgrade
 
@@ -107,7 +108,8 @@ Here's what the upgrade task does:
 - Removes references to the Inter font from the application layout.
 - Runs the upstream upgrader (note: requires `npx` to run the one-time upgrade, but highly recommended).
 
-Here's what that upgrade looks like on a vanilla Rails app:
+<details>
+<summary>Here's what that upgrade looks like on a vanilla Rails app.</summary>
 
 ``` sh
 $ bin/rails tailwindcss:upgrade
@@ -145,7 +147,16 @@ Done in 56ms
          run  bundle install --quiet
 ```
 
+</details>
+
 If this doesn't succeed, it's likely that you've customized your Tailwind configuration and you'll need to do some work to make sure your application upgrades. Please read the [official upgrade guide](https://tailwindcss.com/docs/upgrade-guide)!
+
+
+### Plugins
+
+In Tailwind CLI v3, some Tailwind plugins were included by default in the CLI tool. However, in v4 these default plugins have been removed.
+
+In order to use any plugins with v4, either by declaring them in your (optional) config file or using the [`@plugin` directive](https://tailwindcss.com/docs/functions-and-directives#plugin-directive), it's necessary to install them using a local javascript package manager.
 
 
 ### Troubleshooting
