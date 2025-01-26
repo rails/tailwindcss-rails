@@ -12,7 +12,6 @@
 - [Upgrading your application from Tailwind v3 to v4](#upgrading-your-application-from-tailwind-v3-to-v4)
   * [You don't _have_ to upgrade](#you-dont-_have_-to-upgrade)
   * [Upgrade steps](#upgrade-steps)
-  * [Plugins](#plugins)
   * [Troubleshooting](#troubleshooting)
 - [Developing with Tailwindcss](#developing-with-tailwindcss)
   * [Configuration and commands](#configuration-and-commands)
@@ -150,13 +149,6 @@ Done in 56ms
 </details>
 
 If this doesn't succeed, it's likely that you've customized your Tailwind configuration and you'll need to do some work to make sure your application upgrades. Please read the [official upgrade guide](https://tailwindcss.com/docs/upgrade-guide)!
-
-
-### Plugins
-
-In Tailwind CLI v3, some Tailwind plugins were included by default in the CLI tool. However, in v4 these default plugins have been removed.
-
-In order to use any plugins with v4, either by declaring them in your (optional) config file or using the [`@plugin` directive](https://tailwindcss.com/docs/functions-and-directives#plugin-directive), it's necessary to install them using a local javascript package manager.
 
 
 ### Troubleshooting
