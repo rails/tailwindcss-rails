@@ -1,6 +1,8 @@
 TAILWIND_CONFIG_PATH = Rails.root.join("config/tailwind.config.js")
 APPLICATION_LAYOUT_PATH = Rails.root.join("app/views/layouts/application.html.erb")
 POSTCSS_CONFIG_PATH = Rails.root.join("config/postcss.config.js")
+OLD_TAILWIND_ASSET_PATH = Rails.root.join("app/assets/stylesheets")
+TAILWIND_ASSET_PATH = Rails.root.join("app/assets/tailwind")
 
 unless TAILWIND_CONFIG_PATH.exist?
   say "Default tailwind.config.js is missing!", :red
@@ -14,25 +16,32 @@ end
 
 if POSTCSS_CONFIG_PATH.exist?
   say "Moving PostCSS configuration to application root directory"
-  FileUtils.mv(POSTCSS_CONFIG_PATH, Rails.root, verbose: true) || abort
+  copy_file POSTCSS_CONFIG_PATH, Rails.root.join("postcss.config.js")
+  remove_file POSTCSS_CONFIG_PATH
 end
 
 if APPLICATION_LAYOUT_PATH.exist?
-  if File.read(APPLICATION_LAYOUT_PATH).match?(/stylesheet_link_tag :app/) &&
-     File.read(APPLICATION_LAYOUT_PATH).match?(/stylesheet_link_tag "tailwind"/)
-    say "Remove unnecessary stylesheet_link_tag from application layout"
-    gsub_file APPLICATION_LAYOUT_PATH.to_s, %r{^\s*<%= stylesheet_link_tag "tailwind".*%>$}, ""
-  end
-
   if File.read(APPLICATION_LAYOUT_PATH).match?(/"inter-font"/)
     say "Strip Inter font CSS from application layout"
     gsub_file APPLICATION_LAYOUT_PATH.to_s, %r{, "inter-font"}, ""
   else
     say "Inter font CSS not detected.", :green
   end
+
+  if File.read(APPLICATION_LAYOUT_PATH).match?(/stylesheet_link_tag :app/) &&
+     File.read(APPLICATION_LAYOUT_PATH).match?(/stylesheet_link_tag "tailwind"/)
+    say "Remove unnecessary stylesheet_link_tag from application layout"
+    gsub_file APPLICATION_LAYOUT_PATH.to_s, %r{^\s*<%= stylesheet_link_tag "tailwind".*%>$}, ""
+  end
 else
   say "Default application.html.erb is missing!", :red
   say %(        Please check your layouts and remove any "inter-font" stylesheet links.)
+end
+
+if OLD_TAILWIND_ASSET_PATH.join("application.tailwind.css").exist?
+  say "Moving application.tailwind.css to #{TAILWIND_ASSET_PATH}"
+  copy_file OLD_TAILWIND_ASSET_PATH.join("application.tailwind.css"), TAILWIND_ASSET_PATH.join("application.tailwind.css")
+  remove_file OLD_TAILWIND_ASSET_PATH.join("application.tailwind.css")
 end
 
 if system("npx --version")

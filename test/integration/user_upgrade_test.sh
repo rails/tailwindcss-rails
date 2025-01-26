@@ -75,10 +75,12 @@ if grep -q inter-font app/views/layouts/application.html.erb ; then
 fi
 
 # TEST: moving the postcss file
-if [ ! -f postcss.config.js ] ; then
-  echo "FAIL: postcss.config.js not moved"
-  exit 1
-fi
+test ! -a config/postcss.config.js
+test   -a postcss.config.js
+
+# TEST: moving application.tailwind.css
+test ! -a app/assets/stylesheets/application.tailwind.css
+test   -a app/assets/tailwind/application.tailwind.css
 
 # generate CSS
 bin/rails tailwindcss:build[verbose]

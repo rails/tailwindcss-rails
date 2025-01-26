@@ -101,9 +101,11 @@ Then, run the `tailwindcss:upgrade` task. Among other things, this will try to r
 Here's what the upgrade task does:
 
 - Cleans up some things in the generated `config/tailwind.config.js`.
-- Runs the upstream upgrader (note: requires `npx` to run the one-time upgrade, but highly recommended).
-- Removes references to the Inter font from the application layout.
 - If present, moves `config/postcss.config.js` to the root directory.
+- If present, moves `app/assets/stylesheets/application.tailwind.css` to `app/assets/tailwind`.
+- Removes unnecessary `stylesheet_link_tag "tailwindcss"` tags from the application layout.
+- Removes references to the Inter font from the application layout.
+- Runs the upstream upgrader (note: requires `npx` to run the one-time upgrade, but highly recommended).
 
 Here's what that upgrade looks like on a vanilla Rails app:
 
@@ -112,29 +114,34 @@ $ bin/rails tailwindcss:upgrade
        apply  /path/to/tailwindcss-rails/lib/install/upgrade_tailwindcss.rb
   Removing references to 'defaultTheme' from /home/user/myapp/config/tailwind.config.js
         gsub    config/tailwind.config.js
+  Strip Inter font CSS from application layout
+        gsub    app/views/layouts/application.html.erb
+  Remove unnecessary stylesheet_link_tag from application layout
+        gsub    app/views/layouts/application.html.erb
+  Moving application.tailwind.css to /home/user/myapp/app/assets/tailwind
+      create    app/assets/tailwind/application.tailwind.css
+      remove    app/assets/stylesheets/application.tailwind.css
+10.9.0
   Running the upstream Tailwind CSS upgrader
          run    npx @tailwindcss/upgrade@next --force --config /home/user/myapp/config/tailwind.config.js from "."
 ≈ tailwindcss v4.0.0
 │ Searching for CSS files in the current directory and its subdirectories…
-│ ↳ Linked `./config/tailwind.config.js` to `./app/assets/stylesheets/application.tailwind.css`
+│ ↳ Linked `./config/tailwind.config.js` to `./app/assets/tailwind/application.tailwind.css`
 │ Migrating JavaScript configuration files…
 │ ↳ The configuration file at `./config/tailwind.config.js` could not be automatically migrated to the new CSS
 │   configuration format, so your CSS has been updated to load your existing configuration file.
 │ Migrating templates…
 │ ↳ Migrated templates for configuration file: `./config/tailwind.config.js`
 │ Migrating stylesheets…
-│ ↳ Migrated stylesheet: `./app/assets/stylesheets/application.tailwind.css`
+│ ↳ Migrated stylesheet: `./app/assets/tailwind/application.tailwind.css`
 │ ↳ No PostCSS config found, skipping migration.
 │ Updating dependencies…
 │ Could not detect a package manager. Please manually update `tailwindcss` to v4.
 │ Verify the changes and commit them to your repository.
-  Strip Inter font CSS from application layout
-        gsub    app/views/layouts/application.html.erb
   Compile initial Tailwind build
          run    rails tailwindcss:build from "."
 ≈ tailwindcss v4.0.0
-
-Done in 52ms
+Done in 56ms
          run  bundle install --quiet
 ```
 
@@ -157,9 +164,11 @@ We'll try to improve the upgrade process over time, but for now you may need to 
 
 ### Configuration and commands
 
-#### Input file: `app/assets/stylesheets/application.tailwind.css`
+#### Input file: `app/assets/tailwind/application.tailwind.css`
 
-The installer will generate a Tailwind input file in `app/assets/stylesheets/application.tailwind.css`. This is where you import the plugins you want to use and where you can setup your custom `@apply` rules.
+The `tailwindcss:install` task will generate a Tailwind input file in `app/assets/tailwind/application.tailwind.css`. This is where you import the plugins you want to use and where you can setup your custom `@apply` rules.
+
+⚠ The location of this file changed in v4, from `app/assets/stylesheets` to `app/assets/tailwind`. The `tailwindcss:upgrade` task will move it for you.
 
 #### Output file: `app/assets/builds/tailwind.css`
 
@@ -334,17 +343,6 @@ The inline version also works:
 ```html
 <section class="bg-[url('image.svg')]">Has the image as it's background</section>
 ```
-
-### Conflict with pre-existing asset pipeline stylesheets
-
-If you get a warning `Unrecognized at-rule or error parsing at-rule ‘@tailwind’.` in the browser console after installation, you are incorrectly double-processing `application.tailwind.css`. This is a misconfiguration, even though the styles will be fully effective in many cases.
-
-The file `application.tailwind.css` is installed when running `rails tailwindcss:install` and is placed alongside the common `application.css` in `app/assets/stylesheets`. Because the `application.css` in a newly generated Rails app includes a `require_tree .` directive, the asset pipeline incorrectly processes `application.tailwind.css`, where it should be taken care of by `tailwindcss`. The asset pipeline ignores TailwindCSS's at-directives, and the browser can't process them.
-
-To fix the warning, you can either remove the `application.css`, if you don't plan to use the asset pipeline for stylesheets, and instead rely on TailwindCSS completely for styles. This is what this installer assumes.
-
-Or, if you do want to keep using the asset pipeline in parallel, make sure to remove the `require_tree .` line from the `application.css`.
-
 
 ## License
 
