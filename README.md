@@ -260,13 +260,10 @@ For example, to enable nesting:
 
 ```js
 // postcss.config.js
-module.exports = {
+export default {
   plugins: {
-    'postcss-import': {},
-    'tailwindcss/nesting': {},
-    tailwindcss: {},
-    autoprefixer: {},
-  },
+    "@tailwindcss/postcss": {},
+  }
 }
 ```
 
@@ -278,10 +275,9 @@ module.exports = {
   "name": "my app",
   "private": true,
   "dependencies": {
-    "postcss-advanced-variables": "^4.0.0",
-    "postcss-import": "^16.0.1",
-    "postcss-mixins": "^9.0.4",
-    "tailwindcss": "^3.4.1"
+    "@tailwindcss/postcss": "^4.0.0",
+    "tailwindcss": "^4.0.0",
+    "postcss": "^8.5.1"
   }
 }
 ```
