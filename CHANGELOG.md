@@ -1,5 +1,23 @@
 ## next / unreleased
 
+## v4.0.0.rc2 / 2025-01-26
+
+Everything in v4.0.0.rc1, plus ...
+
+General changes:
+
+- The location of `application.tailwind.css` has moved from `app/assets/stylesheets` to `app/assets/tailwind`. If Propshaft is being used, `app/assets/tailwind` will be excluded from its asset handling.
+
+Changes to the `tailwindcss:install` task:
+
+- The "tailwind" stylesheet link tag will only be added to the application layout if Propshaft isn't in use and already handling `app/assets/build/tailwind.css`. Previously it was always injected, resulting in the tag being rendered twice if Propshaft was in use.
+
+Changes to the `tailwindcss:upgrade` task:
+
+- The "tailwind" stylesheet link tag will be removed if Propshaft is in use and already handling `app/assets/build/tailwind.css`.
+- The file `application.tailwind.css` will be moved from `app/assets/stylesheets` to `app/assets/tailwind`.
+
+
 ## v4.0.0.rc1 / 2025-01-23
 
 ### Upgrade to Tailwind CSS v4
