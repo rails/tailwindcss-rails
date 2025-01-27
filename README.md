@@ -12,7 +12,9 @@
 - [Upgrading your application from Tailwind v3 to v4](#upgrading-your-application-from-tailwind-v3-to-v4)
   * [You don't _have_ to upgrade](#you-dont-_have_-to-upgrade)
   * [Upgrade steps](#upgrade-steps)
+  * [Post Upgrade](#post-upgrade)
   * [Troubleshooting](#troubleshooting)
+  * [Updating CSS class names for v4](#updating-css-class-names-for-v4)
 - [Developing with Tailwindcss](#developing-with-tailwindcss)
   * [Configuration and commands](#configuration-and-commands)
   * [Building for production](#building-for-production)
@@ -91,12 +93,41 @@ gem "tailwindcss-ruby", "~> 3.4"
 
 First, update to `tailwindcss-rails` v4.0.0 or higher. This will also ensure you're transitively depending on `tailwindcss-ruby` v4.
 
-``` html
+
+```html
 # Gemfile
 gem "tailwindcss-rails", "~> 4.0" # which transitively pins tailwindcss-ruby to v4
 ```
 
-Then, run the `tailwindcss:upgrade` task. Among other things, this will try to run the official Tailwind upgrade utility. It requires `npx` in order to run, but it's a one-time operation and is *highly recommended* for a successful upgrade.
+If you want to migrate class names for v4 (optional), apply this [step](#upgrading-class-names-for-v4) and continue this guide.
+
+Add the following line to the `.gitignore` file:
+
+```gitignore
+/node_modules
+```
+(So the Tailwind update tool won’t dig through your node_modules files and infer incorrect migrations, because it complies with ``.gitignore`` constraints)
+
+Then create a ``package.json`` in the root of the project:
+
+```jsonc
+{
+  "name": "app_name",
+  "version": "1.0.0",
+  "dependencies": {
+    "tailwindcss": "^3.4.17", // Mandatory!!
+    // Install all plugins and modules that are referenced in tailwind.config.js
+    "@tailwindcss/aspect-ratio": "^0.4.2",
+    "@tailwindcss/container-queries": "^0.1.1",
+    "@tailwindcss/forms": "^0.5.10",
+    "@tailwindcss/typography": "^0.5.16"
+    // And so on...
+  }
+}
+```
+**Run** ``npm install`` (or ``yarn install`` if using ``yarn``)
+
+Then, **run** the `tailwindcss:upgrade` task. Among other things, this will try to run the official Tailwind upgrade utility. It requires `npx` in order to run, but it's a one-time operation and is *highly recommended* for a successful upgrade.
 
 Here's what the upgrade task does:
 
@@ -145,8 +176,12 @@ $ bin/rails tailwindcss:upgrade
 Done in 56ms
          run  bundle install --quiet
 ```
-
 </details>
+
+
+### Post Upgrade
+
+
 
 If this doesn't succeed, it's likely that you've customized your Tailwind configuration and you'll need to do some work to make sure your application upgrades. Please read the [official upgrade guide](https://tailwindcss.com/docs/upgrade-guide)!
 
@@ -157,10 +192,34 @@ You may want to check out [TailwindCSS v4 - upgrade experience report · rails/t
 
 We know there are some cases we haven't addressed with the upgrade task:
 
-- If the user isn’t using PostCSS, some migrations (e.g., updating class names in the view files) may fail
 - In setups without JavaScript tooling, the update process may fail to fully migrate `tailwind.config.js` because the tool assumes that the imported packages (e.g., tailwind plugins) are installed via a package manager, allowing them to be called.
 
 We'll try to improve the upgrade process over time, but for now you may need to do some manual work to upgrade.
+
+
+### Updating CSS class names for v4
+
+Before running the upgrade task, go to ``config/tailwind.config.js`` update the ``content`` part to:
+
+```js
+  content: [
+    '../public/*.html',
+    '../app/helpers/**/*.rb',
+    '../app/javascript/**/*.js',
+    '../app/views/**/*.{erb,haml,html,slim}'
+  ],
+```
+(Just add an additional ``.`` to all the paths referenced)
+
+Run the upstream upgrader as instructed above.
+
+Then, once you've run that successfully:
+
+- **Delete** ``package.json``, ``node_modules/`` and ``package-lock.json`` (or ``yarn.lock``), plus remove ``/node_modules`` from ``.gitignore``.
+- **Go** to your CSS file and remove the following line (if present):
+  ```css
+  @plugin '@tailwindcss/container-queries';
+  ```
 
 
 ## Developing with Tailwindcss
