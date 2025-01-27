@@ -12,7 +12,6 @@
 - [Upgrading your application from Tailwind v3 to v4](#upgrading-your-application-from-tailwind-v3-to-v4)
   * [You don't _have_ to upgrade](#you-dont-_have_-to-upgrade)
   * [Upgrade steps](#upgrade-steps)
-  * [Post Upgrade](#post-upgrade)
   * [Troubleshooting](#troubleshooting)
   * [Updating CSS class names for v4](#updating-css-class-names-for-v4)
 - [Developing with Tailwindcss](#developing-with-tailwindcss)
@@ -177,10 +176,6 @@ Done in 56ms
          run  bundle install --quiet
 ```
 </details>
-
-
-### Post Upgrade
-
 
 
 If this doesn't succeed, it's likely that you've customized your Tailwind configuration and you'll need to do some work to make sure your application upgrades. Please read the [official upgrade guide](https://tailwindcss.com/docs/upgrade-guide)!

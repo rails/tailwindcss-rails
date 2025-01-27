@@ -1,10 +1,10 @@
-## next / unreleased
+# `tailwindcss-rails` Changelog
 
-## next rc / unreleased
+## v4.0.0.rc4 / 2025-01-27
 
 - The input file `app/assets/tailwind/application.tailwind.css` has been renamed to `app/assets/tailwind/application.css`.
+- Updated README docs on using the upgrade tool to update class names. @EricGusmao
 
-Thanks to @brunoprietog for feedback and advice.
 
 ## v4.0.0.rc3 / 2025-01-27
 
@@ -33,7 +33,7 @@ New task `tailwindcss:upgrade` upgrades many apps cleanly:
 - The "tailwind" stylesheet link tag will be removed if Propshaft is in use and already handling `app/assets/build/tailwind.css`.
 - The input file `application.tailwind.css` will be moved from `app/assets/stylesheets` to `app/assets/tailwind`.
 
-Thanks to @EricGusmao, @patriciomacadden, and @excid3 for their feedback, contributions, and advice on the v4 release.
+Thanks to @EricGusmao, @patriciomacadden, @excid3, and @brunoprietog for their feedback, contributions, and advice on v4 support.
 
 
 ## v3.3.1 / 2025-01-23
