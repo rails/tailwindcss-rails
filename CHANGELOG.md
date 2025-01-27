@@ -1,5 +1,15 @@
 ## next / unreleased
 
+## v4.0.0.rc3 / 2025-01-27
+
+Everything in v4.0.0.rc2, plus ...
+
+General changes:
+
+- Remove the Inter font assets from the gem. @EricGusmao
+- If Propshaft is being used, `app/assets/tailwind` will be excluded from its asset handling. (This was incompletely fixed in RC2.)
+
+
 ## v4.0.0.rc2 / 2025-01-26
 
 Everything in v4.0.0.rc1, plus ...
