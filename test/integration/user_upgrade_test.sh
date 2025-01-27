@@ -80,7 +80,7 @@ test   -a postcss.config.js
 
 # TEST: moving application.tailwind.css
 test ! -a app/assets/stylesheets/application.tailwind.css
-test   -a app/assets/tailwind/application.tailwind.css
+test   -a app/assets/tailwind/application.css
 
 # generate CSS
 bin/rails tailwindcss:build[verbose]

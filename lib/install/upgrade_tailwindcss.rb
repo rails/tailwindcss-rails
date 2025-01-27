@@ -1,8 +1,8 @@
 TAILWIND_CONFIG_PATH = Rails.root.join("config/tailwind.config.js")
 APPLICATION_LAYOUT_PATH = Rails.root.join("app/views/layouts/application.html.erb")
 POSTCSS_CONFIG_PATH = Rails.root.join("config/postcss.config.js")
-OLD_TAILWIND_ASSET_PATH = Rails.root.join("app/assets/stylesheets")
-TAILWIND_ASSET_PATH = Rails.root.join("app/assets/tailwind")
+OLD_TAILWIND_ASSET_PATH = Rails.root.join("app/assets/stylesheets/application.tailwind.css")
+TAILWIND_ASSET_PATH = Rails.root.join("app/assets/tailwind/application.css")
 
 unless TAILWIND_CONFIG_PATH.exist?
   say "Default tailwind.config.js is missing!", :red
@@ -38,10 +38,10 @@ else
   say %(        Please check your layouts and remove any "inter-font" stylesheet links.)
 end
 
-if OLD_TAILWIND_ASSET_PATH.join("application.tailwind.css").exist?
-  say "Moving application.tailwind.css to #{TAILWIND_ASSET_PATH}"
-  copy_file OLD_TAILWIND_ASSET_PATH.join("application.tailwind.css"), TAILWIND_ASSET_PATH.join("application.tailwind.css")
-  remove_file OLD_TAILWIND_ASSET_PATH.join("application.tailwind.css")
+if OLD_TAILWIND_ASSET_PATH.exist?
+  say "Moving #{OLD_TAILWIND_ASSET_PATH} to #{TAILWIND_ASSET_PATH}"
+  copy_file OLD_TAILWIND_ASSET_PATH, TAILWIND_ASSET_PATH
+  remove_file OLD_TAILWIND_ASSET_PATH
 end
 
 if system("npx --version")

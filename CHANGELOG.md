@@ -1,34 +1,12 @@
 ## next / unreleased
 
+## next rc / unreleased
+
+- The input file `app/assets/tailwind/application.tailwind.css` has been renamed to `app/assets/tailwind/application.css`.
+
+Thanks to @brunoprietog for feedback and advice.
+
 ## v4.0.0.rc3 / 2025-01-27
-
-Everything in v4.0.0.rc2, plus ...
-
-General changes:
-
-- Remove the Inter font assets from the gem. @EricGusmao
-- If Propshaft is being used, `app/assets/tailwind` will be excluded from its asset handling. (This was incompletely fixed in RC2.)
-
-
-## v4.0.0.rc2 / 2025-01-26
-
-Everything in v4.0.0.rc1, plus ...
-
-General changes:
-
-- The location of `application.tailwind.css` has moved from `app/assets/stylesheets` to `app/assets/tailwind`. If Propshaft is being used, `app/assets/tailwind` will be excluded from its asset handling.
-
-Changes to the `tailwindcss:install` task:
-
-- The "tailwind" stylesheet link tag will only be added to the application layout if Propshaft isn't in use and already handling `app/assets/build/tailwind.css`. Previously it was always injected, resulting in the tag being rendered twice if Propshaft was in use.
-
-Changes to the `tailwindcss:upgrade` task:
-
-- The "tailwind" stylesheet link tag will be removed if Propshaft is in use and already handling `app/assets/build/tailwind.css`.
-- The file `application.tailwind.css` will be moved from `app/assets/stylesheets` to `app/assets/tailwind`.
-
-
-## v4.0.0.rc1 / 2025-01-23
 
 ### Upgrade to Tailwind CSS v4
 
@@ -36,21 +14,26 @@ General changes:
 
 - Dependency on `tailwindcss-ruby` set to `~> 4.0`.
 - The location of (optional) `postcss.config.js` has moved from the `config/` directory to the app root.
+- The location of `application.tailwind.css` has moved from `app/assets/stylesheets` to `app/assets/tailwind`. If Propshaft is being used, `app/assets/tailwind` will be excluded from its asset handling.
+- The Inter font is no longer packaged with the gem.
 
 Changes to the `tailwindcss:install` task:
 
 - The `tailwindcss:install` task no longer installs `config/tailwind.config.js`.
-- The Inter font is no longer packaged with the gem.
-- Some Tailwind class names are updated for v4.
+- The Inter font is no longer configured in the application layout.
+- Some Tailwind class names in the ERB templates are updated for v4.
+- The "tailwind" stylesheet link tag will only be added to the application layout if Propshaft isn't in use and already handling `app/assets/build/tailwind.css`. Previously it was always injected, resulting in the tag being rendered twice if Propshaft was in use.
 
 New task `tailwindcss:upgrade` upgrades many apps cleanly:
 
 - Cleans up some things in the generated `config/tailwind.config.js`.
 - Runs the upstream upgrader (note: requires `npx` to run the one-time upgrade, but highly recommended).
-- Removes references to the Inter font from the application layout.
+- Removes configuration for the Inter font from the application layout.
 - If present, moves `config/postcss.config.js` to the root directory.
+- The "tailwind" stylesheet link tag will be removed if Propshaft is in use and already handling `app/assets/build/tailwind.css`.
+- The input file `application.tailwind.css` will be moved from `app/assets/stylesheets` to `app/assets/tailwind`.
 
-Thanks to @EricGusmao and @excid3 for their help and advice on this work.
+Thanks to @EricGusmao, @patriciomacadden, and @excid3 for their feedback, contributions, and advice on the v4 release.
 
 
 ## v3.3.1 / 2025-01-23
