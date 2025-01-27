@@ -37,7 +37,7 @@ bin/rails tailwindcss:install
 
 # TEST: tailwind was installed correctly
 grep -q "<main class=\"container" app/views/layouts/application.html.erb
-test -a app/assets/tailwind/application.tailwind.css
+test -a app/assets/tailwind/application.css
 
 # TEST: rake tasks don't exec (#188)
 cat <<EOF >> Rakefile
@@ -46,7 +46,7 @@ task :still_here do
 end
 EOF
 
-cat >> app/assets/tailwind/application.tailwind.css <<EOF
+cat >> app/assets/tailwind/application.css <<EOF
 @theme { --color-special: #abc12399; }
 EOF
 
@@ -66,7 +66,7 @@ grep -q "Show this post" app/views/posts/index.html.erb
 bin/rails tailwindcss:build[verbose]
 grep -q "py-2" app/assets/builds/tailwind.css
 
-# TEST: contents include application.tailwind.css
+# TEST: contents include application.css directives
 grep -q "#abc12399" app/assets/builds/tailwind.css
 
 echo "OK"

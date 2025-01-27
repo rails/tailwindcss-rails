@@ -102,7 +102,7 @@ Here's what the upgrade task does:
 
 - Cleans up some things in the generated `config/tailwind.config.js`.
 - If present, moves `config/postcss.config.js` to the root directory.
-- If present, moves `app/assets/stylesheets/application.tailwind.css` to `app/assets/tailwind`.
+- If present, moves `app/assets/stylesheets/application.tailwind.css` to `app/assets/tailwind/application.css`.
 - Removes unnecessary `stylesheet_link_tag "tailwindcss"` tags from the application layout.
 - Removes references to the Inter font from the application layout.
 - Runs the upstream upgrader (note: requires `npx` to run the one-time upgrade, but highly recommended).
@@ -119,22 +119,22 @@ $ bin/rails tailwindcss:upgrade
         gsub    app/views/layouts/application.html.erb
   Remove unnecessary stylesheet_link_tag from application layout
         gsub    app/views/layouts/application.html.erb
-  Moving application.tailwind.css to /home/user/myapp/app/assets/tailwind
-      create    app/assets/tailwind/application.tailwind.css
+  Moving /home/user/myapp/app/assets/stylesheets/application.tailwind.css to /home/user/myapp/app/assets/tailwind/application.css
+      create    app/assets/tailwind/application.css
       remove    app/assets/stylesheets/application.tailwind.css
 10.9.0
   Running the upstream Tailwind CSS upgrader
          run    npx @tailwindcss/upgrade@next --force --config /home/user/myapp/config/tailwind.config.js from "."
 ≈ tailwindcss v4.0.0
 │ Searching for CSS files in the current directory and its subdirectories…
-│ ↳ Linked `./config/tailwind.config.js` to `./app/assets/tailwind/application.tailwind.css`
+│ ↳ Linked `./config/tailwind.config.js` to `./app/assets/tailwind/application.css`
 │ Migrating JavaScript configuration files…
 │ ↳ The configuration file at `./config/tailwind.config.js` could not be automatically migrated to the new CSS
 │   configuration format, so your CSS has been updated to load your existing configuration file.
 │ Migrating templates…
 │ ↳ Migrated templates for configuration file: `./config/tailwind.config.js`
 │ Migrating stylesheets…
-│ ↳ Migrated stylesheet: `./app/assets/tailwind/application.tailwind.css`
+│ ↳ Migrated stylesheet: `./app/assets/tailwind/application.css`
 │ ↳ No PostCSS config found, skipping migration.
 │ Updating dependencies…
 │ Could not detect a package manager. Please manually update `tailwindcss` to v4.
@@ -167,11 +167,11 @@ We'll try to improve the upgrade process over time, but for now you may need to 
 
 ### Configuration and commands
 
-#### Input file: `app/assets/tailwind/application.tailwind.css`
+#### Input file: `app/assets/tailwind/application.css`
 
-The `tailwindcss:install` task will generate a Tailwind input file in `app/assets/tailwind/application.tailwind.css`. This is where you import the plugins you want to use and where you can setup your custom `@apply` rules.
+The `tailwindcss:install` task will generate a Tailwind input file in `app/assets/tailwind/application.css`. This is where you import the plugins you want to use and where you can setup your custom `@apply` rules.
 
-⚠ The location of this file changed in v4, from `app/assets/stylesheets` to `app/assets/tailwind`. The `tailwindcss:upgrade` task will move it for you.
+⚠ The location of this file changed in v4, from `app/assets/stylesheets/application.tailwind.css` to `app/assets/tailwind/application.css`. The `tailwindcss:upgrade` task will move it for you.
 
 #### Output file: `app/assets/builds/tailwind.css`
 
