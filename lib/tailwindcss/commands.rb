@@ -14,7 +14,7 @@ module Tailwindcss
 
         command << "--minify" unless (debug || rails_css_compressor?)
 
-        postcss_path = rails_root.join("config/postcss.config.js")
+        postcss_path = rails_root.join("postcss.config.js")
         command += ["--postcss", postcss_path.to_s] if File.exist?(postcss_path)
 
         command
