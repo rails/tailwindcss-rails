@@ -38,6 +38,40 @@ module Tailwindcss
       def rails_css_compressor?
         defined?(Rails) && Rails&.application&.config&.assets&.css_compressor.present?
       end
+
+      def engines_tailwindcss_roots
+        return [] unless defined?(Rails)
+
+        Rails::Engine.subclasses.select do |engine|
+          begin
+            spec = Gem::Specification.find_by_name(engine.engine_name)
+            spec.dependencies.any? { |d| d.name == 'tailwindcss-rails' }
+          rescue Gem::MissingSpecError
+            false
+          end
+        end.map do |engine|
+          [
+            Rails.root.join("app/assets/tailwind/#{engine.engine_name}/application.css"),
+            engine.root.join("app/assets/tailwind/#{engine.engine_name}/application.css")
+          ].select(&:exist?).compact.first.to_s
+        end.compact
+      end
+
+      def enhance_command(command)
+        engine_roots = Tailwindcss::Commands.engines_tailwindcss_roots
+        if engine_roots.any?
+          Tempfile.create('tailwind.css') do |file|
+            file.write(engine_roots.map { |root| "@import \"#{root}\";" }.join("\n"))
+            file.write("\n@import \"#{Rails.root.join('app/assets/tailwind/application.css')}\";\n")
+            file.rewind
+            transformed_command = command.dup
+            transformed_command[2] = file.path
+            yield transformed_command if block_given?
+          end
+        else
+          yield command if block_given?
+        end
+      end
     end
   end
 end
