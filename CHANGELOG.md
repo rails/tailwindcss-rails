@@ -1,12 +1,14 @@
 # `tailwindcss-rails` Changelog
 
+## v4.0.0.rc5 / 2025-01-29
+
+General changes since rc4:
+
+- Update the rake tasks to detect an (optional) postcss file in the root directory, after moving the file in #466. #482 @EricGusmao
+- Hide the gem's Rails generators in the `rails g --help` output. #483 @patriciomacadden
+
+
 ## v4.0.0.rc4 / 2025-01-27
-
-- The input file `app/assets/tailwind/application.tailwind.css` has been renamed to `app/assets/tailwind/application.css`.
-- Updated README docs on using the upgrade tool to update class names. @EricGusmao
-
-
-## v4.0.0.rc3 / 2025-01-27
 
 ### Upgrade to Tailwind CSS v4
 
@@ -14,8 +16,9 @@ General changes:
 
 - Dependency on `tailwindcss-ruby` set to `~> 4.0`.
 - The location of (optional) `postcss.config.js` has moved from the `config/` directory to the app root.
-- The location of `application.tailwind.css` has moved from `app/assets/stylesheets` to `app/assets/tailwind`. If Propshaft is being used, `app/assets/tailwind` will be excluded from its asset handling.
+- The input file `app/assets/tailwind/application.tailwind.css` has been renamed to `app/assets/tailwind/application.css`. If Propshaft is being used, `app/assets/tailwind` will be excluded from its asset handling.
 - The Inter font is no longer packaged with the gem.
+- Updated README to contain verbose instructions on upgrading.
 
 Changes to the `tailwindcss:install` task:
 
