@@ -72,11 +72,11 @@ This gem will help with some of the mechanics of the upgrade, however.
 
 Keep in mind that you don't _need_ to upgrade. You can stay on Tailwind v3 for the foreseeable future if you prefer not to migrate now, or if your migration runs into problems.
 
-Just make sure you're either pinned to v3.3.1 of this gem:
+Just make sure you're pinned to v3.3.1 of this gem:
 
 ``` ruby
 # Gemfile
-gem "tailwindcss-rails", "3.3.1" # which transitively pins tailwindcss-ruby to v3
+gem "tailwindcss-rails", "~> 3.3.1" # which transitively pins tailwindcss-ruby to v3
 ```
 
 or if you're on an earlier version of this gem, make sure you're pinning the version of **both** `tailwindcss-rails` and `tailwindcss-ruby`:
@@ -84,7 +84,7 @@ or if you're on an earlier version of this gem, make sure you're pinning the ver
 ``` ruby
 # Gemfile
 gem "tailwindcss-rails", "~> 3.3"
-gem "tailwindcss-ruby", "~> 3.4"
+gem "tailwindcss-ruby", "~> 3.4" # only necessary with tailwindcss-rails < 3.3.1
 ```
 
 
@@ -98,33 +98,7 @@ First, update to `tailwindcss-rails` v4.0.0 or higher. This will also ensure you
 gem "tailwindcss-rails", "~> 4.0" # which transitively pins tailwindcss-ruby to v4
 ```
 
-If you want to migrate class names for v4 (optional), apply this [step](#upgrading-class-names-for-v4) and continue this guide.
-
-Add the following line to the `.gitignore` file:
-
-```gitignore
-/node_modules
-```
-(So the Tailwind update tool won’t dig through your node_modules files and infer incorrect migrations, because it complies with ``.gitignore`` constraints)
-
-Then create a ``package.json`` in the root of the project:
-
-```jsonc
-{
-  "name": "app_name",
-  "version": "1.0.0",
-  "dependencies": {
-    "tailwindcss": "^3.4.17", // Mandatory!!
-    // Install all plugins and modules that are referenced in tailwind.config.js
-    "@tailwindcss/aspect-ratio": "^0.4.2",
-    "@tailwindcss/container-queries": "^0.1.1",
-    "@tailwindcss/forms": "^0.5.10",
-    "@tailwindcss/typography": "^0.5.16"
-    // And so on...
-  }
-}
-```
-**Run** ``npm install`` (or ``yarn install`` if using ``yarn``)
+If you want to migrate CSS class names for v4 (this is an optional step!), jump to [Updating CSS class names for v4](#updating-css-class-names-for-v4) before continuing.
 
 Then, **run** the `tailwindcss:upgrade` task. Among other things, this will try to run the official Tailwind upgrade utility. It requires `npx` in order to run, but it's a one-time operation and is *highly recommended* for a successful upgrade.
 
@@ -187,14 +161,42 @@ You may want to check out [TailwindCSS v4 - upgrade experience report · rails/t
 
 We know there are some cases we haven't addressed with the upgrade task:
 
-- In setups without JavaScript tooling, the update process may fail to fully migrate `tailwind.config.js` because the tool assumes that the imported packages (e.g., tailwind plugins) are installed via a package manager, allowing them to be called.
+- In setups without JavaScript tooling, the update process may fail to fully migrate `tailwind.config.js` because the tool assumes that the imported packages (e.g., tailwind plugins) are installed via a package manager, allowing them to be called. In this case, you should try following the instructions in [Updating CSS class names for v4](#updating-css-class-names-for-v4) which will install the needed javascript packages for the updater.
 
 We'll try to improve the upgrade process over time, but for now you may need to do some manual work to upgrade.
 
 
 ### Updating CSS class names for v4
 
-Before running the upgrade task, go to ``config/tailwind.config.js`` update the ``content`` part to:
+With some additional manual work the upstream upgrade tool will update your application's CSS class names to v4 conventions. **This is an optional step that requires a Javascript toolchain!**
+
+**Add** the following line to the `.gitignore` file, to prevent the upstream upgrade tool from accessing node_modules files.
+
+```gitignore
+/node_modules
+```
+
+**Create** a `package.json` in the root of the project:
+
+```jsonc
+{
+  "name": "app_name",
+  "version": "1.0.0",
+  "dependencies": {
+    "tailwindcss": "^3.4.17", // Mandatory!!
+    // Install all plugins and modules that are referenced in tailwind.config.js
+    "@tailwindcss/aspect-ratio": "^0.4.2",
+    "@tailwindcss/container-queries": "^0.1.1",
+    "@tailwindcss/forms": "^0.5.10",
+    "@tailwindcss/typography": "^0.5.16"
+    // And so on...
+  }
+}
+```
+
+**Run** `npm install` (or `yarn install` if using `yarn`)
+
+**Update** `config/tailwind.config.js` and temporarily change the `content` part to have an additional `.` on all paths so they are relative to the config file:
 
 ```js
   content: [
@@ -204,17 +206,19 @@ Before running the upgrade task, go to ``config/tailwind.config.js`` update the 
     '../app/views/**/*.{erb,haml,html,slim}'
   ],
 ```
-(Just add an additional ``.`` to all the paths referenced)
 
-Run the upstream upgrader as instructed above.
+(Just add an additional `.` to all the paths referenced)
 
-Then, once you've run that successfully:
+**Run** the upstream upgrader as instructed above.
 
-- **Delete** ``package.json``, ``node_modules/`` and ``package-lock.json`` (or ``yarn.lock``), plus remove ``/node_modules`` from ``.gitignore``.
+Then, once you've run that successfully, clean up:
+
+- **Delete** `package.json`, `node_modules/` and `package-lock.json` (or `yarn.lock`), plus remove `/node_modules` from `.gitignore`.
 - **Go** to your CSS file and remove the following line (if present):
   ```css
   @plugin '@tailwindcss/container-queries';
   ```
+- **Revert** the changes to `config/tailwind.config.js` so that paths are once again relative to the application root.
 
 
 ## Developing with Tailwindcss
