@@ -35,17 +35,17 @@
 
 ## Installation
 
-With Rails 7 you can generate a new application preconfigured with Tailwind by using `--css tailwind`. If you're adding Tailwind later, you need to:
+With Rails 7 you can generate a new application preconfigured with Tailwind CSS by using `--css tailwind`. If you're adding Tailwind later, you need to:
 
 1. Run `./bin/bundle add tailwindcss-rails`
 2. Run `./bin/rails tailwindcss:install`
 
-This gem depends on the `tailwindcss-ruby` gem to install a working tailwind executable.
+This gem depends on the `tailwindcss-ruby` gem to install a working Tailwind CLI executable.
 
 
 ### Choosing a specific version of `tailwindcss`
 
-The `tailwindcss-ruby` gem is declared as a floating dependency of this gem, so by default you will get the most recent stable version. However, you can select a specific version of tailwind by pinning that gem to the analogous version in your application's `Gemfile`. For example,
+The `tailwindcss-ruby` gem is declared as a floating dependency of this gem, so by default you will get the most recent stable version. However, you can select a specific version of Tailwind CSS by pinning that gem to the analogous version in your application's `Gemfile`. For example,
 
 ``` ruby
 gem "tailwindcss-rails"
@@ -63,72 +63,53 @@ You can also use a local (npm-based) installation if you prefer, please go to ht
 
 v4.x of this gem has been updated to work with Tailwind v4, including providing some help with upgrading your application.
 
-A full explanation of a Tailwind v4 upgrade is out of scope for this README, so we strongly urge you to read the [official Tailwind v4 upgrade guide](https://tailwindcss.com/docs/upgrade-guide) before embarking on an upgrade to an existing large app.
+A full explanation of a Tailwind CSS v4 upgrade is out of scope for this README, so we **strongly urge** you to read the [official Tailwind CSS v4 upgrade guide](https://tailwindcss.com/docs/upgrade-guide) before embarking on an upgrade to an existing large app.
 
-This gem will help with some of the mechanics of the upgrade, however.
+This gem will help with some of the mechanics of the upgrade:
+
+- update some generated files to handle breaking changes in v4 of this gem,
+- update some local project files to meet some Tailwind CSS v4 conventions,
+- attempt to run the [upstream v4 upgrade tool](https://tailwindcss.com/docs/upgrade-guide#using-the-upgrade-tool).
 
 
 ### You don't _have_ to upgrade
 
-Keep in mind that you don't _need_ to upgrade. You can stay on Tailwind v3 for the foreseeable future if you prefer not to migrate now, or if your migration runs into problems.
+Keep in mind that you don't _need_ to upgrade. You can stay on Tailwind CSS v3 for the foreseeable future if you prefer not to migrate now, or if your migration runs into problems.
 
-Just make sure you're either pinned to v3.3.1 of this gem:
+If you don't want to upgrade, then pin your application to v3.3.1 of this gem:
 
 ``` ruby
 # Gemfile
-gem "tailwindcss-rails", "3.3.1" # which transitively pins tailwindcss-ruby to v3
+gem "tailwindcss-rails", "~> 3.3.1" # which transitively pins tailwindcss-ruby to v3
 ```
 
-or if you're on an earlier version of this gem, make sure you're pinning the version of **both** `tailwindcss-rails` and `tailwindcss-ruby`:
+If you're on an earlier version of this gem, `<= 3.3.0`, then make sure you're pinning the version of **both** `tailwindcss-rails` and `tailwindcss-ruby`:
 
 ``` ruby
 # Gemfile
 gem "tailwindcss-rails", "~> 3.3"
-gem "tailwindcss-ruby", "~> 3.4"
+gem "tailwindcss-ruby", "~> 3.4" # only necessary with tailwindcss-rails <= 3.3.0
 ```
 
 
 ### Upgrade steps
 
-First, update to `tailwindcss-rails` v4.0.0 or higher. This will also ensure you're transitively depending on `tailwindcss-ruby` v4.
+> [!WARNING]
+> In applications using Tailwind plugins without JavaScript tooling, these upgrade steps may fail to fully migrate `tailwind.config.js` because the upstream upgrade tool needs the Tailwind plugins to be installed and available through a JavaScript package manager. If you see errors from the upstream upgrade tool, you should try following the additional steps in [Updating CSS class names for v4](#updating-css-class-names-for-v4) which will help you install (temporarily!) the necessary packages and clean up afterwards.
 
+First, update to `tailwindcss-rails` v4.0.0 or higher. This will also ensure you're transitively depending on `tailwindcss-ruby` v4.
 
 ```html
 # Gemfile
 gem "tailwindcss-rails", "~> 4.0" # which transitively pins tailwindcss-ruby to v4
 ```
 
-If you want to migrate class names for v4 (optional), apply this [step](#upgrading-class-names-for-v4) and continue this guide.
+If you want to migrate CSS class names for v4 (this is an optional step!), jump to [Updating CSS class names for v4](#updating-css-class-names-for-v4) before continuing.
 
-Add the following line to the `.gitignore` file:
+Then, run `bin/rails tailwindcss:upgrade`. Among other things, this will try to run the official Tailwind upgrade utility. It requires `npx` in order to run, but it's a one-time operation and is *highly recommended* for a successful upgrade.
 
-```gitignore
-/node_modules
-```
-(So the Tailwind update tool won’t dig through your node_modules files and infer incorrect migrations, because it complies with ``.gitignore`` constraints)
-
-Then create a ``package.json`` in the root of the project:
-
-```jsonc
-{
-  "name": "app_name",
-  "version": "1.0.0",
-  "dependencies": {
-    "tailwindcss": "^3.4.17", // Mandatory!!
-    // Install all plugins and modules that are referenced in tailwind.config.js
-    "@tailwindcss/aspect-ratio": "^0.4.2",
-    "@tailwindcss/container-queries": "^0.1.1",
-    "@tailwindcss/forms": "^0.5.10",
-    "@tailwindcss/typography": "^0.5.16"
-    // And so on...
-  }
-}
-```
-**Run** ``npm install`` (or ``yarn install`` if using ``yarn``)
-
-Then, **run** the `tailwindcss:upgrade` task. Among other things, this will try to run the official Tailwind upgrade utility. It requires `npx` in order to run, but it's a one-time operation and is *highly recommended* for a successful upgrade.
-
-Here's what the upgrade task does:
+<details>
+<summary>Here's a detailed list of what the upgrade task does.</summary>
 
 - Cleans up some things in the generated `config/tailwind.config.js`.
 - If present, moves `config/postcss.config.js` to the root directory.
@@ -136,6 +117,8 @@ Here's what the upgrade task does:
 - Removes unnecessary `stylesheet_link_tag "tailwindcss"` tags from the application layout.
 - Removes references to the Inter font from the application layout.
 - Runs the upstream upgrader (note: requires `npx` to run the one-time upgrade, but highly recommended).
+
+</details>
 
 <details>
 <summary>Here's what that upgrade looks like on a vanilla Rails app.</summary>
@@ -178,7 +161,7 @@ Done in 56ms
 </details>
 
 
-If this doesn't succeed, it's likely that you've customized your Tailwind configuration and you'll need to do some work to make sure your application upgrades. Please read the [official upgrade guide](https://tailwindcss.com/docs/upgrade-guide)!
+If this doesn't succeed, it's likely that you've customized your Tailwind configuration and you'll need to do some work to make sure your application upgrades. Please read the [official upgrade guide](https://tailwindcss.com/docs/upgrade-guide) and try following the additional steps in [Updating CSS class names for v4](#updating-css-class-names-for-v4).
 
 
 ### Troubleshooting
@@ -187,14 +170,45 @@ You may want to check out [TailwindCSS v4 - upgrade experience report · rails/t
 
 We know there are some cases we haven't addressed with the upgrade task:
 
-- In setups without JavaScript tooling, the update process may fail to fully migrate `tailwind.config.js` because the tool assumes that the imported packages (e.g., tailwind plugins) are installed via a package manager, allowing them to be called.
+- In applications using Tailwind plugins without JavaScript tooling, these upgrade steps may fail to fully migrate `tailwind.config.js` because the upstream upgrade tool needs the Tailwind plugins to be installed and available through a JavaScript package manager. If you see errors from the upstream upgrade tool, you should try following the additional steps in [Updating CSS class names for v4](#updating-css-class-names-for-v4) which will help you install (temporarily!) the necessary packages and clean up afterwards.
 
 We'll try to improve the upgrade process over time, but for now you may need to do some manual work to upgrade.
 
 
 ### Updating CSS class names for v4
 
-Before running the upgrade task, go to ``config/tailwind.config.js`` update the ``content`` part to:
+> [!NOTE]
+> If you'd like to help automate these steps, please drop a note to the maintainers in [this discussion thread](https://github.com/rails/tailwindcss-rails/discussions/450).
+
+With some additional manual work the upstream upgrade tool will update your application's CSS class names to v4 conventions. **This is an optional step that requires a JavaScript toolchain.**
+
+**Add** the following line to the `.gitignore` file, to prevent the upstream upgrade tool from accessing node_modules files.
+
+```gitignore
+/node_modules
+```
+
+**Create** a `package.json` in the root of the project:
+
+```jsonc
+{
+  "name": "app_name",
+  "version": "1.0.0",
+  "dependencies": {
+    "tailwindcss": "^3.4.17", // Mandatory!!
+    // Install all plugins and modules that are referenced in tailwind.config.js
+    "@tailwindcss/aspect-ratio": "^0.4.2",
+    "@tailwindcss/container-queries": "^0.1.1",
+    "@tailwindcss/forms": "^0.5.10",
+    "@tailwindcss/typography": "^0.5.16"
+    // And so on...
+  }
+}
+```
+
+**Run** `npm install` (or `yarn install` if using `yarn`)
+
+**Update** `config/tailwind.config.js` and temporarily change the `content` part to have an additional `.` on all paths so they are relative to the config file:
 
 ```js
   content: [
@@ -204,17 +218,19 @@ Before running the upgrade task, go to ``config/tailwind.config.js`` update the 
     '../app/views/**/*.{erb,haml,html,slim}'
   ],
 ```
-(Just add an additional ``.`` to all the paths referenced)
 
-Run the upstream upgrader as instructed above.
+(Just add an additional `.` to all the paths referenced)
 
-Then, once you've run that successfully:
+**Run** the upstream upgrader as instructed above.
 
-- **Delete** ``package.json``, ``node_modules/`` and ``package-lock.json`` (or ``yarn.lock``), plus remove ``/node_modules`` from ``.gitignore``.
+Then, once you've run that successfully, clean up:
+
+- **Delete** `package.json`, `node_modules/` and `package-lock.json` (or `yarn.lock`), plus remove `/node_modules` from `.gitignore`.
 - **Go** to your CSS file and remove the following line (if present):
   ```css
   @plugin '@tailwindcss/container-queries';
   ```
+- **Revert** the changes to `config/tailwind.config.js` so that paths are once again relative to the application root.
 
 
 ## Developing with Tailwindcss
@@ -311,7 +327,7 @@ Running `bin/dev` invokes Foreman to start both the Tailwind watch process and t
 
 ### Using with PostCSS
 
-If you want to use PostCSS as a preprocessor, create a custom `postcss.config.js` in your project root directory, and that file will be loaded by tailwind automatically.
+If you want to use PostCSS as a preprocessor, create a custom `postcss.config.js` in your project root directory, and that file will be loaded by Tailwind automatically.
 
 For example, to enable nesting:
 
@@ -324,7 +340,7 @@ export default {
 }
 ```
 
-⚠ Note that PostCSS is a javascript tool with its own prerequisites! By default `tailwindcss-rails` does not require any javascript tooling, so in order to use PostCSS, a `package.json` with dependencies for your plugins and a package manager like `yarn` or `npm` is required, for example:
+⚠ Note that PostCSS is a JavaScript tool with its own prerequisites! By default `tailwindcss-rails` does not require any JavaScript tooling, so in order to use PostCSS, a `package.json` with dependencies for your plugins and a package manager like `yarn` or `npm` is required, for example:
 
 ```json
 // package.json
