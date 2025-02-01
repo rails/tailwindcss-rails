@@ -13,7 +13,6 @@ General changes:
 - The Inter font is no longer packaged with the gem.
 - Some Tailwind class names in the generated ERB templates are updated for v4.
 - The README is updated to contain verbose instructions on upgrading.
-- The gem's Rails generators are now hidden in the `rails g --help` output. #483 @patriciomacadden
 
 Changes to the `tailwindcss:install` task:
 
@@ -32,6 +31,9 @@ New task `tailwindcss:upgrade` upgrades many apps cleanly:
 
 Thanks to @EricGusmao, @patriciomacadden, @excid3, and @brunoprietog for their feedback, contributions, and advice on v4 support.
 
+### Other changes
+
+- The gem's Rails generators are now hidden in the `rails g --help` output. #483 @patriciomacadden
 
 ## v3.3.1 / 2025-01-23
 
