@@ -221,6 +221,17 @@ With some additional manual work the upstream upgrade tool will update your appl
 
 (Just add an additional `.` to all the paths referenced)
 
+**Update** references to any existing css files imported in the `app/assets/stylesheets/application.tailwind.css`
+```diff
+ @import "tailwindcss/components";
+ @import "tailwindcss/utilities";
+
+-@import "pagy.css";
+-@import "new_case.css";
++@import "../stylesheets/pagy.css";
++@import "../stylesheets/new_case.css";
+```
+
 **Run** the upstream upgrader as instructed above.
 
 Then, once you've run that successfully, clean up:
