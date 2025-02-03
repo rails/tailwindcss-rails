@@ -104,7 +104,8 @@ First, update to `tailwindcss-rails` v4.0.0 or higher. This will also ensure you
 gem "tailwindcss-rails", "~> 4.0" # which transitively pins tailwindcss-ruby to v4
 ```
 
-**Update** references to any existing css files imported in `application.tailwind.css`
+**Update** path references to any existing css files imported in `app/assets/stylesheets/application.tailwind.css` so that they will resolve when the file is moved to `app/assets/tailwind/application.css`.
+
 ```diff
 -@import "pagy.css";
 +@import "../stylesheets/pagy.css";
