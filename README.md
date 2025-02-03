@@ -104,6 +104,12 @@ First, update to `tailwindcss-rails` v4.0.0 or higher. This will also ensure you
 gem "tailwindcss-rails", "~> 4.0" # which transitively pins tailwindcss-ruby to v4
 ```
 
+**Update** references to any existing css files imported in `application.tailwind.css`
+```diff
+-@import "pagy.css";
++@import "../stylesheets/pagy.css";
+```
+
 If you want to migrate CSS class names for v4 (this is an optional step!), jump to [Updating CSS class names for v4](#updating-css-class-names-for-v4) before continuing.
 
 Then, run `bin/rails tailwindcss:upgrade`. Among other things, this will try to run the official Tailwind upgrade utility. It requires `npx` in order to run, but it's a one-time operation and is *highly recommended* for a successful upgrade.
@@ -221,17 +227,6 @@ With some additional manual work the upstream upgrade tool will update your appl
 
 (Just add an additional `.` to all the paths referenced)
 
-**Update** references to any existing css files imported in the `app/assets/stylesheets/application.tailwind.css`
-```diff
- @import "tailwindcss/components";
- @import "tailwindcss/utilities";
-
--@import "pagy.css";
--@import "new_case.css";
-+@import "../stylesheets/pagy.css";
-+@import "../stylesheets/new_case.css";
-```
-
 **Run** the upstream upgrader as instructed above.
 
 Then, once you've run that successfully, clean up:
@@ -242,7 +237,6 @@ Then, once you've run that successfully, clean up:
   @plugin '@tailwindcss/container-queries';
   ```
 - **Revert** the changes to `config/tailwind.config.js` so that paths are once again relative to the application root.
-
 
 ## Developing with Tailwindcss
 
