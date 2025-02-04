@@ -15,23 +15,23 @@
   <div class="my-5">
 <% if attribute.password_digest? -%>
     <%%= form.label :password %>
-    <%%= form.password_field :password, class: ["block shadow-sm rounded-md border outline-hidden px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": <%= model_resource_name %>.errors[:password].none?, "border-red-400 focus:outline-red-600": <%= model_resource_name %>.errors[:password].any?}] %>
+    <%%= form.password_field :password, class: ["block shadow-sm rounded-md border focus:outline-solid px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": <%= model_resource_name %>.errors[:password].none?, "border-red-400 focus:outline-red-600": <%= model_resource_name %>.errors[:password].any?}] %>
   </div>
 
   <div class="my-5">
     <%%= form.label :password_confirmation %>
-    <%%= form.password_field :password_confirmation, class: ["block shadow-sm rounded-md border outline-hidden px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": <%= model_resource_name %>.errors[:password_confirmation].none?, "border-red-400 focus:outline-red-600": <%= model_resource_name %>.errors[:password_confirmation].any?}] %>
+    <%%= form.password_field :password_confirmation, class: ["block shadow-sm rounded-md border focus:outline-solid px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": <%= model_resource_name %>.errors[:password_confirmation].none?, "border-red-400 focus:outline-red-600": <%= model_resource_name %>.errors[:password_confirmation].any?}] %>
 <% elsif attribute.attachments? -%>
     <%%= form.label :<%= attribute.column_name %> %>
-    <%%= form.<%= attribute.field_type %> :<%= attribute.column_name %>, multiple: true, class: ["block shadow-sm rounded-md border outline-hidden px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": <%= model_resource_name %>.errors[:password].none?, "border-red-400 focus:outline-red-600": <%= model_resource_name %>.errors[:password].any?}] %>
+    <%%= form.<%= attribute.field_type %> :<%= attribute.column_name %>, multiple: true, class: ["block shadow-sm rounded-md border focus:outline-solid px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": <%= model_resource_name %>.errors[:password].none?, "border-red-400 focus:outline-red-600": <%= model_resource_name %>.errors[:password].any?}] %>
 <% else -%>
     <%%= form.label :<%= attribute.column_name %> %>
 <% if attribute.field_type == :textarea || attribute.field_type == :text_area -%>
-    <%%= form.<%= attribute.field_type %> :<%= attribute.column_name %>, rows: 4, class: ["block shadow-sm rounded-md border outline-hidden px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": <%= model_resource_name %>.errors[:<%= attribute.column_name %>].none?, "border-red-400 focus:outline-red-600": <%= model_resource_name %>.errors[:<%= attribute.column_name %>].any?}] %>
+    <%%= form.<%= attribute.field_type %> :<%= attribute.column_name %>, rows: 4, class: ["block shadow-sm rounded-md border focus:outline-solid px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": <%= model_resource_name %>.errors[:<%= attribute.column_name %>].none?, "border-red-400 focus:outline-red-600": <%= model_resource_name %>.errors[:<%= attribute.column_name %>].any?}] %>
 <% elsif attribute.field_type == :checkbox || attribute.field_type == :check_box -%>
-    <%%= form.<%= attribute.field_type %> :<%= attribute.column_name %>, class: ["block shadow-sm rounded-md border outline-hidden mt-2 h-5 w-5", {"border-gray-400 focus:outline-blue-600": <%= model_resource_name %>.errors[:<%= attribute.column_name %>].none?, "border-red-400 focus:outline-red-600": <%= model_resource_name %>.errors[:<%= attribute.column_name %>].any?}] %>
+    <%%= form.<%= attribute.field_type %> :<%= attribute.column_name %>, class: ["block shadow-sm rounded-md border focus:outline-solid mt-2 h-5 w-5", {"border-gray-400 focus:outline-blue-600": <%= model_resource_name %>.errors[:<%= attribute.column_name %>].none?, "border-red-400 focus:outline-red-600": <%= model_resource_name %>.errors[:<%= attribute.column_name %>].any?}] %>
 <% else -%>
-    <%%= form.<%= attribute.field_type %> :<%= attribute.column_name %>, class: ["block shadow-sm rounded-md border outline-hidden px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": <%= model_resource_name %>.errors[:<%= attribute.column_name %>].none?, "border-red-400 focus:outline-red-600": <%= model_resource_name %>.errors[:<%= attribute.column_name %>].any?}] %>
+    <%%= form.<%= attribute.field_type %> :<%= attribute.column_name %>, class: ["block shadow-sm rounded-md border focus:outline-solid px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": <%= model_resource_name %>.errors[:<%= attribute.column_name %>].none?, "border-red-400 focus:outline-red-600": <%= model_resource_name %>.errors[:<%= attribute.column_name %>].any?}] %>
 <% end -%>
 <% end -%>
   </div>
