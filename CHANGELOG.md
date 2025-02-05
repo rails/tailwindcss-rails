@@ -1,5 +1,12 @@
 # `tailwindcss-rails` Changelog
 
+## next / unreleased
+
+Style changes to templates:
+
+* Field outlines are no longer hidden, and the focus border is brighter. #489 @rubys
+
+
 ## v4.0.0 / 2025-02-01
 
 ### Upgrade to Tailwind CSS v4
