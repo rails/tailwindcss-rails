@@ -1,12 +1,16 @@
 APPLICATION_LAYOUT_PATH             = Rails.root.join("app/views/layouts/application.html.erb")
 CENTERING_CONTAINER_INSERTION_POINT = /^\s*<%= yield %>/.freeze
+TAILWIND_ASSET_PATH                 = Rails.root.join("app/assets/tailwind/application.css")
 
 if APPLICATION_LAYOUT_PATH.exist?
-  say "Add Tailwindcss include tags and container element in application layout"
-  insert_into_file APPLICATION_LAYOUT_PATH.to_s, <<~ERB.indent(4), before: /^\s*<%= stylesheet_link_tag/
-    <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
-  ERB
+  unless File.read(APPLICATION_LAYOUT_PATH).match?(/stylesheet_link_tag :app/)
+    say "Add Tailwindcss include tags in application layout"
+    insert_into_file APPLICATION_LAYOUT_PATH.to_s, <<~ERB.indent(4), before: /^\s*<%= stylesheet_link_tag/
+      <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
+    ERB
+  end
 
+  say "Add Tailwindcss container element in application layout"
   if File.open(APPLICATION_LAYOUT_PATH).read =~ /<body>\n\s*<%= yield %>\n\s*<\/body>/
     insert_into_file APPLICATION_LAYOUT_PATH.to_s, %(    <main class="container mx-auto mt-28 px-5 flex">\n  ), before: CENTERING_CONTAINER_INSERTION_POINT
     insert_into_file APPLICATION_LAYOUT_PATH.to_s, %(\n    </main>),  after: CENTERING_CONTAINER_INSERTION_POINT
@@ -28,9 +32,9 @@ if Rails.root.join(".gitignore").exist?
   append_to_file(".gitignore", %(\n/app/assets/builds/*\n!/app/assets/builds/.keep\n))
 end
 
-unless Rails.root.join("app/assets/stylesheets/application.tailwind.css").exist?
-  say "Add default app/assets/stylesheets/application.tailwind.css"
-  copy_file "#{__dir__}/application.tailwind.css", "app/assets/stylesheets/application.tailwind.css"
+unless TAILWIND_ASSET_PATH.exist?
+  say "Add default #{TAILWIND_ASSET_PATH}"
+  copy_file "#{__dir__}/application.css", TAILWIND_ASSET_PATH
 end
 
 if Rails.root.join("Procfile.dev").exist?

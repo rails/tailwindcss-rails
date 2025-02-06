@@ -8,13 +8,13 @@ module Tailwindcss
 
         command = [
           Tailwindcss::Ruby.executable(**kwargs),
-          "-i", rails_root.join("app/assets/stylesheets/application.tailwind.css").to_s,
+          "-i", rails_root.join("app/assets/tailwind/application.css").to_s,
           "-o", rails_root.join("app/assets/builds/tailwind.css").to_s,
         ]
 
         command << "--minify" unless (debug || rails_css_compressor?)
 
-        postcss_path = rails_root.join("config/postcss.config.js")
+        postcss_path = rails_root.join("postcss.config.js")
         command += ["--postcss", postcss_path.to_s] if File.exist?(postcss_path)
 
         command

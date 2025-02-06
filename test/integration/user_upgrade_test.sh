@@ -29,7 +29,7 @@ bundle add rails --skip-install ${RAILSOPTS:-}
 bundle add tailwindcss-rails --skip-install --version 3.3.0
 bundle add tailwindcss-ruby  --skip-install --version 3.4.17
 bundle install --prefer-local
-bundle show --paths
+bundle show --paths | fgrep tailwind
 bundle binstubs --all
 
 # install tailwindcss
@@ -51,10 +51,10 @@ bundle remove tailwindcss-rails --skip-install
 bundle remove tailwindcss-ruby --skip-install
 
 bundle add tailwindcss-rails --skip-install --path="../.."
-bundle add tailwindcss-ruby  --skip-install --version 4.0.0
+bundle add tailwindcss-ruby --skip-install ${TAILWINDCSSOPTS:---version 4.0.0}
 
 bundle install --prefer-local
-bundle show --paths
+bundle show --paths | fgrep tailwind
 bundle binstubs --all
 
 # create a postcss file
@@ -75,10 +75,12 @@ if grep -q inter-font app/views/layouts/application.html.erb ; then
 fi
 
 # TEST: moving the postcss file
-if [ ! -f postcss.config.js ] ; then
-  echo "FAIL: postcss.config.js not moved"
-  exit 1
-fi
+test ! -a config/postcss.config.js
+test   -a postcss.config.js
+
+# TEST: moving application.tailwind.css
+test ! -a app/assets/stylesheets/application.tailwind.css
+test   -a app/assets/tailwind/application.css
 
 # generate CSS
 bin/rails tailwindcss:build[verbose]

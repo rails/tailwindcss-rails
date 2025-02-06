@@ -57,8 +57,7 @@ class Tailwindcss::CommandsTest < ActiveSupport::TestCase
         assert_equal(executable, actual.first)
         refute_includes(actual, "--postcss")
 
-        config_file = Rails.root.join("config/postcss.config.js")
-        FileUtils.mkdir_p(Rails.root.join("config"))
+        config_file = Rails.root.join("postcss.config.js")
         FileUtils.touch(config_file)
         actual = Tailwindcss::Commands.compile_command
         assert_kind_of(Array, actual)

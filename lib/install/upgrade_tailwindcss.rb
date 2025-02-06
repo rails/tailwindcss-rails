@@ -1,6 +1,8 @@
 TAILWIND_CONFIG_PATH = Rails.root.join("config/tailwind.config.js")
 APPLICATION_LAYOUT_PATH = Rails.root.join("app/views/layouts/application.html.erb")
 POSTCSS_CONFIG_PATH = Rails.root.join("config/postcss.config.js")
+OLD_TAILWIND_ASSET_PATH = Rails.root.join("app/assets/stylesheets/application.tailwind.css")
+TAILWIND_ASSET_PATH = Rails.root.join("app/assets/tailwind/application.css")
 
 unless TAILWIND_CONFIG_PATH.exist?
   say "Default tailwind.config.js is missing!", :red
@@ -14,7 +16,32 @@ end
 
 if POSTCSS_CONFIG_PATH.exist?
   say "Moving PostCSS configuration to application root directory"
-  FileUtils.mv(POSTCSS_CONFIG_PATH, Rails.root, verbose: true) || abort
+  copy_file POSTCSS_CONFIG_PATH, Rails.root.join("postcss.config.js")
+  remove_file POSTCSS_CONFIG_PATH
+end
+
+if APPLICATION_LAYOUT_PATH.exist?
+  if File.read(APPLICATION_LAYOUT_PATH).match?(/"inter-font"/)
+    say "Strip Inter font CSS from application layout"
+    gsub_file APPLICATION_LAYOUT_PATH.to_s, %r{, "inter-font"}, ""
+  else
+    say "Inter font CSS not detected.", :green
+  end
+
+  if File.read(APPLICATION_LAYOUT_PATH).match?(/stylesheet_link_tag :app/) &&
+     File.read(APPLICATION_LAYOUT_PATH).match?(/stylesheet_link_tag "tailwind"/)
+    say "Remove unnecessary stylesheet_link_tag from application layout"
+    gsub_file APPLICATION_LAYOUT_PATH.to_s, %r{^\s*<%= stylesheet_link_tag "tailwind".*%>$}, ""
+  end
+else
+  say "Default application.html.erb is missing!", :red
+  say %(        Please check your layouts and remove any "inter-font" stylesheet links.)
+end
+
+if OLD_TAILWIND_ASSET_PATH.exist?
+  say "Moving #{OLD_TAILWIND_ASSET_PATH} to #{TAILWIND_ASSET_PATH}"
+  copy_file OLD_TAILWIND_ASSET_PATH, TAILWIND_ASSET_PATH
+  remove_file OLD_TAILWIND_ASSET_PATH
 end
 
 if system("npx --version")
@@ -30,18 +57,6 @@ if system("npx --version")
 else
   say "Could not run the Tailwind upgrade tool. Please see https://tailwindcss.com/docs/upgrade-guide for manual instructions.", :red
   abort
-end
-
-if APPLICATION_LAYOUT_PATH.exist?
-  if File.read(APPLICATION_LAYOUT_PATH).match?(/"inter-font"/)
-    say "Strip Inter font CSS from application layout"
-    gsub_file APPLICATION_LAYOUT_PATH.to_s, %r{, "inter-font"}, ""
-  else
-    say "Inter font CSS not detected.", :green
-  end
-else
-  say "Default application.html.erb is missing!", :red
-  say %(        Please check your layouts and remove any "inter-font" stylesheet links.)
 end
 
 say "Compile initial Tailwind build"
