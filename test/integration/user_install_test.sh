@@ -7,7 +7,8 @@ set -eux
 
 # set up dependencies
 rm -f Gemfile.lock
-bundle remove actionmailer
+bundle remove actionmailer || true
+bundle remove rails || true
 bundle add rails --skip-install ${RAILSOPTS:-}
 bundle install --prefer-local
 
@@ -47,7 +48,7 @@ end
 EOF
 
 cat >> app/assets/tailwind/application.css <<EOF
-@theme { --color-special: #abc12399; }
+@theme static { --color-special: #abc12399; }
 EOF
 
 bin/rails tailwindcss:build still_here | grep "Rake process did not exit early"
