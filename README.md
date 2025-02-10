@@ -422,4 +422,3 @@ The inline version also works:
 ## License
 
 Tailwind for Rails is released under the [MIT License](https://opensource.org/licenses/MIT).
-The Inter font is released under the [SIL Open Font License, Version 1.1](https://github.com/rsms/inter/blob/master/LICENSE.txt).
