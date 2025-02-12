@@ -30,6 +30,10 @@ module Tailwindcss
         def available_views
           %w(index edit show new _form)
         end
+
+        def turbo_available?
+          defined? Turbo
+        end
     end
   end
 end
