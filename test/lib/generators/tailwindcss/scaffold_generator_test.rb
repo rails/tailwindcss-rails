@@ -46,4 +46,24 @@ class Tailwindcss::Generators::ScaffoldGeneratorTest < Rails::Generators::TestCa
       end
     end
   end
+
+  test "adds a confirmation prompt to the destroy button when turbo is available" do
+    ::Turbo = Class.new
+
+    run_generator
+
+    assert_file "app/views/messages/show.html.erb" do |body|
+      assert_match "data: { turbo_confirm: \"Are you sure?\" }", body, "confirmation prompt should be added for turbo"
+    end
+
+    Object.send :remove_const, :Turbo
+  end
+
+  test "doesn't add a confirmation prompt to the destroy button when turbo is not available" do
+    run_generator
+
+    assert_file "app/views/messages/show.html.erb" do |body|
+      assert_no_match "data: { turbo_confirm: \"Are you sure?\" }", body, "confirmation prompt shouldn't be added"
+    end
+  end
 end
