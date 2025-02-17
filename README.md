@@ -397,7 +397,7 @@ See https://github.com/flavorjones/tailwindcss-ruby for help.
 
 ### Using asset-pipeline assets
 
-In Rails, you want to use [assets from the asset pipeline to get fingerprinting](https://guides.rubyonrails.org/asset_pipeline.html#what-is-fingerprinting-and-why-should-i-care-questionmark). However, Tailwind isn't aware of those assets.
+In Rails, you want to use [assets from the asset pipeline to get fingerprinting](https://guides.rubyonrails.org/asset_pipeline.html#fingerprinting-versioning-with-digest-based-urls). However, Tailwind isn't aware of those assets.
 
 To use assets from the pipeline, use `url(image.svg)`. [Since Sprockets v3.3.0](https://github.com/rails/sprockets-rails/pull/476) `url(image.svg)` is rewritten to `/path/to/assets/image-7801e7538c6f1cc57aa75a5876ab0cac.svg` so output CSS will have the correct path to those assets.
 
