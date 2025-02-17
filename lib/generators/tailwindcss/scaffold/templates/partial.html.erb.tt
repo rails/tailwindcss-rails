@@ -8,6 +8,8 @@
     <%% <%= singular_name %>.<%= attribute.column_name %>.each do |<%= attribute.singular_name %>| %>
       <div><%%= link_to <%= attribute.singular_name %>.filename, <%= attribute.singular_name %> %></div>
     <%% end %>
+<% elsif attribute.type == :boolean -%>
+    <%%= <%= singular_name %>.<%= attribute.column_name %>? ? "Yes" : "No" %>
 <% else -%>
     <%%= <%= singular_name %>.<%= attribute.column_name %> %>
 <% end -%>
