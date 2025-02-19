@@ -1,13 +1,14 @@
 # `tailwindcss-rails` Changelog
 
-## next / unreleased
+## v4.1.0 / 2025-02-19
 
-Style changes to templates:
+### View template improvements
 
 * Field outlines are no longer hidden, and the focus border is brighter. #489 @rubys
 * Boolean fields are improved (checkbox labels aligned, "Yes"/"No" instead of "true"/"false"). #454 @patriciomacadden
 * Attachment links are consistently spaced and styled. #460 @patriciomacadden
 * Index page links to Show, Edit, and Destroy for each resource. #460 @patriciomacadden @flavorjones
+* Turbo confirm prompt added to Destroy links. #498 @patriciomacadden
 
 
 ## v4.0.0 / 2025-02-01
