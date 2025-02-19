@@ -5,6 +5,9 @@
 Style changes to templates:
 
 * Field outlines are no longer hidden, and the focus border is brighter. #489 @rubys
+* Boolean fields are improved (checkbox labels aligned, "Yes"/"No" instead of "true"/"false"). #454 @patriciomacadden
+* Attachment links are consistently spaced and styled. #460 @patriciomacadden
+* Index page links to Show, Edit, and Destroy for each resource. #460 @patriciomacadden @flavorjones
 
 
 ## v4.0.0 / 2025-02-01
