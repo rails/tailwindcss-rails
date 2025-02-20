@@ -13,13 +13,13 @@
   <div id="<%= plural_table_name %>" class="min-w-full divide-y divide-gray-200 space-y-5">
     <%% if @<%= plural_table_name %>.any? %>
       <%% @<%= plural_table_name %>.each do |<%= singular_table_name %>| %>
-        <div class="flex justify-between items-center">
+        <div class="flex flex-col sm:flex-row justify-between items-center pb-5 sm:pb-0">
           <%%= render <%= singular_table_name %> %>
-          <div class="space-x-2">
-            <%%= link_to "Show", <%= model_resource_name(singular_table_name) %>, class: "rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
-            <%%= link_to "Edit", <%= edit_helper(singular_table_name, type: :path) %>, class: "rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
-            <div class="inline-block">
-              <%%= button_to "Destroy", <%= model_resource_name %>, method: :delete, class: "rounded-md px-3.5 py-2.5 text-white bg-red-600 hover:bg-red-500 font-medium cursor-pointer", data: { turbo_confirm: "Are you sure?" } %>
+          <div class="w-full sm:w-auto flex flex-col sm:flex-row space-x-2 space-y-2">
+            <%%= link_to "Show", <%= model_resource_name(singular_table_name) %>, class: "w-full sm:w-auto text-center rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
+            <%%= link_to "Edit", <%= edit_helper(singular_table_name, type: :path) %>, class: "w-full sm:w-auto text-center rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
+            <div class="sm:inline-block">
+              <%%= button_to "Destroy", <%= model_resource_name %>, method: :delete, class: "w-full sm:w-auto rounded-md px-3.5 py-2.5 text-white bg-red-600 hover:bg-red-500 font-medium cursor-pointer", data: { turbo_confirm: "Are you sure?" } %>
             </div>
           </div>
         </div>
