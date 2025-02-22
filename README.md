@@ -195,7 +195,7 @@ With some additional manual work the upstream upgrade tool will update your appl
 /node_modules
 ```
 
-**Create** a `package.json` in the root of the project:
+**Create** or **update** a `package.json` in the root of the project:
 
 ```jsonc
 {
@@ -232,7 +232,9 @@ With some additional manual work the upstream upgrade tool will update your appl
 
 Then, once you've run that successfully, clean up:
 
-- **Delete** `package.json`, `node_modules/` and `package-lock.json` (or `yarn.lock`), plus remove `/node_modules` from `.gitignore`.
+- **Review** `package.json` to remove unnecessary modules.
+  - This includes modules added for the period of upgrade.
+  - If you don't need any modules besides `tailwindcss` itself, **delete** `package.json`, `node_modules/` and `package-lock.json` (or `yarn.lock`), plus remove `/node_modules` from `.gitignore`.
 - **Go** to your CSS file and remove the following line (if present):
   ```css
   @plugin '@tailwindcss/container-queries';
@@ -273,6 +275,30 @@ This gem also makes available a Puma plugin to manage a live rebuild process whe
 
 This gem also generates a `Procfile.dev` file which will run both the rails server and a live rebuild process (see "Live Rebuild" section below).
 
+#### Install plugins
+
+Tailwind plugins can be installed using `package.json`.
+
+Using Yarn:
+
+``` sh
+[ ! -f package.json ] && yarn init
+yarn add daisyui # example
+```
+
+Using npm:
+
+``` sh
+npm init
+npm add daisyui # example
+```
+
+Than use `@plugin` annotation in `app/assets/tailwind/application.css`:
+
+``` css
+@import "tailwindcss";
+@plugin "daisyui";
+```
 
 ### Building for production
 
