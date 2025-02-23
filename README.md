@@ -12,7 +12,7 @@
 - [Upgrading your application from Tailwind v3 to v4](#upgrading-your-application-from-tailwind-v3-to-v4)
   * [You don't _have_ to upgrade](#you-dont-_have_-to-upgrade)
   * [Upgrade steps](#upgrade-steps)
-  * [Troubleshooting](#troubleshooting)
+  * [Troubleshooting a v4 upgrade](#troubleshooting-a-v4-upgrade)
   * [Updating CSS class names for v4](#updating-css-class-names-for-v4)
 - [Developing with Tailwindcss](#developing-with-tailwindcss)
   * [Configuration and commands](#configuration-and-commands)
@@ -20,9 +20,10 @@
   * [Building for testing](#building-for-testing)
   * [Building unminified assets](#building-unminified-assets)
   * [Live rebuild](#live-rebuild)
+  * [Using Tailwind plugins](#using-tailwind-plugins)
   * [Using with PostCSS](#using-with-postcss)
   * [Custom inputs or outputs](#custom-inputs-or-outputs)
-- [Troubleshooting](#troubleshooting-1)
+- [Troubleshooting](#troubleshooting)
   * [Lost keystrokes or hanging when using terminal-based debugging tools (e.g. IRB, Pry, `ruby/debug`...etc.) with the Puma plugin](#lost-keystrokes-or-hanging-when-using-terminal-based-debugging-tools-eg-irb-pry-rubydebugetc-with-the-puma-plugin)
   * [Running in a docker container exits prematurely](#running-in-a-docker-container-exits-prematurely)
   * [Conflict with sassc-rails](#conflict-with-sassc-rails)
@@ -171,7 +172,7 @@ Done in 56ms
 If this doesn't succeed, it's likely that you've customized your Tailwind configuration and you'll need to do some work to make sure your application upgrades. Please read the [official upgrade guide](https://tailwindcss.com/docs/upgrade-guide) and try following the additional steps in [Updating CSS class names for v4](#updating-css-class-names-for-v4).
 
 
-### Troubleshooting
+### Troubleshooting a v4 upgrade
 
 You may want to check out [TailwindCSS v4 - upgrade experience report · rails/tailwindcss-rails · Discussion #450](https://github.com/rails/tailwindcss-rails/discussions/450) if you're having trouble upgrading.
 
@@ -275,31 +276,6 @@ This gem also makes available a Puma plugin to manage a live rebuild process whe
 
 This gem also generates a `Procfile.dev` file which will run both the rails server and a live rebuild process (see "Live Rebuild" section below).
 
-#### Install plugins
-
-Tailwind plugins can be installed using `package.json`.
-
-Using Yarn:
-
-``` sh
-[ ! -f package.json ] && yarn init
-yarn add daisyui # example
-```
-
-Using npm:
-
-``` sh
-npm init
-npm add daisyui # example
-```
-
-Than use `@plugin` annotation in `app/assets/tailwind/application.css`:
-
-``` css
-@import "tailwindcss";
-@plugin "daisyui";
-```
-
 ### Building for production
 
 The `tailwindcss:build` is automatically attached to `assets:precompile`, so before the asset pipeline digests the files, the Tailwind output will be generated.
@@ -355,6 +331,32 @@ If you are running `rails tailwindcss:watch` in a docker container without a tty
 #### Foreman
 
 Running `bin/dev` invokes Foreman to start both the Tailwind watch process and the rails server in development mode based on your `Procfile.dev` file.
+
+
+### Using Tailwind plugins
+
+If you want to use Tailwind plugins, they can be installed using `package.json`.
+
+Using Yarn:
+
+``` sh
+[ ! -f package.json ] && yarn init
+yarn add daisyui # example
+```
+
+Using npm:
+
+``` sh
+npm init
+npm add daisyui # example
+```
+
+Than use `@plugin` annotation in `app/assets/tailwind/application.css`:
+
+``` css
+@import "tailwindcss";
+@plugin "daisyui";
+```
 
 
 ### Using with PostCSS
