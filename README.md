@@ -291,7 +291,9 @@ The `tailwindcss:build` task is automatically attached to the `test:prepare` Rak
 If you want unminified assets, you can:
 
 - pass a `debug` argument to the rake task, i.e. `rails tailwindcss:build[debug]` or `rails tailwindcss:watch[debug]`.
-- set an environment variable named `TAILWINDCSS_DEBUG` with a value of `true` or `1` 
+- set an environment variable named `TAILWINDCSS_DEBUG` with a non-blank value
+
+If both values are set, the environment variable will take precedence over the rake task argument.  
 
 ### Live rebuild
 

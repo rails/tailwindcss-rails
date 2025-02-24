@@ -36,23 +36,21 @@ class Tailwindcss::CommandsTest < ActiveSupport::TestCase
   test ".compile_command debug environment variable" do
     begin
       Rails.stub(:root, File) do # Rails.root won't work in this test suite
-        ENV["TAILWINDCSS_DEBUG"] = "0"
+        ENV["TAILWINDCSS_DEBUG"] = ""
         actual = Tailwindcss::Commands.compile_command
         assert_kind_of(Array, actual)
         assert_includes(actual, "--minify")
 
-        ENV["TAILWINDCSS_DEBUG"] = "1"
+        actual = Tailwindcss::Commands.compile_command(debug: true)
+        assert_kind_of(Array, actual)
+        assert_includes(actual, "--minify")
+
+        ENV["TAILWINDCSS_DEBUG"] = "any non-blank value"
         actual = Tailwindcss::Commands.compile_command
         assert_kind_of(Array, actual)
         refute_includes(actual, "--minify")
 
-        ENV["TAILWINDCSS_DEBUG"] = "false"
-        actual = Tailwindcss::Commands.compile_command
-        assert_kind_of(Array, actual)
-        assert_includes(actual, "--minify")
-
-        ENV["TAILWINDCSS_DEBUG"] = "true"
-        actual = Tailwindcss::Commands.compile_command
+        actual = Tailwindcss::Commands.compile_command(debug: true)
         assert_kind_of(Array, actual)
         refute_includes(actual, "--minify")
       end
