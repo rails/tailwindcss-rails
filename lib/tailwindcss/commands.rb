@@ -4,7 +4,7 @@ module Tailwindcss
   module Commands
     class << self
       def compile_command(debug: false, **kwargs)
-        debug ||= ["true", "1"].include?(ENV["TAILWINDCSS_DEBUG"])
+        debug = ENV["TAILWINDCSS_DEBUG"].present? unless ENV["TAILWINDCSS_DEBUG"].nil?
         rails_root = defined?(Rails) ? Rails.root : Pathname.new(Dir.pwd)
 
         command = [
