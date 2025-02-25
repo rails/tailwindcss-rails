@@ -1,5 +1,12 @@
 # `tailwindcss-rails` Changelog
 
+## next / unreleased
+
+### Features
+
+* Support for environment variable `TAILWINDCSS_DEBUG` to turn off CSS minification. #504 @r-sierra
+
+
 ## v4.1.0 / 2025-02-19
 
 ### View template improvements
