@@ -1,9 +1,10 @@
 # `tailwindcss-rails` Changelog
 
-## next / unreleased
+## v4.2.0 / 2025-03-02
 
 ### Features
 
+* Improve the view templates to display better on mobile devices. #503 @patriciomacadden
 * Support for environment variable `TAILWINDCSS_DEBUG` to turn off CSS minification. #504 @r-sierra
 
 
