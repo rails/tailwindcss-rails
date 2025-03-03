@@ -33,6 +33,32 @@ class Tailwindcss::CommandsTest < ActiveSupport::TestCase
     end
   end
 
+  test ".compile_command debug environment variable" do
+    begin
+      Rails.stub(:root, File) do # Rails.root won't work in this test suite
+        ENV["TAILWINDCSS_DEBUG"] = ""
+        actual = Tailwindcss::Commands.compile_command
+        assert_kind_of(Array, actual)
+        assert_includes(actual, "--minify")
+
+        actual = Tailwindcss::Commands.compile_command(debug: true)
+        assert_kind_of(Array, actual)
+        assert_includes(actual, "--minify")
+
+        ENV["TAILWINDCSS_DEBUG"] = "any non-blank value"
+        actual = Tailwindcss::Commands.compile_command
+        assert_kind_of(Array, actual)
+        refute_includes(actual, "--minify")
+
+        actual = Tailwindcss::Commands.compile_command(debug: true)
+        assert_kind_of(Array, actual)
+        refute_includes(actual, "--minify")
+      end
+    ensure
+      ENV.delete('TAILWINDCSS_DEBUG')
+    end
+  end
+
   test ".compile_command when Rails compression is on" do
     Rails.stub(:root, File) do # Rails.root won't work in this test suite
       Tailwindcss::Commands.stub(:rails_css_compressor?, true) do

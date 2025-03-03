@@ -20,4 +20,18 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "railties", ">= 7.0.0"
   spec.add_dependency "tailwindcss-ruby", "~> 4.0"
+
+  # TODO: remove this after a suitable period of time after the v4.0.0 release.
+  spec.post_install_message = <<~TEXT
+    == Upgrading to Tailwind CSS v4 ==
+
+    If you are upgrading to tailwindcss-rails 4.x, please read the upgrade guide at:
+
+      https://github.com/rails/tailwindcss-rails/blob/main/README.md#upgrading-your-application-from-tailwind-v3-to-v4
+
+    If you're not ready to upgrade yet, please pin to version 3 in your Gemfile:
+
+      gem "tailwindcss-rails", "~> 3.3.1"
+
+  TEXT
 end

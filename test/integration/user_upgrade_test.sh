@@ -7,7 +7,8 @@ set -eux
 
 # set up dependencies
 rm -f Gemfile.lock
-bundle remove actionmailer
+bundle remove actionmailer || true
+bundle remove rails || true
 bundle add rails --skip-install ${RAILSOPTS:-}
 bundle install --prefer-local
 
