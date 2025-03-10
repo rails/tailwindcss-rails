@@ -126,4 +126,143 @@ class Tailwindcss::CommandsTest < ActiveSupport::TestCase
       assert_includes(actual, "always")
     end
   end
+
+  test ".engines_tailwindcss_roots when there are no engines" do
+    Rails.stub(:root, Pathname.new("/dummy")) do
+      Rails::Engine.stub(:subclasses, []) do
+        assert_empty Tailwindcss::Commands.engines_tailwindcss_roots
+      end
+    end
+  end
+
+  test ".engines_tailwindcss_roots when there are engines" do
+    Dir.mktmpdir do |tmpdir|
+      root = Pathname.new(tmpdir)
+
+      # Create two engines
+      engine_root1 = root.join('engine1')
+      engine_root2 = root.join('engine2')
+      FileUtils.mkdir_p(engine_root1)
+      FileUtils.mkdir_p(engine_root2)
+
+      engine1 = Class.new(Rails::Engine) do
+        define_singleton_method(:engine_name) { "test_engine1" }
+        define_singleton_method(:root) { engine_root1 }
+      end
+
+      engine2 = Class.new(Rails::Engine) do
+        define_singleton_method(:engine_name) { "test_engine2" }
+        define_singleton_method(:root) { engine_root2 }
+      end
+
+      # Create mock specs for both engines
+      spec1 = Minitest::Mock.new
+      spec1.expect(:dependencies, [Gem::Dependency.new("tailwindcss-rails")])
+
+      spec2 = Minitest::Mock.new
+      spec2.expect(:dependencies, [Gem::Dependency.new("tailwindcss-rails")])
+
+      spec3 = Minitest::Mock.new
+      spec3.expect(:dependencies, [])
+
+      # Set up file structure
+      # Engine 1: CSS in engine root
+      engine1_css = engine_root1.join("app/assets/tailwind/test_engine1/application.css")
+      FileUtils.mkdir_p(File.dirname(engine1_css))
+      FileUtils.touch(engine1_css)
+
+      # Engine 2: CSS in Rails root
+      engine2_css = root.join("app/assets/tailwind/test_engine2/application.css")
+      FileUtils.mkdir_p(File.dirname(engine2_css))
+      FileUtils.touch(engine2_css)
+
+      # Engine 3: CsS in engine root, but no tailwindcss-rails dependency
+      engine3_css = engine_root2.join("app/assets/tailwind/test_engine3/application.css")
+      FileUtils.mkdir_p(File.dirname(engine3_css))
+      FileUtils.touch(engine3_css)
+
+      find_by_name_results = {
+        "test_engine1" => spec1,
+        "test_engine2" => spec2
+      }
+
+      Gem::Specification.stub(:find_by_name, ->(name) { find_by_name_results[name] }) do
+        Rails.stub(:root, root) do
+          Rails::Engine.stub(:subclasses, [engine1, engine2]) do
+            roots = Tailwindcss::Commands.engines_tailwindcss_roots
+
+            assert_equal 2, roots.size
+            assert_includes roots, engine1_css.to_s
+            assert_includes roots, engine2_css.to_s
+            assert_not_includes roots, engine3_css.to_s
+          end
+        end
+      end
+
+      spec1.verify
+      spec2.verify
+    end
+  end
+
+  test ".enhance_command when there are no engines" do
+    Dir.mktmpdir do |tmpdir|
+      root = Pathname.new(tmpdir)
+      input_path = root.join("app/assets/tailwind/application.css")
+      output_path = root.join("app/assets/builds/tailwind.css")
+
+      command = ["tailwindcss", "-i", input_path.to_s, "-o", output_path.to_s]
+
+      Rails.stub(:root, root) do
+        Tailwindcss::Commands.stub(:engines_tailwindcss_roots, []) do
+          Tailwindcss::Commands.enhance_command(command) do |actual|
+            assert_equal command, actual
+          end
+        end
+      end
+    end
+  end
+
+  test ".enhance_command when there are engines" do
+    Dir.mktmpdir do |tmpdir|
+      root = Pathname.new(tmpdir)
+      input_path = root.join("app/assets/tailwind/application.css")
+      output_path = root.join("app/assets/builds/tailwind.css")
+
+      # Create necessary files
+      FileUtils.mkdir_p(File.dirname(input_path))
+      FileUtils.touch(input_path)
+
+      # Create engine CSS file
+      engine_css_path = root.join("app/assets/tailwind/test_engine/application.css")
+      FileUtils.mkdir_p(File.dirname(engine_css_path))
+      FileUtils.touch(engine_css_path)
+
+      command = ["tailwindcss", "-i", input_path.to_s, "-o", output_path.to_s]
+
+      Rails.stub(:root, root) do
+        Tailwindcss::Commands.stub(:engines_tailwindcss_roots, [engine_css_path.to_s]) do
+          Tailwindcss::Commands.enhance_command(command) do |actual|
+            # Command should be modified to use a temporary file
+            assert_equal command[0], actual[0]  # executable
+            assert_equal command[1], actual[1]  # -i flag
+            assert_equal command[3], actual[3]  # -o flag
+            assert_equal command[4], actual[4]  # output path
+
+            temp_path = Pathname.new(actual[2])
+            refute_equal command[2], temp_path.to_s  # input path should be different
+            assert_match(/tailwind\.css/, temp_path.basename.to_s)  # should use temp file
+            assert_includes [Dir.tmpdir, '/tmp'], temp_path.dirname.to_s  # should be in temp directory
+
+            # Check temp file contents
+            temp_content = File.read(temp_path)
+            expected_content = <<~CSS
+            @import "#{engine_css_path}";
+            @import "#{input_path}";
+          CSS
+            assert_equal expected_content.strip, temp_content.strip
+          end
+        end
+      end
+    end
+  end
 end
