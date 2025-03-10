@@ -139,11 +139,13 @@ class Tailwindcss::CommandsTest < ActiveSupport::TestCase
     Dir.mktmpdir do |tmpdir|
       root = Pathname.new(tmpdir)
 
-      # Create two engines
+      # Create multiple engines
       engine_root1 = root.join('engine1')
       engine_root2 = root.join('engine2')
+      engine_root3 = root.join('engine3')
       FileUtils.mkdir_p(engine_root1)
       FileUtils.mkdir_p(engine_root2)
+      FileUtils.mkdir_p(engine_root3)
 
       engine1 = Class.new(Rails::Engine) do
         define_singleton_method(:engine_name) { "test_engine1" }
@@ -155,7 +157,12 @@ class Tailwindcss::CommandsTest < ActiveSupport::TestCase
         define_singleton_method(:root) { engine_root2 }
       end
 
-      # Create mock specs for both engines
+      engine3 = Class.new(Rails::Engine) do
+        define_singleton_method(:engine_name) { "test_engine3" }
+        define_singleton_method(:root) { engine_root3 }
+      end
+
+      # Create mock specs for engines
       spec1 = Minitest::Mock.new
       spec1.expect(:dependencies, [Gem::Dependency.new("tailwindcss-rails")])
 
@@ -183,7 +190,8 @@ class Tailwindcss::CommandsTest < ActiveSupport::TestCase
 
       find_by_name_results = {
         "test_engine1" => spec1,
-        "test_engine2" => spec2
+        "test_engine2" => spec2,
+        "test_engine3" => spec3,
       }
 
       Gem::Specification.stub(:find_by_name, ->(name) { find_by_name_results[name] }) do
