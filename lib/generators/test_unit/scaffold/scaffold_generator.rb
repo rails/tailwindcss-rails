@@ -5,7 +5,9 @@ module TestUnit # :nodoc:
     class ScaffoldGenerator < Base # :nodoc:
       def fix_system_test
         if turbo_defined?
-          gsub_file File.join("test/system", class_path, "#{file_name.pluralize}_test.rb"), "click_on \"Destroy this #{human_name.downcase}\", match: :first", "accept_confirm { click_on \"Destroy this #{human_name.downcase}\", match: :first }"
+          gsub_file File.join("test/system", class_path, "#{file_name.pluralize}_test.rb"),
+                    /(click_on.*Destroy this.*)$/,
+                    "accept_confirm { \\1 }"
         end
       end
 
