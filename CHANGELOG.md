@@ -1,10 +1,11 @@
 # `tailwindcss-rails` Changelog
 
-## next / unreleased
+## v4.2.1 / 2025-03-19
 
 ### Fixed
 
 * Fix styles for form errors in some scaffold fields. #513 @patriciomacadden
+* Update scaffold system tests to handle the "Destroy" confirmation prompt when Turbo is enabled. Fixes #519. #520 @patriciomacadden @flavorjones
 
 
 ## v4.2.0 / 2025-03-02
