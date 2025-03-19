@@ -1,5 +1,12 @@
 # `tailwindcss-rails` Changelog
 
+## next / unreleased
+
+### Fixed
+
+* Fix styles for form errors in some scaffold fields. #513 @patriciomacadden
+
+
 ## v4.2.0 / 2025-03-02
 
 ### Features
