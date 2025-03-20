@@ -1,5 +1,6 @@
 require "rails/generators/erb/scaffold/scaffold_generator"
 require "rails/generators/resource_helpers"
+require File.expand_path("../../test_unit/scaffold/scaffold_generator.rb", __dir__)
 
 module Tailwindcss
   module Generators

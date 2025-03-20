@@ -63,6 +63,9 @@ fi
 bin/rails generate scaffold post title:string body:text published:boolean
 grep -q "Show" app/views/posts/index.html.erb
 
+# TEST: the "accept_confirm" system test change was applied cleanly
+grep -q "accept_confirm { click_on \"Destroy this post\"" test/system/posts_test.rb
+
 # TEST: contents of the css file
 bin/rails tailwindcss:build[verbose]
 grep -q "py-2" app/assets/builds/tailwind.css
