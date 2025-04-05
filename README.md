@@ -145,7 +145,7 @@ $ bin/rails tailwindcss:upgrade
       remove    app/assets/stylesheets/application.tailwind.css
 10.9.0
   Running the upstream Tailwind CSS upgrader
-         run    npx @tailwindcss/upgrade@next --force --config /home/user/myapp/config/tailwind.config.js from "."
+         run    npx @tailwindcss/upgrade --force --config /home/user/myapp/config/tailwind.config.js from "."
 ≈ tailwindcss v4.0.0
 │ Searching for CSS files in the current directory and its subdirectories…
 │ ↳ Linked `./config/tailwind.config.js` to `./app/assets/tailwind/application.css`

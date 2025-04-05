@@ -46,7 +46,7 @@ end
 
 if system("npx --version")
   say "Running the upstream Tailwind CSS upgrader"
-  command = Shellwords.join(["npx", "@tailwindcss/upgrade@next", "--force", "--config", TAILWIND_CONFIG_PATH.to_s])
+  command = Shellwords.join(["npx", "@tailwindcss/upgrade", "--force", "--config", TAILWIND_CONFIG_PATH.to_s])
   success = run(command, abort_on_failure: false)
   unless success
     say "The upgrade tool failed!", :red
