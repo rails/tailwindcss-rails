@@ -29,6 +29,12 @@ module Tailwindcss
         end
       end
 
+      def command_env(verbose:)
+        {}.tap do |env|
+          env["DEBUG"] = "1" if verbose
+        end
+      end
+
       def rails_css_compressor?
         defined?(Rails) && Rails&.application&.config&.assets&.css_compressor.present?
       end
