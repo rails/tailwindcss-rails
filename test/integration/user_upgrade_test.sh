@@ -11,6 +11,7 @@ bundle remove actionmailer || true
 bundle remove rails || true
 bundle add rails --skip-install ${RAILSOPTS:-}
 bundle install --prefer-local
+npm uninstall tailwindcss
 
 # do our work a directory with spaces in the name (#176, #184)
 rm -rf "My Workspace"
@@ -52,7 +53,7 @@ bundle remove tailwindcss-rails --skip-install
 bundle remove tailwindcss-ruby --skip-install
 
 bundle add tailwindcss-rails --skip-install --path="../.."
-bundle add tailwindcss-ruby --skip-install ${TAILWINDCSSOPTS:---version 4.0.0}
+bundle add tailwindcss-ruby --skip-install ${TAILWINDCSSOPTS:---version 4.0.17}
 
 bundle install --prefer-local
 bundle show --paths | fgrep tailwind

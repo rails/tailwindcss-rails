@@ -36,38 +36,38 @@ jobs:
 
   user-install:
     name: "user-install (rails ${{ matrix.ref }})"
-    runs-on: ${{matrix.plat}}-latest
+    runs-on: ubuntu-latest
+    container:
+      image: ruby:3.4
     strategy:
       fail-fast: false
       matrix:
-        plat: ["ubuntu"]
         ref: ["7-2-stable", "8-0-stable", "main"]
     env:
       RAILSOPTS: --git=https://github.com/rails/rails --ref=${{ matrix.ref }}
     steps:
       - uses: actions/checkout@v4
-      - uses: ruby/setup-ruby@v1
+      - uses: actions/setup-node@v4
         with:
-          ruby-version: "3.3"
-          bundler: latest
+          node-version: 20
       - run: test/integration/user_install_test.sh
         shell: bash
 
   user-upgrade:
     name: "user-upgrade (rails ${{ matrix.ref }})"
-    runs-on: ${{matrix.plat}}-latest
+    runs-on: ubuntu-latest
+    container:
+      image: ruby:3.4
     strategy:
       fail-fast: false
       matrix:
-        plat: ["ubuntu"]
         ref: ["7-2-stable", "8-0-stable", "main"]
     env:
       RAILSOPTS: --git=https://github.com/rails/rails --ref=${{ matrix.ref }}
     steps:
       - uses: actions/checkout@v4
-      - uses: ruby/setup-ruby@v1
+      - uses: actions/setup-node@v4
         with:
-          ruby-version: "3.3"
-          bundler: latest
+          node-version: 20
       - run: test/integration/user_upgrade_test.sh
         shell: bash
