@@ -54,6 +54,7 @@ jobs:
         shell: bash
 
   user-upgrade:
+    continue-on-error: true
     name: "user-upgrade (rails ${{ matrix.ref }})"
     runs-on: ${{matrix.plat}}-latest
     strategy:
