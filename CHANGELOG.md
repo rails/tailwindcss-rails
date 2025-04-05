@@ -1,5 +1,14 @@
 # `tailwindcss-rails` Changelog
 
+## v4.2.2 / 2025-04-05
+
+### Improved
+
+* The "tailwindcss:upgrade" task now uses the latest version of the `@tailwindcss/upgrade` tool. #529 @flavorjones
+* The "verbose" flag on Rails tasks now emits additional tailwind CLI debugging info (e.g., `bin/rails tailwindcss:build[verbose]`). #530 @flavorjones
+* Simplified the scaffold templates, removing unnecessary `div` tags. @523 @patriciomacadden
+
+
 ## v4.2.1 / 2025-03-19
 
 ### Fixed
