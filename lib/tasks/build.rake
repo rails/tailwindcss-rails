@@ -2,9 +2,13 @@ namespace :tailwindcss do
   desc "Build your Tailwind CSS"
   task build: :environment do |_, args|
     debug = args.extras.include?("debug")
+    verbose = args.extras.include?("verbose")
+
     command = Tailwindcss::Commands.compile_command(debug: debug)
-    puts command.inspect if args.extras.include?("verbose")
-    system(*command, exception: true)
+    env = Tailwindcss::Commands.command_env(verbose: verbose)
+    puts "Running: #{Shellwords.join(command)}" if verbose
+
+    system(env, *command, exception: true)
   end
 
   desc "Watch and build your Tailwind CSS on file changes"
@@ -12,9 +16,13 @@ namespace :tailwindcss do
     debug = args.extras.include?("debug")
     poll = args.extras.include?("poll")
     always = args.extras.include?("always")
+    verbose = args.extras.include?("verbose")
+
     command = Tailwindcss::Commands.watch_command(always: always, debug: debug, poll: poll)
-    puts command.inspect if args.extras.include?("verbose")
-    system(*command)
+    env = Tailwindcss::Commands.command_env(verbose: verbose)
+    puts "Running: #{Shellwords.join(command)}" if verbose
+
+    system(env, *command)
   rescue Interrupt
     puts "Received interrupt, exiting tailwindcss:watch" if args.extras.include?("verbose")
   end

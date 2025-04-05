@@ -403,11 +403,40 @@ If you need to use a custom input or output file, you can run `bundle exec tailw
 
 ## Troubleshooting
 
-Some common problems experienced by users ...
+When having trouble with `tailwindcss:build` or `tailwindcss:watch`, the first thing you should do is collect some diagnostic information by setting the "verbose" flag, which will emit:
+
+1. the command being run (so you can try running `tailwindcss` yourself without the gem's help)
+2. additional debugging output from `tailwindcss` by setting the env var `DEBUG=1`
+
+Here's what that looks like:
+
+``` sh
+$ bin/rails tailwindcss:build[verbose]
+
+Running: /path/to/tailwindcss-ruby-4.0.17-x86_64-linux-gnu/exe/x86_64-linux-gnu/tailwindcss -i /home/flavorjones/code/oss/tailwindcss-rails/My Workspace/test-install/app/assets/tailwind/application.css -o /home/flavorjones/code/oss/tailwindcss-rails/My Workspace/test-install/app/assets/builds/tailwind.css --minify
+≈ tailwindcss v4.0.17
+
+Done in 37ms
+
+[38.22ms] [@tailwindcss/cli] (initial build)
+[11.90ms]   ↳ Setup compiler
+[ 6.52ms]   ↳ Scan for candidates
+[10.39ms]   ↳ Build CSS
+[ 1.69ms]   ↳ Optimize CSS
+[ 5.80ms]   ↳ Write output
+```
+
+### The `watch` command is hanging
+
+There is a [known issue](https://github.com/tailwindlabs/tailwindcss/issues/17246#issuecomment-2753067488) running `tailwindcss -w` (that's the CLI in watch mode) when the utility `watchman` is also installed.
+
+Please try uninstalling `watchman` and try running the watch task again.
+
 
 ### Lost keystrokes or hanging when using terminal-based debugging tools (e.g. IRB, Pry, `ruby/debug`...etc.) with the Puma plugin
 
 We've addressed the issue and you can avoid the problem by upgrading `tailwindcss-rails` to [v2.4.1](https://github.com/rails/tailwindcss-rails/releases/tag/v2.4.1) or later versions.
+
 
 ### Running in a docker container exits prematurely
 
@@ -415,17 +444,21 @@ If you are running `rails tailwindcss:watch` as a process in a Docker container,
 
 If you are running `rails tailwindcss:watch` in a docker container without a tty, pass the `always` argument to the task to instruct tailwindcss to keep the watcher alive even when `stdin` is closed: `rails tailwindcss:watch[always]`. If you use `bin/dev` then you should modify your `Procfile.dev`.
 
+
 ### Conflict with sassc-rails
 
 Tailwind uses modern CSS features that are not recognized by the `sassc-rails` extension that was included by default in the Gemfile for Rails 6. In order to avoid any errors like `SassC::SyntaxError`, you must remove that gem from your Gemfile.
+
 
 ### Class names must be spelled out
 
 For Tailwind to work, your class names need to be spelled out. If you need to make sure Tailwind generates class names that don't exist in your content files or that are programmatically composed, use the [safelist option](https://tailwindcss.com/docs/content-configuration#safelisting-classes).
 
+
 ### `ERROR: Cannot find the tailwindcss executable` for supported platform
 
 See https://github.com/flavorjones/tailwindcss-ruby for help.
+
 
 ### Using asset-pipeline assets
 
