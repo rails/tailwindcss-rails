@@ -400,6 +400,12 @@ Then you can use yarn or npm to install the dependencies.
 
 If you need to use a custom input or output file, you can run `bundle exec tailwindcss` to access the platform-specific executable, and give it your own build options.
 
+## Rails Engines support
+
+If you have Rails Engines in your application that use Tailwind CSS, they will be automatically included in the Tailwind build as long as they conform to next conventions:
+
+- The engine must have `tailwindcss-rails` as gem dependency.
+- The engine must have a `app/assets/tailwind/<engine_name>/application.css` file or your application must have overridden file in the same location of your application root.
 
 ## Troubleshooting
 
