@@ -3,13 +3,16 @@ require "tailwindcss/ruby"
 module Tailwindcss
   module Commands
     class << self
-      def compile_command(debug: false, **kwargs)
+      def rails_root
+        defined?(Rails) ? Rails.root : Pathname.new(Dir.pwd)
+      end
+
+      def compile_command(input = rails_root.join("app/assets/tailwind/application.css").to_s, debug: false, **kwargs)
         debug = ENV["TAILWINDCSS_DEBUG"].present? if ENV.key?("TAILWINDCSS_DEBUG")
-        rails_root = defined?(Rails) ? Rails.root : Pathname.new(Dir.pwd)
 
         command = [
           Tailwindcss::Ruby.executable(**kwargs),
-          "-i", rails_root.join("app/assets/tailwind/application.css").to_s,
+          "-i", input,
           "-o", rails_root.join("app/assets/builds/tailwind.css").to_s,
         ]
 
@@ -21,8 +24,8 @@ module Tailwindcss
         command
       end
 
-      def watch_command(always: false, poll: false, **kwargs)
-        compile_command(**kwargs).tap do |command|
+      def watch_command(input = rails_root.join("app/assets/tailwind/application.css").to_s, always: false, poll: false, **kwargs)
+        compile_command(input, **kwargs).tap do |command|
           command << "-w"
           command << "always" if always
           command << "-p" if poll
@@ -57,19 +60,17 @@ module Tailwindcss
         end.compact
       end
 
-      def enhance_command(command)
+      def with_dynamic_input
         engine_roots = Tailwindcss::Commands.engines_tailwindcss_roots
         if engine_roots.any?
           Tempfile.create('tailwind.css') do |file|
             file.write(engine_roots.map { |root| "@import \"#{root}\";" }.join("\n"))
             file.write("\n@import \"#{Rails.root.join('app/assets/tailwind/application.css')}\";\n")
             file.rewind
-            transformed_command = command.dup
-            transformed_command[2] = file.path
-            yield transformed_command if block_given?
+            yield file.path if block_given?
           end
         else
-          yield command if block_given?
+          yield rails_root.join("app/assets/tailwind/application.css").to_s if block_given?
         end
       end
     end

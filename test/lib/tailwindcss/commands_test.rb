@@ -11,7 +11,7 @@ class Tailwindcss::CommandsTest < ActiveSupport::TestCase
 
   test ".compile_command" do
     Rails.stub(:root, File) do # Rails.root won't work in this test suite
-      actual = Tailwindcss::Commands.compile_command
+      actual = Tailwindcss::Commands.compile_command("app/assets/tailwind/application.css")
       assert_kind_of(Array, actual)
       assert_equal(executable, actual.first)
       assert_includes(actual, "-i")
@@ -212,29 +212,25 @@ class Tailwindcss::CommandsTest < ActiveSupport::TestCase
     end
   end
 
-  test ".enhance_command when there are no engines" do
+  test ".with_dynamic_input when there are no engines" do
     Dir.mktmpdir do |tmpdir|
       root = Pathname.new(tmpdir)
-      input_path = root.join("app/assets/tailwind/application.css")
-      output_path = root.join("app/assets/builds/tailwind.css")
-
-      command = ["tailwindcss", "-i", input_path.to_s, "-o", output_path.to_s]
+      input_path = root.join("app/assets/tailwind/application.css").to_s
 
       Rails.stub(:root, root) do
         Tailwindcss::Commands.stub(:engines_tailwindcss_roots, []) do
-          Tailwindcss::Commands.enhance_command(command) do |actual|
-            assert_equal command, actual
+          Tailwindcss::Commands.with_dynamic_input do |actual|
+            assert_equal input_path, actual
           end
         end
       end
     end
   end
 
-  test ".enhance_command when there are engines" do
+  test ".with_dynamic_input when there are engines" do
     Dir.mktmpdir do |tmpdir|
       root = Pathname.new(tmpdir)
-      input_path = root.join("app/assets/tailwind/application.css")
-      output_path = root.join("app/assets/builds/tailwind.css")
+      input_path = root.join("app/assets/tailwind/application.css").to_s
 
       # Create necessary files
       FileUtils.mkdir_p(File.dirname(input_path))
@@ -245,24 +241,16 @@ class Tailwindcss::CommandsTest < ActiveSupport::TestCase
       FileUtils.mkdir_p(File.dirname(engine_css_path))
       FileUtils.touch(engine_css_path)
 
-      command = ["tailwindcss", "-i", input_path.to_s, "-o", output_path.to_s]
-
       Rails.stub(:root, root) do
         Tailwindcss::Commands.stub(:engines_tailwindcss_roots, [engine_css_path.to_s]) do
-          Tailwindcss::Commands.enhance_command(command) do |actual|
-            # Command should be modified to use a temporary file
-            assert_equal command[0], actual[0]  # executable
-            assert_equal command[1], actual[1]  # -i flag
-            assert_equal command[3], actual[3]  # -o flag
-            assert_equal command[4], actual[4]  # output path
-
-            temp_path = Pathname.new(actual[2])
-            refute_equal command[2], temp_path.to_s  # input path should be different
+          Tailwindcss::Commands.with_dynamic_input do |actual|
+            temp_path = Pathname.new(actual)
+            refute_equal input_path, temp_path.to_s  # input path should be different
             assert_match(/tailwind\.css/, temp_path.basename.to_s)  # should use temp file
             assert_includes [Dir.tmpdir, '/tmp'], temp_path.dirname.to_s  # should be in temp directory
 
             # Check temp file contents
-            temp_content = File.read(temp_path)
+            temp_content = File.read(actual)
             expected_content = <<~CSS
             @import "#{engine_css_path}";
             @import "#{input_path}";
