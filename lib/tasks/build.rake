@@ -4,7 +4,7 @@ namespace :tailwindcss do
     debug = args.extras.include?("debug")
     command = Tailwindcss::Commands.compile_command(debug: debug)
     puts command.inspect if args.extras.include?("verbose")
-    system(*command, exception: true)
+    system(Tailwindcss::Commands::ENV, *command, exception: true)
   end
 
   desc "Watch and build your Tailwind CSS on file changes"
@@ -14,7 +14,7 @@ namespace :tailwindcss do
     always = args.extras.include?("always")
     command = Tailwindcss::Commands.watch_command(always: always, debug: debug, poll: poll)
     puts command.inspect if args.extras.include?("verbose")
-    system(*command)
+    system(Tailwindcss::Commands::ENV, *command)
   rescue Interrupt
     puts "Received interrupt, exiting tailwindcss:watch" if args.extras.include?("verbose")
   end
