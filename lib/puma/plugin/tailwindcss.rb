@@ -13,7 +13,7 @@ Puma::Plugin.create do
       # If we use system(*command) instead, IRB and Debug can't read from $stdin
       # correctly bacause some keystrokes will be taken by watch_command.
       begin
-        IO.popen(Tailwindcss::Commands.watch_command, 'r+') do |io|
+        IO.popen({'BROWSERSLIST_IGNORE_OLD_DATA' => '1'}, Tailwindcss::Commands.watch_command, 'r+') do |io|
           IO.copy_stream(io, $stdout)
         end
       rescue Interrupt
