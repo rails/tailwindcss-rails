@@ -87,7 +87,8 @@ GEM
       net-protocol
     net-protocol (0.2.2)
       timeout
-    net-smtp (0.5.0)
+    net-smtp (0.5.1)
+      net-protocol
     nokogiri (1.18.1)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
