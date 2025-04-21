@@ -1,5 +1,10 @@
 ## next / unreleased
 
+## v3.3.2 / 2025-04-21
+
+* Quash the "caniuse-lite is outdated" warning message from the `tailwindcss` CLI. #536 @wlipa
+
+
 ## v3.3.1 / 2025-01-23
 
 * Pin the dependency on `tailwindcss-ruby` to `~> 3.0` to prevent users from upgrading Tailwind while still on v3 of this gem.
