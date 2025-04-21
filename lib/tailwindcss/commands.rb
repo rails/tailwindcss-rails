@@ -2,6 +2,8 @@ require "tailwindcss/ruby"
 
 module Tailwindcss
   module Commands
+    ENV = {'BROWSERSLIST_IGNORE_OLD_DATA' => '1'}
+
     class << self
       def compile_command(debug: false, **kwargs)
         rails_root = defined?(Rails) ? Rails.root : Pathname.new(Dir.pwd)
