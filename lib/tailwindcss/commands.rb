@@ -42,15 +42,13 @@ module Tailwindcss
         defined?(Rails) && Rails&.application&.config&.assets&.css_compressor.present?
       end
 
-      def engines_tailwindcss_roots
+      def engines_roots
         return [] unless defined?(Rails)
+        return [] unless Rails.application&.config&.tailwindcss_rails&.engines
 
-        Rails::Engine.subclasses.select do |engine|
+        Rails::Engine.descendants.select do |engine|
           begin
-            spec = Gem::Specification.find_by_name(engine.engine_name)
-            spec.dependencies.any? { |d| d.name == 'tailwindcss-rails' }
-          rescue Gem::MissingSpecError
-            false
+            engine.engine_name.in?(Rails.application.config.tailwindcss_rails.engines)
           end
         end.map do |engine|
           [
@@ -61,7 +59,7 @@ module Tailwindcss
       end
 
       def with_dynamic_input
-        engine_roots = Tailwindcss::Commands.engines_tailwindcss_roots
+        engine_roots = Tailwindcss::Commands.engines_roots
         if engine_roots.any?
           Tempfile.create('tailwind.css') do |file|
             file.write(engine_roots.map { |root| "@import \"#{root}\";" }.join("\n"))

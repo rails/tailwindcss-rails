@@ -5,6 +5,10 @@ module Tailwindcss
     config.tailwindcss_rails = ActiveSupport::OrderedOptions.new
     config.tailwindcss_rails.engines = []
 
+    initializer 'tailwindcss.load_hook' do |app|
+      ActiveSupport.run_load_hooks(:tailwindcss_rails, app)
+    end
+
     initializer "tailwindcss.disable_generator_stylesheets" do
       Rails.application.config.generators.stylesheets = false
     end
