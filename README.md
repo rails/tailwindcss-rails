@@ -406,6 +406,14 @@ If you have Rails Engines in your application that use Tailwind CSS, they will b
 
 - The engine must have `tailwindcss-rails` as gem dependency.
 - The engine must have a `app/assets/tailwind/<engine_name>/application.css` file or your application must have overridden file in the same location of your application root.
+- The engine must register itself in Tailwindcss Rails:
+```ruby
+  initializer 'your_engine.tailwindcss' do |app|
+    ActiveSupport.on_load(:tailwindcss_rails) do
+      config.tailwindcss_rails.engines << Your::Engine.engine_name
+    end
+  end
+```
 
 ## Troubleshooting
 
