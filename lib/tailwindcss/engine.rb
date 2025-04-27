@@ -2,6 +2,9 @@ require "rails"
 
 module Tailwindcss
   class Engine < ::Rails::Engine
+    config.tailwindcss_rails = ActiveSupport::OrderedOptions.new
+    config.tailwindcss_rails.engines = []
+
     initializer "tailwindcss.disable_generator_stylesheets" do
       Rails.application.config.generators.stylesheets = false
     end
