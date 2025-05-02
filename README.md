@@ -124,7 +124,7 @@ Then, run `bin/rails tailwindcss:upgrade`. Among other things, this will try to 
 - If present, moves `app/assets/stylesheets/application.tailwind.css` to `app/assets/tailwind/application.css`.
 - Removes unnecessary `stylesheet_link_tag "tailwindcss"` tags from the application layout.
 - Removes references to the Inter font from the application layout.
-- Runs the upstream upgrader (note: requires `npx` to run the one-time upgrade, but highly recommended).
+- Runs v4.1.4 of the upstream upgrader (note: requires `npx` to run the one-time upgrade, but highly recommended).
 
 </details>
 
@@ -145,7 +145,7 @@ $ bin/rails tailwindcss:upgrade
       remove    app/assets/stylesheets/application.tailwind.css
 10.9.0
   Running the upstream Tailwind CSS upgrader
-         run    npx @tailwindcss/upgrade --force --config /home/user/myapp/config/tailwind.config.js from "."
+         run    npx @tailwindcss/upgrade@4.1.4 --force --config /home/user/myapp/config/tailwind.config.js from "."
 ≈ tailwindcss v4.0.0
 │ Searching for CSS files in the current directory and its subdirectories…
 │ ↳ Linked `./config/tailwind.config.js` to `./app/assets/tailwind/application.css`

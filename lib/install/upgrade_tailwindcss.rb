@@ -45,8 +45,14 @@ if OLD_TAILWIND_ASSET_PATH.exist?
 end
 
 if system("npx --version")
+  # We're pinning to v4.1.4 because v4.1.5 of the upgrade tool introduces a dependency version check
+  # on tailwind and I haven't been able to figure out how to get that to work reliably and I am
+  # extremely frustrated with the whole thing. See #544
+  #
+  # At some point we will probably need to unpin this at which point I am sincerely hoping that
+  # someone else will do it.
   say "Running the upstream Tailwind CSS upgrader"
-  command = Shellwords.join(["npx", "@tailwindcss/upgrade", "--force", "--config", TAILWIND_CONFIG_PATH.to_s])
+  command = Shellwords.join(["npx", "@tailwindcss/upgrade@4.1.4", "--force", "--config", TAILWIND_CONFIG_PATH.to_s])
   success = run(command, abort_on_failure: false)
   unless success
     say "The upgrade tool failed!", :red
