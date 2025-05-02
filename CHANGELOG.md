@@ -1,5 +1,12 @@
 # `tailwindcss-rails` Changelog
 
+## v4.2.3 / 2025-05-02
+
+### Improved
+
+* The "tailwindcss:upgrade" task now pins to v4.1.4 of the `@tailwindcss/upgrade` tool. #544 @flavorjones
+
+
 ## v4.2.2 / 2025-04-05
 
 ### Improved
