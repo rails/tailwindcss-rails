@@ -5,10 +5,12 @@ namespace :tailwindcss do
     verbose = args.extras.include?("verbose")
 
     command = Tailwindcss::Commands.compile_command(debug: debug)
-    env = Tailwindcss::Commands.command_env(verbose: verbose)
-    puts "Running: #{Shellwords.join(command)}" if verbose
+    Tailwindcss::Commands.enhance_command(command) do |transformed_command|
+      env = Tailwindcss::Commands.command_env(verbose: verbose)
+      puts "Running: #{Shellwords.join(command)}" if verbose
 
-    system(env, *command, exception: true)
+      system(env, *command, exception: true)
+    end
   end
 
   desc "Watch and build your Tailwind CSS on file changes"
@@ -19,10 +21,12 @@ namespace :tailwindcss do
     verbose = args.extras.include?("verbose")
 
     command = Tailwindcss::Commands.watch_command(always: always, debug: debug, poll: poll)
-    env = Tailwindcss::Commands.command_env(verbose: verbose)
-    puts "Running: #{Shellwords.join(command)}" if verbose
+    Tailwindcss::Commands.enhance_command(command) do |transformed_command|
+      env = Tailwindcss::Commands.command_env(verbose: verbose)
+      puts "Running: #{Shellwords.join(command)}" if verbose
 
-    system(env, *command)
+      system(env, *command)
+    end
   rescue Interrupt
     puts "Received interrupt, exiting tailwindcss:watch" if args.extras.include?("verbose")
   end
