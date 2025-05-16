@@ -1,5 +1,4 @@
 require "test_helper"
-require "ostruct"
 require "minitest/mock"
 
 class Tailwindcss::CommandsTest < ActiveSupport::TestCase
@@ -227,6 +226,13 @@ class Tailwindcss::CommandsTest < ActiveSupport::TestCase
   end
 
   private
+    # Define Structs outside of methods to avoid redefining them
+    ConfigStruct = Struct.new(:engines)
+    AssetsStruct = Struct.new(:css_compressor)
+    TailwindStruct = Struct.new(:tailwindcss_rails, :assets)
+    AppStruct = Struct.new(:config)
+    EngineStruct = Struct.new(:name, :root, :css_path)
+
     def with_rails_app
       Object.send(:remove_const, :Rails) if Object.const_defined?(:Rails)
       Object.const_set(:Rails, setup_mock_rails)
@@ -257,12 +263,10 @@ class Tailwindcss::CommandsTest < ActiveSupport::TestCase
 
       mock_rails.const_set(:Engine, mock_engine)
       mock_rails.root = Pathname.new(@tmp_dir)
-      mock_rails.application = OpenStruct.new(
-        config: OpenStruct.new(
-          tailwindcss_rails: OpenStruct.new(engines: []),
-          assets: OpenStruct.new(css_compressor: nil)
-        )
-      )
+      tailwind_config = ConfigStruct.new([])
+      assets_config = AssetsStruct.new(nil)
+      app_config = TailwindStruct.new(tailwind_config, assets_config)
+      mock_rails.application = AppStruct.new(app_config)
       mock_rails
     end
 
@@ -290,10 +294,11 @@ class Tailwindcss::CommandsTest < ActiveSupport::TestCase
 
     def create_test_engines
       [1, 2, 3].map do |i|
-        engine = OpenStruct.new
-        engine.name = "test_engine#{i}"
-        engine.root = File.join(@tmp_dir, "engine#{i}")
-        engine.css_path = File.join(@tmp_dir, "app/assets/tailwind/test_engine#{i}/application.css")
+        engine = EngineStruct.new(
+          "test_engine#{i}",
+          File.join(@tmp_dir, "engine#{i}"),
+          File.join(@tmp_dir, "app/assets/tailwind/test_engine#{i}/application.css")
+        )
         FileUtils.mkdir_p(File.dirname(engine.css_path))
         FileUtils.touch(engine.css_path)
         engine
