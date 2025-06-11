@@ -22,8 +22,10 @@
   * [Live rebuild](#live-rebuild)
   * [Using Tailwind plugins](#using-tailwind-plugins)
   * [Using with PostCSS](#using-with-postcss)
+  * [Rails Engines support](#rails-engines-support)
   * [Custom inputs or outputs](#custom-inputs-or-outputs)
 - [Troubleshooting](#troubleshooting)
+  * [The `watch` command is hanging](#the-watch-command-is-hanging)
   * [Lost keystrokes or hanging when using terminal-based debugging tools (e.g. IRB, Pry, `ruby/debug`...etc.) with the Puma plugin](#lost-keystrokes-or-hanging-when-using-terminal-based-debugging-tools-eg-irb-pry-rubydebugetc-with-the-puma-plugin)
   * [Running in a docker container exits prematurely](#running-in-a-docker-container-exits-prematurely)
   * [Conflict with sassc-rails](#conflict-with-sassc-rails)
@@ -43,12 +45,11 @@ With Rails 7 you can generate a new application preconfigured with Tailwind CSS 
 
 This gem depends on the `tailwindcss-ruby` gem to install a working Tailwind CLI executable.
 
-
 ### Choosing a specific version of `tailwindcss`
 
 The `tailwindcss-ruby` gem is declared as a floating dependency of this gem, so by default you will get the most recent stable version. However, you can select a specific version of Tailwind CSS by pinning that gem to the analogous version in your application's `Gemfile`. For example,
 
-``` ruby
+```ruby
 gem "tailwindcss-rails"
 
 # pin to tailwindcss version 3.4.13
@@ -58,7 +59,6 @@ gem "tailwindcss-ruby", "3.4.13"
 ### Using a local installation of `tailwindcss`
 
 You can also use a local (npm-based) installation if you prefer, please go to https://github.com/flavorjones/tailwindcss-ruby for more information.
-
 
 ## Upgrading your application from Tailwind v3 to v4
 
@@ -72,26 +72,24 @@ This gem will help with some of the mechanics of the upgrade:
 - update some local project files to meet some Tailwind CSS v4 conventions,
 - attempt to run the [upstream v4 upgrade tool](https://tailwindcss.com/docs/upgrade-guide#using-the-upgrade-tool).
 
-
 ### You don't _have_ to upgrade
 
 Keep in mind that you don't _need_ to upgrade. You can stay on Tailwind CSS v3 for the foreseeable future if you prefer not to migrate now, or if your migration runs into problems.
 
 If you don't want to upgrade, then pin your application to v3.3.1 of this gem:
 
-``` ruby
+```ruby
 # Gemfile
 gem "tailwindcss-rails", "~> 3.3.1" # which transitively pins tailwindcss-ruby to v3
 ```
 
 If you're on an earlier version of this gem, `<= 3.3.0`, then make sure you're pinning the version of **both** `tailwindcss-rails` and `tailwindcss-ruby`:
 
-``` ruby
+```ruby
 # Gemfile
 gem "tailwindcss-rails", "~> 3.3"
 gem "tailwindcss-ruby", "~> 3.4" # only necessary with tailwindcss-rails <= 3.3.0
 ```
-
 
 ### Upgrade steps
 
@@ -101,8 +99,8 @@ gem "tailwindcss-ruby", "~> 3.4" # only necessary with tailwindcss-rails <= 3.3.
 First, update to `tailwindcss-rails` v4.0.0 or higher. This will also ensure you're transitively depending on `tailwindcss-ruby` v4.
 
 ```html
-# Gemfile
-gem "tailwindcss-rails", "~> 4.0" # which transitively pins tailwindcss-ruby to v4
+# Gemfile gem "tailwindcss-rails", "~> 4.0" # which transitively pins
+tailwindcss-ruby to v4
 ```
 
 **Update** path references to any existing css files imported in `app/assets/stylesheets/application.tailwind.css` so that they will resolve when the file is moved to `app/assets/tailwind/application.css`.
@@ -114,7 +112,7 @@ gem "tailwindcss-rails", "~> 4.0" # which transitively pins tailwindcss-ruby to 
 
 If you want to migrate CSS class names for v4 (this is an optional step!), jump to [Updating CSS class names for v4](#updating-css-class-names-for-v4) before continuing.
 
-Then, run `bin/rails tailwindcss:upgrade`. Among other things, this will try to run the official Tailwind upgrade utility. It requires `npx` in order to run, but it's a one-time operation and is *highly recommended* for a successful upgrade.
+Then, run `bin/rails tailwindcss:upgrade`. Among other things, this will try to run the official Tailwind upgrade utility. It requires `npx` in order to run, but it's a one-time operation and is _highly recommended_ for a successful upgrade.
 
 <details>
 <summary>Here's a detailed list of what the upgrade task does.</summary>
@@ -131,7 +129,7 @@ Then, run `bin/rails tailwindcss:upgrade`. Among other things, this will try to 
 <details>
 <summary>Here's what that upgrade looks like on a vanilla Rails app.</summary>
 
-``` sh
+```sh
 $ bin/rails tailwindcss:upgrade
        apply  /path/to/tailwindcss-rails/lib/install/upgrade_tailwindcss.rb
   Removing references to 'defaultTheme' from /home/user/myapp/config/tailwind.config.js
@@ -166,11 +164,10 @@ $ bin/rails tailwindcss:upgrade
 Done in 56ms
          run  bundle install --quiet
 ```
+
 </details>
 
-
 If this doesn't succeed, it's likely that you've customized your Tailwind configuration and you'll need to do some work to make sure your application upgrades. Please read the [official upgrade guide](https://tailwindcss.com/docs/upgrade-guide) and try following the additional steps in [Updating CSS class names for v4](#updating-css-class-names-for-v4).
-
 
 ### Troubleshooting a v4 upgrade
 
@@ -181,7 +178,6 @@ We know there are some cases we haven't addressed with the upgrade task:
 - In applications using Tailwind plugins without JavaScript tooling, these upgrade steps may fail to fully migrate `tailwind.config.js` because the upstream upgrade tool needs the Tailwind plugins to be installed and available through a JavaScript package manager. If you see errors from the upstream upgrade tool, you should try following the additional steps in [Updating CSS class names for v4](#updating-css-class-names-for-v4) which will help you install (temporarily!) the necessary packages and clean up afterwards.
 
 We'll try to improve the upgrade process over time, but for now you may need to do some manual work to upgrade.
-
 
 ### Updating CSS class names for v4
 
@@ -208,9 +204,9 @@ With some additional manual work the upstream upgrade tool will update your appl
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@tailwindcss/container-queries": "^0.1.1",
     "@tailwindcss/forms": "^0.5.10",
-    "@tailwindcss/typography": "^0.5.16"
+    "@tailwindcss/typography": "^0.5.16",
     // And so on...
-  }
+  },
 }
 ```
 
@@ -280,11 +276,9 @@ This gem also generates a `Procfile.dev` file which will run both the rails serv
 
 The `tailwindcss:build` is automatically attached to `assets:precompile`, so before the asset pipeline digests the files, the Tailwind output will be generated.
 
-
 ### Building for testing
 
 The `tailwindcss:build` task is automatically attached to the `test:prepare` Rake task. This task runs before test commands. If you run `bin/rails test` in your CI environment, your Tailwind output will be generated before tests run.
-
 
 ### Building unminified assets
 
@@ -303,7 +297,6 @@ While you're developing your application, you want to run Tailwind in "watch" mo
 - or run `rails tailwindcss:watch` as a separate process,
 - or run `bin/dev` which uses [Foreman](https://github.com/ddollar/foreman)
 
-
 #### Puma plugin
 
 This gem ships with a Puma plugin. To use it, add this line to your `puma.rb` configuration:
@@ -313,7 +306,6 @@ plugin :tailwindcss if ENV.fetch("RAILS_ENV", "development") == "development"
 ```
 
 and then running `rails server` (or just `puma`) will run the Tailwind watch process in the background.
-
 
 #### Run `rails tailwindcss:watch`
 
@@ -331,11 +323,9 @@ If you are running `rails tailwindcss:watch` as a process in a Docker container,
 
 If you are running `rails tailwindcss:watch` in a docker container without a tty, pass the `always` argument to the task to instruct tailwindcss to keep the watcher alive even when `stdin` is closed: `rails tailwindcss:watch[always]`. If you use `bin/dev` then you should modify your `Procfile.dev`.
 
-
 #### Foreman
 
 Running `bin/dev` invokes Foreman to start both the Tailwind watch process and the rails server in development mode based on your `Procfile.dev` file.
-
 
 ### Using Tailwind plugins
 
@@ -343,25 +333,24 @@ If you want to use Tailwind plugins, they can be installed using `package.json`.
 
 Using Yarn:
 
-``` sh
+```sh
 [ ! -f package.json ] && yarn init
 yarn add daisyui # example
 ```
 
 Using npm:
 
-``` sh
+```sh
 npm init
 npm add daisyui # example
 ```
 
 Than use `@plugin` annotation in `app/assets/tailwind/application.css`:
 
-``` css
+```css
 @import "tailwindcss";
 @plugin "daisyui";
 ```
-
 
 ### Using with PostCSS
 
@@ -374,8 +363,8 @@ For example, to enable nesting:
 export default {
   plugins: {
     "@tailwindcss/postcss": {},
-  }
-}
+  },
+};
 ```
 
 ⚠ Note that PostCSS is a JavaScript tool with its own prerequisites! By default `tailwindcss-rails` does not require any JavaScript tooling, so in order to use PostCSS, a `package.json` with dependencies for your plugins and a package manager like `yarn` or `npm` is required, for example:
@@ -395,11 +384,13 @@ export default {
 
 Then you can use yarn or npm to install the dependencies.
 
+### Rails Engines support
+
+If you have Rails Engines in your application that use Tailwind CSS and provide an `app/assets/tailwind/<engine_name>/application.css` file, entry point files will be created for each of them in `app/assets/builds/tailwind/<engine_name>.css` so they can be included in your host application's Tailwind CSS by adding `@import "../../assets/builds/tailwind/<engine_name>"` to your `app/assets/tailwind/application.css` file.
 
 ### Custom inputs or outputs
 
 If you need to use a custom input or output file, you can run `bundle exec tailwindcss` to access the platform-specific executable, and give it your own build options.
-
 
 ## Troubleshooting
 
@@ -410,7 +401,7 @@ When having trouble with `tailwindcss:build` or `tailwindcss:watch`, the first t
 
 Here's what that looks like:
 
-``` sh
+```sh
 $ bin/rails tailwindcss:build[verbose]
 
 Running: /path/to/tailwindcss-ruby-4.0.17-x86_64-linux-gnu/exe/x86_64-linux-gnu/tailwindcss -i /home/flavorjones/code/oss/tailwindcss-rails/My Workspace/test-install/app/assets/tailwind/application.css -o /home/flavorjones/code/oss/tailwindcss-rails/My Workspace/test-install/app/assets/builds/tailwind.css --minify
@@ -432,11 +423,9 @@ There is a [known issue](https://github.com/tailwindlabs/tailwindcss/issues/1724
 
 Please try uninstalling `watchman` and try running the watch task again.
 
-
 ### Lost keystrokes or hanging when using terminal-based debugging tools (e.g. IRB, Pry, `ruby/debug`...etc.) with the Puma plugin
 
 We've addressed the issue and you can avoid the problem by upgrading `tailwindcss-rails` to [v2.4.1](https://github.com/rails/tailwindcss-rails/releases/tag/v2.4.1) or later versions.
-
 
 ### Running in a docker container exits prematurely
 
@@ -444,21 +433,17 @@ If you are running `rails tailwindcss:watch` as a process in a Docker container,
 
 If you are running `rails tailwindcss:watch` in a docker container without a tty, pass the `always` argument to the task to instruct tailwindcss to keep the watcher alive even when `stdin` is closed: `rails tailwindcss:watch[always]`. If you use `bin/dev` then you should modify your `Procfile.dev`.
 
-
 ### Conflict with sassc-rails
 
 Tailwind uses modern CSS features that are not recognized by the `sassc-rails` extension that was included by default in the Gemfile for Rails 6. In order to avoid any errors like `SassC::SyntaxError`, you must remove that gem from your Gemfile.
-
 
 ### Class names must be spelled out
 
 For Tailwind to work, your class names need to be spelled out. If you need to make sure Tailwind generates class names that don't exist in your content files or that are programmatically composed, use the [safelist option](https://tailwindcss.com/docs/content-configuration#safelisting-classes).
 
-
 ### `ERROR: Cannot find the tailwindcss executable` for supported platform
 
 See https://github.com/flavorjones/tailwindcss-ruby for help.
-
 
 ### Using asset-pipeline assets
 
@@ -468,20 +453,22 @@ To use assets from the pipeline, use `url(image.svg)`. [Since Sprockets v3.3.0](
 
 ```js
 module.exports = {
-    theme: {
-        extend: {
-            backgroundImage: {
-                'image': "url('image.svg')"
-            }
-        }
-    }
-}
+  theme: {
+    extend: {
+      backgroundImage: {
+        image: "url('image.svg')",
+      },
+    },
+  },
+};
 ```
 
 The inline version also works:
 
 ```html
-<section class="bg-[url('image.svg')]">Has the image as it's background</section>
+<section class="bg-[url('image.svg')]">
+  Has the image as it's background
+</section>
 ```
 
 ## License
