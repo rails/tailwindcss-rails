@@ -386,7 +386,10 @@ Then you can use yarn or npm to install the dependencies.
 
 ### Rails Engines support
 
-If you have Rails Engines in your application that use Tailwind CSS and provide an `app/assets/tailwind/<engine_name>/application.css` file, entry point files will be created for each of them in `app/assets/builds/tailwind/<engine_name>.css` so they can be included in your host application's Tailwind CSS by adding `@import "../../assets/builds/tailwind/<engine_name>"` to your `app/assets/tailwind/application.css` file.
+If you have Rails Engines in your application that use Tailwind CSS and provide an `app/assets/tailwind/<engine_name>/engine.css` file, entry point files will be created for each of them in `app/assets/builds/tailwind/<engine_name>.css` so they can be included in your host application's Tailwind CSS by adding `@import "../../assets/builds/tailwind/<engine_name>"` to your `app/assets/tailwind/application.css` file.
+
+> [!IMPORTANT]
+> Only imported in `app/assets/tailwind/application.css` engine CSS files will be included in the build. By default, no engine CSS files are imported. This give you flexibility on which engine CSS files you want to include in your build.
 
 ### Custom inputs or outputs
 
