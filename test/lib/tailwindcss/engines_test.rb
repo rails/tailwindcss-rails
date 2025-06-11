@@ -83,7 +83,7 @@ class Tailwindcss::EnginesTest < ActiveSupport::TestCase
 
     Class.new(Rails::Engine) do
       define_singleton_method(:engine_name) { name }
-      define_singleton_method(:root) { root_path.dup }
+      define_singleton_method(:root) { root_path }
     end
   end
 end
