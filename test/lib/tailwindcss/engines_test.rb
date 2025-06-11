@@ -4,7 +4,7 @@ require "minitest/mock"
 class Tailwindcss::EnginesTest < ActiveSupport::TestCase
   def setup
     super
-    @tmpdir_path = Pathname.new(Dir.mktmpdir)
+    @tmpdir_path = Pathname.new(TAILWINDCSS_TEST_APP_ROOT)
     @builds_dir = @tmpdir_path.join("app/assets/builds/tailwind")
   end
 
