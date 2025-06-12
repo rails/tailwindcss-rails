@@ -22,8 +22,8 @@
   * [Live rebuild](#live-rebuild)
   * [Using Tailwind plugins](#using-tailwind-plugins)
   * [Using with PostCSS](#using-with-postcss)
-  * [Rails Engines support](#rails-engines-support)
   * [Custom inputs or outputs](#custom-inputs-or-outputs)
+  * [Rails Engines support (Experimental)](#rails-engines-support-experimental)
 - [Troubleshooting](#troubleshooting)
   * [The `watch` command is hanging](#the-watch-command-is-hanging)
   * [Lost keystrokes or hanging when using terminal-based debugging tools (e.g. IRB, Pry, `ruby/debug`...etc.) with the Puma plugin](#lost-keystrokes-or-hanging-when-using-terminal-based-debugging-tools-eg-irb-pry-rubydebugetc-with-the-puma-plugin)
@@ -384,16 +384,18 @@ export default {
 
 Then you can use yarn or npm to install the dependencies.
 
-### Rails Engines support
+### Custom inputs or outputs
+
+If you need to use a custom input or output file, you can run `bundle exec tailwindcss` to access the platform-specific executable, and give it your own build options.
+
+### Rails Engines support (Experimental)
+
+_This feature is experimental and may change in the future. If you have feedback, please join the [discussion](https://github.com/rails/tailwindcss-rails/discussions/355)._
 
 If you have Rails Engines in your application that use Tailwind CSS and provide an `app/assets/tailwind/<engine_name>/engine.css` file, entry point files will be created for each of them in `app/assets/builds/tailwind/<engine_name>.css` so they can be included in your host application's Tailwind CSS by adding `@import "../builds/tailwind/<engine_name>"` to your `app/assets/tailwind/application.css` file.
 
 > [!IMPORTANT]
-> Only imported in `app/assets/tailwind/application.css` engine CSS files will be included in the build. By default, no engine CSS files are imported. This give you flexibility on which engine CSS files you want to include in your build.
-
-### Custom inputs or outputs
-
-If you need to use a custom input or output file, you can run `bundle exec tailwindcss` to access the platform-specific executable, and give it your own build options.
+> You must `@import` the engine CSS files in your `app/assets/tailwind/application.css` for the engine to be included in the build. By default, no engine CSS files are imported, and you must opt-in to using the file in your build.
 
 ## Troubleshooting
 
