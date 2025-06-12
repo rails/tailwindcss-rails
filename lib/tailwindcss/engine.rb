@@ -15,5 +15,9 @@ module Tailwindcss
     config.app_generators do |g|
       g.template_engine :tailwindcss
     end
+
+    config.after_initialize do
+      Tailwindcss::Engines.bundle
+    end
   end
 end
