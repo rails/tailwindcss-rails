@@ -1,5 +1,12 @@
 # `tailwindcss-rails` Changelog
 
+## v4.3.0.rc1
+
+### Improved
+
+* Experimental support for Rails engines. Feedback is welcome at #355. #554 @bopm
+
+
 ## v4.2.3 / 2025-05-02
 
 ### Improved
