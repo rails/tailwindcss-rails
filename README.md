@@ -392,7 +392,7 @@ If you need to use a custom input or output file, you can run `bundle exec tailw
 
 _This feature is experimental and may change in the future. If you have feedback, please join the [discussion](https://github.com/rails/tailwindcss-rails/discussions/355)._
 
-If you have Rails Engines in your application that use Tailwind CSS and provide an `app/assets/tailwind/<engine_name>/engine.css` file, entry point files will be created for each of them in `app/assets/builds/tailwind/<engine_name>.css` so they can be included in your host application's Tailwind CSS by adding `@import "../builds/tailwind/<engine_name>"` to your `app/assets/tailwind/application.css` file.
+If you have Rails Engines in your application that use Tailwind CSS and provide an `app/assets/tailwind/<engine_name>/engine.css` file, entry point files will be created for each of them in `app/assets/builds/tailwind/<engine_name>.css` on the first build/watch invocation so they can be included in your host application's Tailwind CSS by adding `@import "../builds/tailwind/<engine_name>"` to your `app/assets/tailwind/application.css` file.
 
 > [!IMPORTANT]
 > You must `@import` the engine CSS files in your `app/assets/tailwind/application.css` for the engine to be included in the build. By default, no engine CSS files are imported, and you must opt-in to using the file in your build.
