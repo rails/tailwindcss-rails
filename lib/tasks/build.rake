@@ -4,7 +4,6 @@ namespace :tailwindcss do
     debug = args.extras.include?("debug")
     verbose = args.extras.include?("verbose")
 
-
     command = Tailwindcss::Commands.compile_command(debug: debug)
     env = Tailwindcss::Commands.command_env(verbose: verbose)
     puts "Running: #{Shellwords.join(command)}" if verbose
