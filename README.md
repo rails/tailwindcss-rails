@@ -7,31 +7,31 @@
 <!-- toc -->
 
 - [Installation](#installation)
-  - [Choosing a specific version of `tailwindcss`](#choosing-a-specific-version-of-tailwindcss)
-  - [Using a local installation of `tailwindcss`](#using-a-local-installation-of-tailwindcss)
+  * [Choosing a specific version of `tailwindcss`](#choosing-a-specific-version-of-tailwindcss)
+  * [Using a local installation of `tailwindcss`](#using-a-local-installation-of-tailwindcss)
 - [Upgrading your application from Tailwind v3 to v4](#upgrading-your-application-from-tailwind-v3-to-v4)
-  - [You don't _have_ to upgrade](#you-dont-_have_-to-upgrade)
-  - [Upgrade steps](#upgrade-steps)
-  - [Troubleshooting a v4 upgrade](#troubleshooting-a-v4-upgrade)
-  - [Updating CSS class names for v4](#updating-css-class-names-for-v4)
+  * [You don't _have_ to upgrade](#you-dont-_have_-to-upgrade)
+  * [Upgrade steps](#upgrade-steps)
+  * [Troubleshooting a v4 upgrade](#troubleshooting-a-v4-upgrade)
+  * [Updating CSS class names for v4](#updating-css-class-names-for-v4)
 - [Developing with Tailwindcss](#developing-with-tailwindcss)
-  - [Configuration and commands](#configuration-and-commands)
-  - [Building for production](#building-for-production)
-  - [Building for testing](#building-for-testing)
-  - [Building unminified assets](#building-unminified-assets)
-  - [Live rebuild](#live-rebuild)
-  - [Using Tailwind plugins](#using-tailwind-plugins)
-  - [Using with PostCSS](#using-with-postcss)
-  - [Custom inputs or outputs](#custom-inputs-or-outputs)
-  - [Rails Engines support (Experimental)](#rails-engines-support-experimental)
+  * [Configuration and commands](#configuration-and-commands)
+  * [Building for production](#building-for-production)
+  * [Building for testing](#building-for-testing)
+  * [Building unminified assets](#building-unminified-assets)
+  * [Live rebuild](#live-rebuild)
+  * [Using Tailwind plugins](#using-tailwind-plugins)
+  * [Using with PostCSS](#using-with-postcss)
+  * [Custom inputs or outputs](#custom-inputs-or-outputs)
+  * [Rails Engines support (Experimental)](#rails-engines-support-experimental)
 - [Troubleshooting](#troubleshooting)
-  - [The `watch` command is hanging](#the-watch-command-is-hanging)
-  - [Lost keystrokes or hanging when using terminal-based debugging tools (e.g. IRB, Pry, `ruby/debug`...etc.) with the Puma plugin](#lost-keystrokes-or-hanging-when-using-terminal-based-debugging-tools-eg-irb-pry-rubydebugetc-with-the-puma-plugin)
-  - [Running in a docker container exits prematurely](#running-in-a-docker-container-exits-prematurely)
-  - [Conflict with sassc-rails](#conflict-with-sassc-rails)
-  - [Class names must be spelled out](#class-names-must-be-spelled-out)
-  - [`ERROR: Cannot find the tailwindcss executable` for supported platform](#error-cannot-find-the-tailwindcss-executable-for-supported-platform)
-  - [Using asset-pipeline assets](#using-asset-pipeline-assets)
+  * [The `watch` command is hanging](#the-watch-command-is-hanging)
+  * [Lost keystrokes or hanging when using terminal-based debugging tools (e.g. IRB, Pry, `ruby/debug`...etc.) with the Puma plugin](#lost-keystrokes-or-hanging-when-using-terminal-based-debugging-tools-eg-irb-pry-rubydebugetc-with-the-puma-plugin)
+  * [Running in a docker container exits prematurely](#running-in-a-docker-container-exits-prematurely)
+  * [Conflict with sassc-rails](#conflict-with-sassc-rails)
+  * [Class names must be spelled out](#class-names-must-be-spelled-out)
+  * [`ERROR: Cannot find the tailwindcss executable` for supported platform](#error-cannot-find-the-tailwindcss-executable-for-supported-platform)
+  * [Using asset-pipeline assets](#using-asset-pipeline-assets)
 - [License](#license)
 
 <!-- tocstop -->
@@ -99,7 +99,7 @@ gem "tailwindcss-ruby", "~> 3.4" # only necessary with tailwindcss-rails <= 3.3.
 First, update to `tailwindcss-rails` v4.0.0 or higher. This will also ensure you're transitively depending on `tailwindcss-ruby` v4.
 
 ```ruby
-# Gemfile
+# Gemfile 
 gem "tailwindcss-rails", "~> 4.0" # which transitively pins tailwindcss-ruby to v4
 ```
 
