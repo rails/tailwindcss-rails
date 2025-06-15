@@ -4,7 +4,7 @@ namespace :tailwindcss do
     debug = args.extras.include?("debug")
     verbose = args.extras.include?("verbose")
 
-    Tailwindcss::Engines.bundle
+
     command = Tailwindcss::Commands.compile_command(debug: debug)
     env = Tailwindcss::Commands.command_env(verbose: verbose)
     puts "Running: #{Shellwords.join(command)}" if verbose
@@ -19,7 +19,6 @@ namespace :tailwindcss do
     always = args.extras.include?("always")
     verbose = args.extras.include?("verbose")
 
-    Tailwindcss::Engines.bundle
     command = Tailwindcss::Commands.watch_command(always: always, debug: debug, poll: poll)
     env = Tailwindcss::Commands.command_env(verbose: verbose)
     puts "Running: #{Shellwords.join(command)}" if verbose
@@ -28,7 +27,15 @@ namespace :tailwindcss do
   rescue Interrupt
     puts "Received interrupt, exiting tailwindcss:watch" if args.extras.include?("verbose")
   end
+
+  desc "Create Rails Engines entry points"
+  task engines: :environment do
+    Tailwindcss::Engines.bundle
+  end
 end
+
+Rake::Task["tailwindcss:build"].enhance(["tailwindcss:engines"])
+Rake::Task["tailwindcss:watch"].enhance(["tailwindcss:engines"])
 
 Rake::Task["assets:precompile"].enhance(["tailwindcss:build"])
 
