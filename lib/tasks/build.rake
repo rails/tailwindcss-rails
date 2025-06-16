@@ -27,7 +27,7 @@ namespace :tailwindcss do
     puts "Received interrupt, exiting tailwindcss:watch" if args.extras.include?("verbose")
   end
 
-  desc "Create Rails Engines entry points"
+  desc "Create Tailwind CSS entry point files for Rails Engines"
   task engines: :environment do
     Tailwindcss::Engines.bundle
   end
