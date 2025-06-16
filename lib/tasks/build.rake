@@ -1,6 +1,6 @@
 namespace :tailwindcss do
   desc "Build your Tailwind CSS"
-  task build: :environment do |_, args|
+  task build: [:environment, :engines] do |_, args|
     debug = args.extras.include?("debug")
     verbose = args.extras.include?("verbose")
 
@@ -12,7 +12,7 @@ namespace :tailwindcss do
   end
 
   desc "Watch and build your Tailwind CSS on file changes"
-  task watch: :environment do |_, args|
+  task watch: [:environment, :engines] do |_, args|
     debug = args.extras.include?("debug")
     poll = args.extras.include?("poll")
     always = args.extras.include?("always")
@@ -25,6 +25,11 @@ namespace :tailwindcss do
     system(env, *command)
   rescue Interrupt
     puts "Received interrupt, exiting tailwindcss:watch" if args.extras.include?("verbose")
+  end
+
+  desc "Create Tailwind CSS entry point files for Rails Engines"
+  task engines: :environment do
+    Tailwindcss::Engines.bundle
   end
 end
 
