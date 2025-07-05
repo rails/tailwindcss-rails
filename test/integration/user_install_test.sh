@@ -11,34 +11,41 @@ bundle remove actionmailer || true
 bundle remove rails || true
 bundle add rails --skip-install ${RAILSOPTS:-}
 bundle install --prefer-local
+bundle exec rails -v
 
 # do our work a directory with spaces in the name (#176, #184)
 rm -rf "My Workspace"
 mkdir "My Workspace"
 pushd "My Workspace"
 
-# create a rails app
-bundle exec rails -v
+function prepare_deps {
+  # make sure to use the same version of rails (e.g., install from git source if necessary)
+  bundle remove rails --skip-install
+  bundle add rails --skip-install ${RAILSOPTS:-}
+
+  # use the tailwindcss-rails under test
+  bundle add tailwindcss-rails --skip-install --path="../.."
+  bundle add tailwindcss-ruby --skip-install ${TAILWINDCSSOPTS:-}
+  bundle install --prefer-local
+  bundle show --paths | fgrep tailwind
+  bundle binstubs --all
+}
+
+function install_tailwindcss {
+  # install tailwindcss
+  bin/rails tailwindcss:install
+
+  # TEST: tailwind was installed correctly
+  grep -q "<main class=\"container" app/views/layouts/application.html.erb
+  test -a app/assets/tailwind/application.css
+}
+
+# Application variation #1 ----------------------------------------
 bundle exec rails new test-install --skip-bundle
 pushd test-install
 
-# make sure to use the same version of rails (e.g., install from git source if necessary)
-bundle remove rails --skip-install
-bundle add rails --skip-install ${RAILSOPTS:-}
-
-# use the tailwindcss-rails under test
-bundle add tailwindcss-rails --skip-install --path="../.."
-bundle add tailwindcss-ruby --skip-install ${TAILWINDCSSOPTS:-}
-bundle install --prefer-local
-bundle show --paths | fgrep tailwind
-bundle binstubs --all
-
-# install tailwindcss
-bin/rails tailwindcss:install
-
-# TEST: tailwind was installed correctly
-grep -q "<main class=\"container" app/views/layouts/application.html.erb
-test -a app/assets/tailwind/application.css
+prepare_deps
+install_tailwindcss
 
 # TEST: rake tasks don't exec (#188)
 cat <<EOF >> Rakefile
@@ -72,5 +79,18 @@ grep -q "py-2" app/assets/builds/tailwind.css
 
 # TEST: contents include application.css directives
 grep -q "#abc12399" app/assets/builds/tailwind.css
+
+# Application variation #2 ----------------------------------------
+popd
+bundle exec rails new test-install2 --skip-bundle --skip-system-test
+pushd test-install2
+
+prepare_deps
+install_tailwindcss
+
+# TEST: presence of the generated file
+# TEST: nothing blew up without system tests, https://github.com/rails/tailwindcss-rails/issues/559
+bin/rails generate scaffold post title:string body:text published:boolean
+grep -q "Show" app/views/posts/index.html.erb
 
 echo "OK"
