@@ -1,10 +1,11 @@
 # `tailwindcss-rails` Changelog
 
-## v4.3.0.rc2
+## v4.3.0
 
 ### Improved
 
 * Experimental support for Rails engines. Feedback is welcome at #355. #554, #556 @bopm
+* Gracefully handle application created with `--skip-system-test`. #559, #562 @flavorjones
 
 
 ## v4.2.3 / 2025-05-02
