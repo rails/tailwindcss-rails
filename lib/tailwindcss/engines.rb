@@ -1,6 +1,6 @@
 module Tailwindcss
   module Engines
-     class << self
+    class << self
       def bundle
         FileUtils.mkdir_p(Rails.root.join("app/assets/builds/tailwind"))
         Rails::Engine.subclasses.select do |engine|
