@@ -6,6 +6,7 @@ set -o pipefail
 set -eux
 
 # set up dependencies
+gem install bcrypt # it's complicated, see Rails 7549ba77. can probably be removed once Rails 8.0 is EOL.
 rm -f Gemfile.lock
 bundle remove actionmailer || true
 bundle remove rails || true
