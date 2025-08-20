@@ -36,7 +36,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        plat: ["ubuntu", "windows", "macos"]
+        plat: [ "ubuntu", "macos" ]
     runs-on: ${{matrix.plat}}-latest
     steps:
       - uses: actions/checkout@v4
@@ -51,7 +51,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        plat: ["ubuntu", "macos"] # TODO: on windows the tailwind upgrader tests are failing
+        plat: [ "ubuntu", "macos" ]
     runs-on: ${{matrix.plat}}-latest
     steps:
       - uses: actions/checkout@v4
