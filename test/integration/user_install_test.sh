@@ -9,6 +9,7 @@ set -eux
 rm -f Gemfile.lock
 bundle remove actionmailer || true
 bundle remove rails || true
+rm -f Gemfile.lock
 bundle add rails --skip-install ${RAILSOPTS:-}
 bundle install --prefer-local
 bundle exec rails -v
@@ -21,6 +22,7 @@ pushd "My Workspace"
 function prepare_deps {
   # make sure to use the same version of rails (e.g., install from git source if necessary)
   bundle remove rails --skip-install
+  rm -f Gemfile.lock
   bundle add rails --skip-install ${RAILSOPTS:-}
 
   # use the tailwindcss-rails under test
