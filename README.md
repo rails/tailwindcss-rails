@@ -26,6 +26,7 @@
   * [Rails Engines support (Experimental)](#rails-engines-support-experimental)
 - [Troubleshooting](#troubleshooting)
   * [The `watch` command is hanging](#the-watch-command-is-hanging)
+  * [The `build` command (or `bin/rails assets:precompile`) is hanging inside a docker container](#the-build-command-or-binrails-assetsprecompile-is-hanging-inside-a-docker-container)
   * [Lost keystrokes or hanging when using terminal-based debugging tools (e.g. IRB, Pry, `ruby/debug`...etc.) with the Puma plugin](#lost-keystrokes-or-hanging-when-using-terminal-based-debugging-tools-eg-irb-pry-rubydebugetc-with-the-puma-plugin)
   * [Running in a docker container exits prematurely](#running-in-a-docker-container-exits-prematurely)
   * [Conflict with sassc-rails](#conflict-with-sassc-rails)
@@ -427,6 +428,10 @@ Done in 37ms
 There is a [known issue](https://github.com/tailwindlabs/tailwindcss/issues/17246#issuecomment-2753067488) running `tailwindcss -w` (that's the CLI in watch mode) when the utility `watchman` is also installed.
 
 Please try uninstalling `watchman` and try running the watch task again.
+
+### The `build` command (or `bin/rails assets:precompile`) is hanging inside a docker container
+
+Without a `WORKDIR`, tailwind may search the entire filesystem for files with CSS class names. So, please make sure your Dockerfile uses a `WORKDIR`.
 
 ### Lost keystrokes or hanging when using terminal-based debugging tools (e.g. IRB, Pry, `ruby/debug`...etc.) with the Puma plugin
 
