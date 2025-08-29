@@ -354,6 +354,9 @@ Than use `@plugin` annotation in `app/assets/tailwind/application.css`:
 ```
 
 ### Using with PostCSS
+> [!NOTE]
+> Starting with Tailwind 4, the TailwindCSS CLI tool no longer supports PostCSS out of the box, as the `--postcss` command has been removed. The below information only partains to Tailwind 3.
+> If you're wanting to leverage PostCSS with Tailwind 4, you'll likely want to reference [The official Tailwind 4 PostCSS docs](https://tailwindcss.com/docs/installation/using-postcss), and leverage [cssbundling-rails](https://github.com/rails/cssbundling-rails).
 
 If you want to use PostCSS as a preprocessor, create a custom `postcss.config.js` in your project root directory, and that file will be loaded by Tailwind automatically.
 
