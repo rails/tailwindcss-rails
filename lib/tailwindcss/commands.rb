@@ -21,11 +21,10 @@ module Tailwindcss
         command
       end
 
-      def watch_command(always: false, poll: false, **kwargs)
+      def watch_command(always: false, **kwargs)
         compile_command(**kwargs).tap do |command|
           command << "-w"
           command << "always" if always
-          command << "-p" if poll
         end
       end
 
