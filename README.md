@@ -14,7 +14,7 @@
   * [Upgrade steps](#upgrade-steps)
   * [Troubleshooting a v4 upgrade](#troubleshooting-a-v4-upgrade)
   * [Updating CSS class names for v4](#updating-css-class-names-for-v4)
-- [Developing with Tailwindcss](#developing-with-tailwindcss)
+- [Developing with TailwindCSS](#developing-with-tailwindcss)
   * [Configuration and commands](#configuration-and-commands)
   * [Building for production](#building-for-production)
   * [Building for testing](#building-for-testing)
@@ -44,7 +44,7 @@ With Rails 7 you can generate a new application preconfigured with Tailwind CSS 
 1. Run `./bin/bundle add tailwindcss-rails`
 2. Run `./bin/rails tailwindcss:install`
 
-This gem depends on the `tailwindcss-ruby` gem to install a working Tailwind CLI executable.
+This gem depends on the `tailwindcss-ruby` gem to install a working TailwindCSS CLI executable.
 
 ### Choosing a specific version of `tailwindcss`
 
@@ -239,7 +239,7 @@ Then, once you've run that successfully, clean up:
   ```
 - **Revert** the changes to `config/tailwind.config.js` so that paths are once again relative to the application root.
 
-## Developing with Tailwindcss
+## Developing with TailwindCSS
 
 ### Configuration and commands
 
@@ -355,35 +355,12 @@ Than use `@plugin` annotation in `app/assets/tailwind/application.css`:
 
 ### Using with PostCSS
 
-If you want to use PostCSS as a preprocessor, create a custom `postcss.config.js` in your project root directory, and that file will be loaded by Tailwind automatically.
+> [!NOTE]
+> Starting with Tailwind v4, the upstream CLI tool no longer supports PostCSS, and the `--postcss` option has
+been removed. If you want to leverage PostCSS with Tailwind 3, please reference the [tailwindcss-rails v3
+README](https://github.com/rails/tailwindcss-rails/tree/v3-stable?tab=readme-ov-file#using-with-postcss).
 
-For example, to enable nesting:
-
-```js
-// postcss.config.js
-export default {
-  plugins: {
-    "@tailwindcss/postcss": {},
-  },
-};
-```
-
-⚠ Note that PostCSS is a JavaScript tool with its own prerequisites! By default `tailwindcss-rails` does not require any JavaScript tooling, so in order to use PostCSS, a `package.json` with dependencies for your plugins and a package manager like `yarn` or `npm` is required, for example:
-
-```json
-// package.json
-{
-  "name": "my app",
-  "private": true,
-  "dependencies": {
-    "@tailwindcss/postcss": "^4.0.0",
-    "tailwindcss": "^4.0.0",
-    "postcss": "^8.5.1"
-  }
-}
-```
-
-Then you can use yarn or npm to install the dependencies.
+To leverage PostCSS with Tailwind 4, please reference [The official Tailwind 4 PostCSS docs](https://tailwindcss.com/docs/installation/using-postcss), and leverage [cssbundling-rails](https://github.com/rails/cssbundling-rails).
 
 ### Custom inputs or outputs
 
