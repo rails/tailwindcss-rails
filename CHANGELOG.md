@@ -5,6 +5,7 @@
 ### Improved
 
 * Support Rails 8.1 scaffolding which disables system tests by default. #585 @flavorjones
+* Puma plugin now has experimental support for Rails engines. #567 @bopm
 
 
 ## v4.3.0 / 2025-07-06
