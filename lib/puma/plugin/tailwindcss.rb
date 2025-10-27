@@ -20,7 +20,11 @@ Puma::Plugin.create do
       end
     end
 
-    launcher.events.on_stopped { stop_tailwind }
+    if Gem::Version.new(Puma::Const::PUMA_VERSION) >= Gem::Version.new("7")
+      launcher.events.after_stopped { stop_tailwind }
+    else
+      launcher.events.on_stopped { stop_tailwind }
+    end
 
     in_background do
       monitor_tailwind

@@ -6,6 +6,7 @@
 
 * Support Rails 8.1 scaffolding which disables system tests by default. #585 @flavorjones
 * Puma plugin now has experimental support for Rails engines. #567 @bopm
+* Puma plugin uses Puma 7's `after_stopped` callback, quashing a deprecation warning. #578 @rono23
 
 
 ## v4.3.0 / 2025-07-06
