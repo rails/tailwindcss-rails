@@ -1,5 +1,12 @@
 # `tailwindcss-rails` Changelog
 
+## next / unreleased
+
+### Improved
+
+* Support Rails 8.1 scaffolding which disables system tests by default. #585 @flavorjones
+
+
 ## v4.3.0 / 2025-07-06
 
 ### Improved

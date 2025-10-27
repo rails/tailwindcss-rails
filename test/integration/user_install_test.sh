@@ -69,8 +69,12 @@ if [[ $(rails -v) > "Rails 8.0.0.beta" ]] ; then
   grep -q PasswordsController app/controllers/passwords_controller.rb
 fi
 
+# TEST: doesn't fail when not generating system tests
+bin/rails generate scaffold memo title:string body:text published:boolean --system-tests=false
+grep -q "Show" app/views/memos/index.html.erb
+
 # TEST: presence of the generated file
-bin/rails generate scaffold post title:string body:text published:boolean
+bin/rails generate scaffold post title:string body:text published:boolean --system-tests=true
 grep -q "Show" app/views/posts/index.html.erb
 
 # TEST: the "accept_confirm" system test change was applied cleanly

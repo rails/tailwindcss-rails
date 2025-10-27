@@ -41,7 +41,7 @@ jobs:
       fail-fast: false
       matrix:
         plat: ["ubuntu"]
-        ref: ["7-2-stable", "8-0-stable", "main"]
+        ref: ["7-2-stable", "8-0-stable", "8-1-stable", "main"]
     env:
       RAILSOPTS: --git=https://github.com/rails/rails --ref=${{ matrix.ref }}
     steps:
