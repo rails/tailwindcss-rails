@@ -111,14 +111,6 @@ class Tailwindcss::CommandsTest < ActiveSupport::TestCase
       refute_includes(actual, "-p")
       refute_includes(actual, "--minify")
 
-      actual = Tailwindcss::Commands.watch_command(poll: true)
-      assert_kind_of(Array, actual)
-      assert_equal(executable, actual.first)
-      assert_includes(actual, "-w")
-      refute_includes(actual, "always")
-      assert_includes(actual, "-p")
-      assert_includes(actual, "--minify")
-
       actual = Tailwindcss::Commands.watch_command(always: true)
       assert_kind_of(Array, actual)
       assert_equal(executable, actual.first)

@@ -2,6 +2,11 @@
 
 ## next / unreleased
 
+### Changed
+
+* Removed the "poll" option on the watch command, since Tailwind v4 dropped support for this option (and it has been a no-op in this gem since.) #580 @flavorjones
+
+
 ### Improved
 
 * Support Rails 8.1 scaffolding which disables system tests by default. #585 @flavorjones

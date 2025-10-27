@@ -262,12 +262,13 @@ Synopsis:
 - `bin/rails tailwindcss:install` - installs the configuration file, output file, and `Procfile.dev`
 - `bin/rails tailwindcss:build` - generate the output file
   - `bin/rails tailwindcss:build[debug]` - generate unminimized output
+  - `bin/rails tailwindcss:build[verbose]` - emit the commands being run
 - `bin/rails tailwindcss:watch` - start live rebuilds, generating output on file changes
   - `bin/rails tailwindcss:watch[debug]` - generate unminimized output
-  - `bin/rails tailwindcss:watch[poll]` - for systems without file system events
   - `bin/rails tailwindcss:watch[always]` - for systems without TTY (e.g., some docker containers)
+  - `bin/rails tailwindcss:watch[verbose]` - emit the commands being run
 
-Note that you can combine task options, e.g. `rails tailwindcss:watch[debug,poll]`.
+Note that you can combine task options, e.g. `rails tailwindcss:watch[debug,always]`.
 
 This gem also makes available a Puma plugin to manage a live rebuild process when you run `rails server` (see "Live Rebuild" section below).
 
@@ -311,14 +312,6 @@ and then running `rails server` (or just `puma`) will run the Tailwind watch pro
 #### Run `rails tailwindcss:watch`
 
 This is a flexible command, which can be run with a few different options.
-
-If you are running `rails tailwindcss:watch` on a system that doesn't fully support file system events, pass a `poll` argument to the task to instruct tailwindcss to instead use polling:
-
-```
-rails tailwindcss:watch[poll]
-```
-
-(If you use `bin/dev` then you should modify your `Procfile.dev` to use the `poll` option.)
 
 If you are running `rails tailwindcss:watch` as a process in a Docker container, set `tty: true` in `docker-compose.yml` for the appropriate container to keep the watch process running.
 
