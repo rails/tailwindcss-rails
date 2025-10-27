@@ -1,6 +1,10 @@
 # Tailwind CSS for Rails
 
-[Tailwind CSS](https://tailwindcss.com) is a utility-first CSS framework packed with classes like flex, pt-4, text-center and rotate-90 that can be composed to build any design, directly in your markup.
+[Tailwind CSS](https://tailwindcss.com) is a utility-first CSS framework packed with classes like `flex`, `pt-4`, `text-center` and `rotate-90` that can be composed to build any design, directly in your markup.
+
+> [!NOTE]
+> This document is specific to Tailwind v4, corresponding to v4 of this gem. If you are looking for documentation for v3, please visit to the [tailwindcss-rails v3
+README](https://github.com/rails/tailwindcss-rails/tree/v3-stable?tab=readme-ov-file).
 
 <!-- regenerate TOC with `rake format:toc` -->
 
