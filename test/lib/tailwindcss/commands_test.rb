@@ -95,6 +95,31 @@ class Tailwindcss::CommandsTest < ActiveSupport::TestCase
     end
   end
 
+  test ".compile_command file with & without input/output ENV variables" do
+    begin
+      Rails.stub(:root, File) do # Rails.root won't work in this test suite
+        ENV["TAILWINDCSS_INPUT_FILE"] = nil
+        ENV["TAILWINDCSS_OUTPUT_FILE"] = nil
+
+        command = Tailwindcss::Commands.compile_command.join(" ")
+
+        assert_includes(command, "-i #{Tailwindcss::Commands::INPUT_FILE}")
+        assert_includes(command, "-o #{Tailwindcss::Commands::OUTPUT_FILE}")
+
+        ENV["TAILWINDCSS_INPUT_FILE"] = "path/to/my-input-file"
+        ENV["TAILWINDCSS_OUTPUT_FILE"] = "path/to/my-output-file"
+
+        command = Tailwindcss::Commands.compile_command.join(" ")
+
+        assert_includes(command, "-i path/to/my-input-file")
+        assert_includes(command, "-o path/to/my-output-file")
+      end
+    ensure
+      ENV.delete('TAILWINDCSS_INPUT_FILE')
+      ENV.delete('TAILWINDCSS_OUTPUT_FILE')
+    end
+  end
+
   test ".watch_command" do
     Rails.stub(:root, File) do # Rails.root won't work in this test suite
       actual = Tailwindcss::Commands.watch_command
