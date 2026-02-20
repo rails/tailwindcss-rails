@@ -6,4 +6,5 @@ gem "debug", ">= 1.0.0"
 
 group :test do
   gem "actionmailer", ">= 7.0.0"
+  gem "minitest-mock"
 end

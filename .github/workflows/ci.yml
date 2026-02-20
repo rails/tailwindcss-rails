@@ -20,7 +20,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        ruby: ["3.1", "3.2", "3.3", "3.4", "head"]
+        ruby: ["3.1", "3.2", "3.3", "3.4", "4.0", "head"]
     steps:
       - uses: actions/checkout@v5
       - run: rm Gemfile.lock
@@ -38,11 +38,13 @@ jobs:
       matrix:
         plat: [ "ubuntu", "macos" ]
     runs-on: ${{matrix.plat}}-latest
+    env:
+      GEM_HOME: ${{ github.workspace }}/.gem # Needs to be a writable directory to bundle remove/add
     steps:
       - uses: actions/checkout@v5
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: "3.4"
+          ruby-version: "4.0"
           bundler: latest
       - run: test/integration/user_install_test.sh
         shell: bash
@@ -53,11 +55,13 @@ jobs:
       matrix:
         plat: [ "ubuntu", "macos" ]
     runs-on: ${{matrix.plat}}-latest
+    env:
+      GEM_HOME: ${{ github.workspace }}/.gem # Needs to be a writable directory to bundle remove/add
     steps:
       - uses: actions/checkout@v5
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: "3.4"
+          ruby-version: "4.0"
           bundler: latest
       - run: test/integration/user_upgrade_test.sh
         shell: bash

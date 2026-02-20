@@ -10,6 +10,8 @@ on:
     types: [opened, synchronize]
     branches:
       - '*'
+env:
+  GEM_HOME: ${{ github.workspace }}/.gem # Needs to be a writable directory to bundle remove/add
 
 jobs:
   tests:
@@ -18,7 +20,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        ruby: ["3.3"]
+        ruby: ["4.0"]
     steps:
       - uses: actions/checkout@v5
       - uses: ruby/setup-ruby@v1
@@ -28,8 +30,7 @@ jobs:
           rm Gemfile.lock
           bundle remove actionmailer
           git clone --depth 1 --branch main https://github.com/rails/rails
-          bundle add actionmailer --path=rails
-          bundle add railties --path=rails
+          bundle add rails --path=rails --skip-install
           bundle install
       - name: Run tests
         run: bin/test
@@ -48,7 +49,7 @@ jobs:
       - uses: actions/checkout@v5
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: "3.3"
+          ruby-version: "4.0"
           bundler: latest
       - run: test/integration/user_install_test.sh
         shell: bash
@@ -60,14 +61,14 @@ jobs:
       fail-fast: false
       matrix:
         plat: ["ubuntu"]
-        ref: ["7-2-stable", "8-0-stable", "main"]
+        ref: ["7-2-stable", "8-0-stable", "8-1-stable", "main"]
     env:
       RAILSOPTS: --git=https://github.com/rails/rails --ref=${{ matrix.ref }}
     steps:
       - uses: actions/checkout@v5
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: "3.3"
+          ruby-version: "4.0"
           bundler: latest
       - run: test/integration/user_upgrade_test.sh
         shell: bash
