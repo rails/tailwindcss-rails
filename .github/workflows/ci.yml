@@ -22,7 +22,7 @@ jobs:
       matrix:
         ruby: ["3.1", "3.2", "3.3", "3.4", "4.0", "head"]
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - run: rm Gemfile.lock
       - uses: ruby/setup-ruby@v1
         with:
@@ -41,7 +41,7 @@ jobs:
     env:
       GEM_HOME: ${{ github.workspace }}/.gem # Needs to be a writable directory to bundle remove/add
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: "4.0"
@@ -58,7 +58,7 @@ jobs:
     env:
       GEM_HOME: ${{ github.workspace }}/.gem # Needs to be a writable directory to bundle remove/add
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: "4.0"

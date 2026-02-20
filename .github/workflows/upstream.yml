@@ -22,7 +22,7 @@ jobs:
       matrix:
         ruby: ["4.0"]
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{matrix.ruby}}
@@ -46,7 +46,7 @@ jobs:
     env:
       RAILSOPTS: --git=https://github.com/rails/rails --ref=${{ matrix.ref }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: "4.0"
@@ -65,7 +65,7 @@ jobs:
     env:
       RAILSOPTS: --git=https://github.com/rails/rails --ref=${{ matrix.ref }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: "4.0"
