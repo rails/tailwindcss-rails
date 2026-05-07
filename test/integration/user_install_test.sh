@@ -41,6 +41,9 @@ function install_tailwindcss {
   # TEST: tailwind was installed correctly
   grep -q "<main class=\"container" app/views/layouts/application.html.erb
   test -a app/assets/tailwind/application.css
+  grep -q '@source not "../../../log";' app/assets/tailwind/application.css
+  grep -q '@source not "../../../tmp";' app/assets/tailwind/application.css
+  grep -q '@source not "../../../storage";' app/assets/tailwind/application.css
 }
 
 # Application variation #1 ----------------------------------------
