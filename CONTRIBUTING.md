@@ -7,9 +7,14 @@ This doc is a brief introduction on modifying and maintaining this gem.
 
 ### Running the test suite
 
-The unit tests are run with `bundle exec rake test`
+Run `bin/setup` once to install bundler dependencies and the linting tools.
 
-There is an additional integration test which runs in CI, `test/integration/user_install_test.sh` which you may also want to run.
+Run `bin/ci` for a complete set of tests which includes:
+
+- unit tests (run with `bin/test` or `bundle exec rake test`)
+- integration tests in `test/integration/`
+
+And, if the proper tools (actionlint and zizmor) are installed, Github Actions will be linted.
 
 
 ### Testing in a Rails app

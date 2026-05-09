@@ -1,0 +1,26 @@
+#!/usr/bin/env ruby
+
+require "bundler/setup"
+require "active_support/continuous_integration"
+
+def installed?(command)
+  system("command -v #{command} > /dev/null 2>&1")
+end
+
+ActiveSupport::ContinuousIntegration.run do
+  if installed?("actionlint")
+    step "Lint: GitHub Actions", "actionlint"
+  else
+    heading "Skipping Lint: GitHub Actions", "actionlint not installed", type: :subtitle
+  end
+
+  if installed?("zizmor")
+    step "Security: zizmor", "zizmor", "."
+  else
+    heading "Skipping Security: zizmor", "zizmor not installed", type: :subtitle
+  end
+
+  step "Tests: unit", "bin/test"
+  step "Tests: integration (user install)", "test/integration/user_install_test.sh"
+  step "Tests: integration (user upgrade)", "test/integration/user_upgrade_test.sh"
+end
