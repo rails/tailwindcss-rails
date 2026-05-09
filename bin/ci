@@ -21,6 +21,9 @@ ActiveSupport::ContinuousIntegration.run do
   end
 
   step "Tests: unit", "bin/test"
-  step "Tests: integration (user install)", "test/integration/user_install_test.sh"
-  step "Tests: integration (user upgrade)", "test/integration/user_upgrade_test.sh"
+
+  Bundler.with_unbundled_env do
+    step "Tests: integration (user install)", "test/integration/user_install_test.sh"
+    step "Tests: integration (user upgrade)", "test/integration/user_upgrade_test.sh"
+  end
 end
