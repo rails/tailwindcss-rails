@@ -5,18 +5,23 @@
 set -o pipefail
 set -eux
 
-# set up dependencies
+ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
+WORKDIR="$ROOT/tmp/integration-user-install"
+
+rm -rf "$WORKDIR"
+mkdir -p "$WORKDIR"
+pushd "$WORKDIR"
+
+# set up dependencies in a fresh Gemfile
 gem install bcrypt # it's complicated, see Rails 7549ba77. can probably be removed once Rails 8.0 is EOL.
-rm -f Gemfile.lock
-bundle remove actionmailer || true
-bundle remove rails || true
-rm -f Gemfile.lock
+cat > Gemfile <<EOF
+source "https://rubygems.org"
+EOF
 bundle add rails --skip-install ${RAILSOPTS:-}
 bundle install --prefer-local
 bundle exec rails -v
 
-# do our work a directory with spaces in the name (#176, #184)
-rm -rf "My Workspace"
+# do our work in a directory with spaces in the name (#176, #184)
 mkdir "My Workspace"
 pushd "My Workspace"
 
@@ -27,7 +32,7 @@ function prepare_deps {
   bundle add rails --skip-install ${RAILSOPTS:-}
 
   # use the tailwindcss-rails under test
-  bundle add tailwindcss-rails --skip-install --path="../.."
+  bundle add tailwindcss-rails --skip-install --path="$ROOT"
   bundle add tailwindcss-ruby --skip-install ${TAILWINDCSSOPTS:-}
   bundle install --prefer-local
   bundle show --paths | fgrep tailwind
