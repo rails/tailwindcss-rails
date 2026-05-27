@@ -1,5 +1,12 @@
 # `tailwindcss-rails` Changelog
 
+## next / unreleased
+
+### Fixed
+
+* `tailwindcss:watch` now handles `SIGTERM` from process supervisors by forwarding stop signals to the spawned `tailwindcss` process and waiting for it to exit, preventing orphaned watchers when foreman, systemd, or Docker stops the rake task. @jordan-brough
+
+
 ## v4.4.0 / 2025-10-27
 
 ### Changed
@@ -469,5 +476,4 @@ Nothing. But we're promote 0.5.4 to 1.0.0 to go along with the final release of 
 ## v0.5.3 / 2021-12-03
 
 * Match button label for destroy with text used by regular Rails templates by [@dhh](https://github.com/dhh)
-
 
