@@ -2,9 +2,10 @@ namespace :tailwindcss do
   desc "Build your Tailwind CSS"
   task build: [:environment, :engines] do |_, args|
     debug = args.extras.include?("debug")
+    silent = args.extras.include?("silent")
     verbose = args.extras.include?("verbose")
 
-    command = Tailwindcss::Commands.compile_command(debug: debug)
+    command = Tailwindcss::Commands.compile_command(debug: debug, silent: silent)
     env = Tailwindcss::Commands.command_env(verbose: verbose)
     puts "Running: #{Shellwords.join(command)}" if verbose
 
@@ -15,9 +16,10 @@ namespace :tailwindcss do
   task watch: [:environment, :engines] do |_, args|
     debug = args.extras.include?("debug")
     always = args.extras.include?("always")
+    silent = args.extras.include?("silent")
     verbose = args.extras.include?("verbose")
 
-    command = Tailwindcss::Commands.watch_command(always: always, debug: debug)
+    command = Tailwindcss::Commands.watch_command(always: always, debug: debug, silent: silent)
     env = Tailwindcss::Commands.command_env(verbose: verbose)
     puts "Running: #{Shellwords.join(command)}" if verbose
 
