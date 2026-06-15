@@ -4,7 +4,7 @@
 
 ### Improved
 
-* New `silent` flag on `tailwindcss:build` and `tailwindcss:watch` tasks to suppress non-error output from the tailwindcss CLI (e.g., `bin/rails tailwindcss:watch[silent]`). Requires the tailwindcss CLI's `--silent` option, which was added in https://github.com/tailwindlabs/tailwindcss/pull/20100 (post-v4.3.0).
+* New `silent` flag on `tailwindcss:build` and `tailwindcss:watch` tasks to suppress non-error output from the tailwindcss CLI (e.g., `bin/rails tailwindcss:watch[silent]`). Requires Tailwind CSS v4.3.1. #618 @jordan-brough
 
 
 ## v4.4.0 / 2025-10-27
