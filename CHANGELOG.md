@@ -1,6 +1,6 @@
 # `tailwindcss-rails` Changelog
 
-## next / unreleased
+## v4.5.0 / 2026-06-15
 
 ### Improved
 

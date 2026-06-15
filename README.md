@@ -266,12 +266,12 @@ Synopsis:
 - `bin/rails tailwindcss:install` - installs the configuration file, output file, and `Procfile.dev`
 - `bin/rails tailwindcss:build` - generate the output file
   - `bin/rails tailwindcss:build[debug]` - generate unminimized output
-  - `bin/rails tailwindcss:build[silent]` - suppress non-error output from tailwindcss (requires tailwindcss CLI support for `--silent`)
+  - `bin/rails tailwindcss:build[silent]` - suppress non-error output from tailwindcss (requires Tailwind CSS v4.3.1)
   - `bin/rails tailwindcss:build[verbose]` - emit the commands being run
 - `bin/rails tailwindcss:watch` - start live rebuilds, generating output on file changes
   - `bin/rails tailwindcss:watch[debug]` - generate unminimized output
   - `bin/rails tailwindcss:watch[always]` - for systems without TTY (e.g., some docker containers)
-  - `bin/rails tailwindcss:watch[silent]` - suppress non-error output from tailwindcss (requires tailwindcss CLI support for `--silent`)
+  - `bin/rails tailwindcss:watch[silent]` - suppress non-error output from tailwindcss (requires Tailwind CSS v4.3.1)
   - `bin/rails tailwindcss:watch[verbose]` - emit the commands being run
 
 Note that you can combine task options, e.g. `rails tailwindcss:watch[debug,always]`.
