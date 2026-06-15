@@ -13,11 +13,16 @@ namespace :tailwindcss do
 
   desc "Watch and build your Tailwind CSS on file changes"
   task watch: [:environment, :engines] do |_, args|
-    Tailwindcss::Commands.watch(
-      always: args.extras.include?("always"),
-      debug: args.extras.include?("debug"),
-      verbose: args.extras.include?("verbose"),
-    )
+    debug = args.extras.include?("debug")
+    always = args.extras.include?("always")
+    verbose = args.extras.include?("verbose")
+
+    command = Tailwindcss::Commands.watch_command(always: always, debug: debug)
+    env = Tailwindcss::Commands.command_env(verbose: verbose)
+    puts "Running: #{Shellwords.join(command)}" if verbose
+
+    received_signal = Tailwindcss::ProcessRunner.spawn_and_wait(env, *command)
+    puts "Received #{received_signal}, exiting tailwindcss:watch" if verbose && received_signal
   end
 
   desc "Create Tailwind CSS entry point files for Rails Engines"
