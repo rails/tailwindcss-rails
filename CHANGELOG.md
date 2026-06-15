@@ -7,6 +7,13 @@
 * `tailwindcss:watch` now forwards stop signals (`SIGINT`/`SIGTERM`) to the spawned `tailwindcss` process, instead of letting it be orphaned. This happens when a process manager signals the watch task directly rather than the whole process group — most commonly Procfile-based managers like foreman in development. @jordan-brough
 
 
+## v4.5.0 / 2026-06-15
+
+### Improved
+
+* New `silent` flag on `tailwindcss:build` and `tailwindcss:watch` tasks to suppress non-error output from the tailwindcss CLI (e.g., `bin/rails tailwindcss:watch[silent]`). Requires Tailwind CSS v4.3.1. #618 @jordan-brough
+
+
 ## v4.4.0 / 2025-10-27
 
 ### Changed
