@@ -1,5 +1,12 @@
 # `tailwindcss-rails` Changelog
 
+## next / unreleased
+
+### Fixed
+
+* `tailwindcss:watch` now forwards stop signals (`SIGINT`/`SIGTERM`) to the spawned `tailwindcss` process, instead of letting it be orphaned. This happens when a process manager signals the watch task directly rather than the whole process group — most commonly Procfile-based managers like foreman in development. @jordan-brough
+
+
 ## v4.5.0 / 2026-06-15
 
 ### Improved
