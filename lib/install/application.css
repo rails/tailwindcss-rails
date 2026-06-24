@@ -1,1 +1,10 @@
-@import "tailwindcss";
+/*
+ * `source("../../")` roots Tailwind's source detection at `app/` instead of
+ * the Rails working directory, so `--watch` (e.g. `bin/dev`) stops waking on
+ * writes to `log/`, `tmp/`, `storage/`, and other non-source dirs. See #491.
+ *
+ * Rooting at `app/` would otherwise drop `lib/` from scanning, so `@source`
+ * re-adds it for apps that keep view helpers/components/partials there.
+ */
+@import "tailwindcss" source("../../");
+@source "../../../lib";

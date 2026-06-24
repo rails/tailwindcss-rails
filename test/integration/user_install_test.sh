@@ -46,6 +46,11 @@ function install_tailwindcss {
   # TEST: tailwind was installed correctly
   grep -q "<main class=\"container" app/views/layouts/application.html.erb
   test -a app/assets/tailwind/application.css
+
+  # TEST: source scanning is scoped to app/ so the watcher ignores log/, tmp/, etc. (#491)
+  grep -q 'source("../../")' app/assets/tailwind/application.css
+  # TEST: lib/ is still scanned, so classes in helpers/components there aren't dropped (#491)
+  grep -q '@source "../../../lib"' app/assets/tailwind/application.css
 }
 
 # Application variation #1 ----------------------------------------

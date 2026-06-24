@@ -1,5 +1,12 @@
 # `tailwindcss-rails` Changelog
 
+## next / unreleased
+
+### Fixed
+
+* The install template now scopes Tailwind source scanning to `app/` (plus `lib/`), so `--watch` no longer rebuilds on writes to `log/`, `tmp/`, `storage/`, etc. New installs only. Fixes #491. #628 @ajaynomics
+
+
 ## v4.6.0 / 2026-06-17
 
 ### Fixed
