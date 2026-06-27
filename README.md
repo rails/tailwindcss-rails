@@ -22,6 +22,7 @@ README](https://github.com/rails/tailwindcss-rails/tree/v3-stable?tab=readme-ov-
   * [Configuration and commands](#configuration-and-commands)
   * [Building for production](#building-for-production)
   * [Building for testing](#building-for-testing)
+  * [Skipping the automatic build](#skipping-the-automatic-build)
   * [Building unminified assets](#building-unminified-assets)
   * [Live rebuild](#live-rebuild)
   * [Using Tailwind plugins](#using-tailwind-plugins)
@@ -287,6 +288,10 @@ The `tailwindcss:build` is automatically attached to `assets:precompile`, so bef
 ### Building for testing
 
 The `tailwindcss:build` task is automatically attached to the `test:prepare` Rake task. This task runs before test commands. If you run `bin/rails test` in your CI environment, your Tailwind output will be generated before tests run.
+
+### Skipping the automatic build
+
+Setting the `TAILWINDCSS_SKIP_BUILD` environment variable to any non-blank value skips the automatic `tailwindcss:build` that is otherwise attached to `assets:precompile` (and to test prepare). This is useful when the CSS is already built and committed, when you want to cache the build across CI or Docker layers, or for cross-architecture Docker builds where the standalone CLI may not produce correct output. The default behavior is unchanged when the variable is unset or blank.
 
 ### Building unminified assets
 
