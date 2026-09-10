@@ -32,7 +32,7 @@ jobs:
       - uses: ruby/setup-ruby@95ef2b042f9d7a56d8268cba8559e2842e2ad01b # v1.321.0
         with:
           ruby-version: ${{matrix.ruby}}
-      - run: |
+      - run: | # zizmor: ignore[adhoc-packages] -- this job intentionally installs Rails from git main, outside the lockfile
           rm Gemfile.lock
           bundle remove actionmailer
           git clone --depth 1 --branch main https://github.com/rails/rails
