@@ -33,12 +33,14 @@ namespace :tailwindcss do
   end
 end
 
-Rake::Task["assets:precompile"].enhance(["tailwindcss:build"])
+unless ENV["TAILWINDCSS_SKIP_BUILD"].present?
+  Rake::Task["assets:precompile"].enhance(["tailwindcss:build"])
 
-if Rake::Task.task_defined?("test:prepare")
-  Rake::Task["test:prepare"].enhance(["tailwindcss:build"])
-elsif Rake::Task.task_defined?("spec:prepare")
-  Rake::Task["spec:prepare"].enhance(["tailwindcss:build"])
-elsif Rake::Task.task_defined?("db:test:prepare")
-  Rake::Task["db:test:prepare"].enhance(["tailwindcss:build"])
+  if Rake::Task.task_defined?("test:prepare")
+    Rake::Task["test:prepare"].enhance(["tailwindcss:build"])
+  elsif Rake::Task.task_defined?("spec:prepare")
+    Rake::Task["spec:prepare"].enhance(["tailwindcss:build"])
+  elsif Rake::Task.task_defined?("db:test:prepare")
+    Rake::Task["db:test:prepare"].enhance(["tailwindcss:build"])
+  end
 end
