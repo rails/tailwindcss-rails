@@ -1,5 +1,12 @@
 # `tailwindcss-rails` Changelog
 
+## main (unreleased)
+
+### Improved
+
+* Setting the `TAILWINDCSS_SKIP_BUILD` environment variable to a non-blank value skips attaching `tailwindcss:build` to `assets:precompile` (and test prepare). This is useful when the CSS is pre-built/committed, when caching CI or Docker layers, or for cross-architecture Docker builds. @cgmoore120
+
+
 ## v4.6.0 / 2026-06-17
 
 ### Fixed
