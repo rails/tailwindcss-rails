@@ -1,5 +1,12 @@
 # `tailwindcss-rails` Changelog
 
+## next / unreleased
+
+### Improved
+
+* `tailwindcss:watch` now replaces itself with the `tailwindcss` process instead of waiting on it, so the booted Rails app no longer stays in memory for as long as the watcher runs (about 80 MB in a new app and 270 MB in a larger one). Stop signals now reach `tailwindcss` directly, so `Tailwindcss::ProcessRunner` is removed. @jclusso
+
+
 ## v4.6.0 / 2026-06-17
 
 ### Fixed
