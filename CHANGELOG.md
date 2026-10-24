@@ -2,6 +2,10 @@
 
 ## next / unreleased
 
+### Improved
+
+* `tailwindcss:watch` now replaces itself with the `tailwindcss` process instead of waiting on it, so the booted Rails app no longer stays in memory for as long as the watcher runs (about 80 MB in a new app and 270 MB in a larger one). Stop signals now reach `tailwindcss` directly, so the gem no longer uses `Tailwindcss::ProcessRunner`. #648 @jclusso
+
 ### Fixed
 
 * `tailwindcss:install` and `tailwindcss:upgrade` now work when the gem is installed under a path with spaces. #647 @afurm
