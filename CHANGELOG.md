@@ -1,5 +1,12 @@
 # `tailwindcss-rails` Changelog
 
+## next / unreleased
+
+### Fixed
+
+* `tailwindcss:install` and `tailwindcss:upgrade` now work when the gem is installed under a path with spaces. #647 @afurm
+
+
 ## v4.6.0 / 2026-06-17
 
 ### Fixed
