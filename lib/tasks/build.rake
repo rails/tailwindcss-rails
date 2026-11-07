@@ -23,8 +23,11 @@ namespace :tailwindcss do
     env = Tailwindcss::Commands.command_env(verbose: verbose)
     puts "Running: #{Shellwords.join(command)}" if verbose
 
-    received_signal = Tailwindcss::ProcessRunner.spawn_and_wait(env, *command)
-    puts "Received #{received_signal}, exiting tailwindcss:watch" if verbose && received_signal
+    # Replace this process so the booted Rails app doesn't stay in memory, and
+    # stop signals reach tailwindcss directly. exec discards buffered output,
+    # so flush the line above first.
+    $stdout.flush
+    exec(env, *command)
   end
 
   desc "Create Tailwind CSS entry point files for Rails Engines"
